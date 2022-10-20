@@ -82,7 +82,7 @@ window.addEventListener("mousemove", (e) => {
   let pmrem = new PMREMGenerator(renderer);
   let envmapTexture = await new RGBELoader()
     .setDataType(FloatType)
-    .loadAsync("assets/old_room_2k.hdr");  // thanks to https://polyhaven.com/hdris !
+    .loadAsync("./assets/old_room_2k.hdr");  // thanks to https://polyhaven.com/hdris !
   let envMap = pmrem.fromEquirectangular(envmapTexture).texture;
 
 
@@ -131,14 +131,14 @@ window.addEventListener("mousemove", (e) => {
 
   let textures = {
     // thanks to https://free3d.com/user/ali_alkendi !
-    bump: await new TextureLoader().loadAsync("assets/earthbump.jpg"),
-    map: await new TextureLoader().loadAsync("assets/earthmap.jpg"),
-    spec: await new TextureLoader().loadAsync("assets/earthspec.jpg"),
-    planeTrailMask: await new TextureLoader().loadAsync("assets/mask.png"),
+    bump: await new TextureLoader().loadAsync("./assets/earthbump.jpg"),
+    map: await new TextureLoader().loadAsync("./assets/earthmap.jpg"),
+    spec: await new TextureLoader().loadAsync("./assets/earthspec.jpg"),
+    planeTrailMask: await new TextureLoader().loadAsync("./assets/mask.png"),
   };
 
   // "Cartoon Plane" (https://skfb.ly/UOLT) by antonmoek
-  let plane = (await new GLTFLoader().loadAsync("assets/plane/scene.glb")).scene.children[0];
+  let plane = (await new GLTFLoader().loadAsync("./assets/plane/scene.glb")).scene.children[0];
   let planesData = [
     makePlane(plane, textures.planeTrailMask, envMap, scene),
     makePlane(plane, textures.planeTrailMask, envMap, scene),
