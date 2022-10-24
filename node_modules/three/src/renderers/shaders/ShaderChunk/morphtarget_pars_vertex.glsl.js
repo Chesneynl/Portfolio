@@ -3,13 +3,34 @@ export default /* glsl */`
 
 	uniform float morphTargetBaseInfluence;
 
-	#ifndef USE_MORPHNORMALS
+	#ifdef MORPHTARGETS_TEXTURE
 
-		uniform float morphTargetInfluences[ 8 ];
+		uniform float morphTargetInfluences[ MORPHTARGETS_COUNT ];
+		uniform sampler2DArray morphTargetsTexture;
+		uniform vec2 morphTargetsTextureSize;
+
+		vec4 getMorph( const in int vertexIndex, const in int morphTargetIndex, const in int offset ) {
+
+			float texelIndex = float( vertexIndex * MORPHTARGETS_TEXTURE_STRIDE + offset );
+			float y = floor( texelIndex / morphTargetsTextureSize.x );
+			float x = texelIndex - y * morphTargetsTextureSize.x;
+
+			vec3 morphUV = vec3( ( x + 0.5 ) / morphTargetsTextureSize.x, y / morphTargetsTextureSize.y, morphTargetIndex );
+			return texture( morphTargetsTexture, morphUV );
+
+		}
 
 	#else
 
-		uniform float morphTargetInfluences[ 4 ];
+		#ifndef USE_MORPHNORMALS
+
+			uniform float morphTargetInfluences[ 8 ];
+
+		#else
+
+			uniform float morphTargetInfluences[ 4 ];
+
+		#endif
 
 	#endif
 
