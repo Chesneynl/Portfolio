@@ -1,67 +1,62 @@
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, useRef } from "react";
 import {
   useGLTF,
   OrbitControls,
   Center,
   softShadows,
+  Environment,
   PivotControls,
+  useScroll,
+  ScrollControls,
+  Scroll,
 } from "@react-three/drei";
 import "./App.css";
-import Model from "./component/Room";
+import Room from "./component/Room";
+import Lights from "./component/Lights";
+import Floor from "./component/Floor";
 import { angleToRadians } from "../src/utils/angle";
+
+// softShadows();
+
+// const useStore = create((set) => ({
+//   position: [0, 0, 10],
+//   setPosition: (position) => set({ position }),
+// }));
 
 function App() {
   return (
     <Canvas
       id="three-canvas-container"
       shadows
-      camera={{ position: [10, 9, 10], fov: 20 }}
+      dpr={[1, 2]}
+      // orthographic
+      camera={{ position: [7.5, 7, 7.5], fov: 30 }}
     >
-      <ambientLight intensity={0.5} />
-      <directionalLight
-        castShadow
-        position={[2.5, 5, 5]}
-        intensity={1.5}
-        shadow-mapSize={[1024, 1024]}
-      >
-        <orthographicCamera
-          attach="shadow-camera"
-          args={[-5, 5, 5, -5, 1, 50]}
-        />
-      </directionalLight>
-
-      <mesh scale={20} receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry />
-        <shadowMaterial transparent opacity={0.5} />
-      </mesh>
-
-      <PivotControls
-        rotation={[0, -Math.PI / 2, 0]}
-        anchor={[1, -1, -1]}
-        scale={75}
-        depthTest={false}
-        fixed
-        lineWidth={2}
-      >
-        <mesh castShadow receiveShadow position={[-1, 0.5, 1]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial />
-        </mesh>
-      </PivotControls>
-
-      <PivotControls
-        anchor={[1, 1, 1]}
-        rotation={[Math.PI, -Math.PI / 2, 0]}
-        scale={0.75}
-      >
-        <Center top scale={1} position={[38, 0, 1.4]}>
-          <Model />
-        </Center>
-      </PivotControls>
-
-      <OrbitControls makeDefault />
+      <Scene />
+      {/* <OrbitControls makeDefault /> */}
     </Canvas>
+  );
+}
+
+function Scene() {
+  return (
+    <ScrollControls
+      pages={3} // Each page takes 100% of the height of the canvas
+      distance={1} // A factor that increases scroll bar travel (default: 1)
+      damping={4} // Friction, higher is faster (default: 4)
+      horizontal={false} // Can also scroll horizontally (default: false)
+      infinite={false} // Can also scroll infinitely (default: false)
+    >
+      <Lights />
+      <Floor />
+      <Room />
+      <Scroll html>
+        <h1>First page</h1>
+        <h1 style={{ top: "100vh" }}>Second page</h1>
+        <h1 style={{ top: "200vh" }}>Third page</h1>
+      </Scroll>
+    </ScrollControls>
   );
 }
 

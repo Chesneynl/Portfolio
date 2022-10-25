@@ -4,4 +4,20 @@ body {
 
 #three-canvas-container {
   height: 100vh !important;
+
+}
+
+#three-canvas-container h1 {
+    position:absolute;
+}
+
+#container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  width: 100%;
+  top: 0;
+  max-width: 1024px;
+  border: 1px solid red;
 }
