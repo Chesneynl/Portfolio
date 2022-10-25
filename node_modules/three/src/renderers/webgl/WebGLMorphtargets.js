@@ -1,4 +1,4 @@
-import { FloatType, RGBAFormat } from '../../constants.js';
+import { FloatType } from '../../constants.js';
 import { DataArrayTexture } from '../../textures/DataArrayTexture.js';
 import { Vector4 } from '../../math/Vector4.js';
 import { Vector2 } from '../../math/Vector2.js';
@@ -12,20 +12,6 @@ function numericalSort( a, b ) {
 function absNumericalSort( a, b ) {
 
 	return Math.abs( b[ 1 ] ) - Math.abs( a[ 1 ] );
-
-}
-
-function denormalize( morph, attribute ) {
-
-	let denominator = 1;
-	const array = attribute.isInterleavedBufferAttribute ? attribute.data.array : attribute.array;
-
-	if ( array instanceof Int8Array ) denominator = 127;
-	else if ( array instanceof Int16Array ) denominator = 32767;
-	else if ( array instanceof Int32Array ) denominator = 2147483647;
-	else console.error( 'THREE.WebGLMorphtargets: Unsupported morph attribute data type: ', array );
-
-	morph.divideScalar( denominator );
 
 }
 
@@ -89,7 +75,6 @@ function WebGLMorphtargets( gl, capabilities, textures ) {
 				const buffer = new Float32Array( width * height * 4 * morphTargetsCount );
 
 				const texture = new DataArrayTexture( buffer, width, height, morphTargetsCount );
-				texture.format = RGBAFormat; // using RGBA since RGB might be emulated (and is thus slower)
 				texture.type = FloatType;
 				texture.needsUpdate = true;
 
@@ -113,8 +98,6 @@ function WebGLMorphtargets( gl, capabilities, textures ) {
 
 							morph.fromBufferAttribute( morphTarget, j );
 
-							if ( morphTarget.normalized === true ) denormalize( morph, morphTarget );
-
 							buffer[ offset + stride + 0 ] = morph.x;
 							buffer[ offset + stride + 1 ] = morph.y;
 							buffer[ offset + stride + 2 ] = morph.z;
@@ -126,8 +109,6 @@ function WebGLMorphtargets( gl, capabilities, textures ) {
 
 							morph.fromBufferAttribute( morphNormal, j );
 
-							if ( morphNormal.normalized === true ) denormalize( morph, morphNormal );
-
 							buffer[ offset + stride + 4 ] = morph.x;
 							buffer[ offset + stride + 5 ] = morph.y;
 							buffer[ offset + stride + 6 ] = morph.z;
@@ -138,8 +119,6 @@ function WebGLMorphtargets( gl, capabilities, textures ) {
 						if ( hasMorphColors === true ) {
 
 							morph.fromBufferAttribute( morphColor, j );
-
-							if ( morphColor.normalized === true ) denormalize( morph, morphNormal );
 
 							buffer[ offset + stride + 8 ] = morph.x;
 							buffer[ offset + stride + 9 ] = morph.y;

@@ -320,7 +320,8 @@ const persist = (config, baseOptions) => (set, get, api) => {
         }
       }
     }).then((migratedState) => {
-      stateFromStorage = options.merge(migratedState, configResult);
+      var _a2;
+      stateFromStorage = options.merge(migratedState, (_a2 = get()) != null ? _a2 : configResult);
       set(stateFromStorage, true);
       return setItem();
     }).then(() => {

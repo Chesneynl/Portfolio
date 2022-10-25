@@ -327,7 +327,8 @@ System.register([], (function (exports) {
               }
             }
           }).then((migratedState) => {
-            stateFromStorage = options.merge(migratedState, configResult);
+            var _a2;
+            stateFromStorage = options.merge(migratedState, (_a2 = get()) != null ? _a2 : configResult);
             set(stateFromStorage, true);
             return setItem();
           }).then(() => {

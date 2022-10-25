@@ -326,6 +326,14 @@
 
 			}
 
+			if ( 'Translation' in textureNode ) {
+
+				const values = textureNode.Translation.value;
+				texture.offset.x = values[ 0 ];
+				texture.offset.y = values[ 1 ];
+
+			}
+
 			return texture;
 
 		} // load a texture specified as a blob or data URI, or via an external URL using THREE.TextureLoader
@@ -1735,6 +1743,13 @@
 				if ( geoInfo.material && geoInfo.material.mappingType !== 'AllSame' ) {
 
 					materialIndex = getData( polygonVertexIndex, polygonIndex, vertexIndex, geoInfo.material )[ 0 ];
+
+					if ( materialIndex < 0 ) {
+
+						console.warn( 'THREE.FBXLoader: Invalid material index:', materialIndex );
+						materialIndex = 0;
+
+					}
 
 				}
 
@@ -3276,6 +3291,9 @@
 
 					}
 
+					break;
+					// cannot happen but is required by the DeepScan
+
 				default:
 					throw new Error( 'THREE.FBXLoader: Unknown property type ' + type );
 
@@ -3658,7 +3676,7 @@
 		if ( transformData.preRotation ) {
 
 			const array = transformData.preRotation.map( THREE.MathUtils.degToRad );
-			array.push( transformData.eulerOrder );
+			array.push( transformData.eulerOrder || THREE.Euler.DefaultOrder );
 			lPreRotationM.makeRotationFromEuler( tempEuler.fromArray( array ) );
 
 		}
@@ -3666,7 +3684,7 @@
 		if ( transformData.rotation ) {
 
 			const array = transformData.rotation.map( THREE.MathUtils.degToRad );
-			array.push( transformData.eulerOrder );
+			array.push( transformData.eulerOrder || THREE.Euler.DefaultOrder );
 			lRotationM.makeRotationFromEuler( tempEuler.fromArray( array ) );
 
 		}
@@ -3674,7 +3692,7 @@
 		if ( transformData.postRotation ) {
 
 			const array = transformData.postRotation.map( THREE.MathUtils.degToRad );
-			array.push( transformData.eulerOrder );
+			array.push( transformData.eulerOrder || THREE.Euler.DefaultOrder );
 			lPostRotationM.makeRotationFromEuler( tempEuler.fromArray( array ) );
 			lPostRotationM.invert();
 

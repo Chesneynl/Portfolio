@@ -406,7 +406,9 @@ var persist = function persist(config, baseOptions) {
           }
         }
       }).then(function (migratedState) {
-        stateFromStorage = options.merge(migratedState, configResult);
+        var _get;
+
+        stateFromStorage = options.merge(migratedState, (_get = get()) != null ? _get : configResult);
         set(stateFromStorage, true);
         return setItem();
       }).then(function () {
