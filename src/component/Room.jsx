@@ -46,13 +46,13 @@ export default function Room(props) {
   const [selectedColors, setSelectedColors] = useState(graciousColors);
   const [animationPercentage, setAnimationPercentage] = useState(0);
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
-  const cameraPosition = new THREE.Vector3(7.5, 4, 7.5);
+  const cameraPosition = new THREE.Vector3(5, 5, 5);
   const couchPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
   const lerp = cameraPosition.lerp(
     new THREE.Vector3(2, 2, 0),
     animationPercentage
   );
-  const lerpCamera = new THREE.Vector3(0, 0, 0).lerp(
+  const lerpCamera = new THREE.Vector3(0, 1.3, 0).lerp(
     new THREE.Vector3(
       couchPosition.x - 0.4,
       couchPosition.y + 0.3,
