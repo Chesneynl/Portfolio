@@ -46,24 +46,29 @@ export default function Room(props) {
   const [selectedColors, setSelectedColors] = useState(graciousColors);
   const [animationPercentage, setAnimationPercentage] = useState(0);
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
-  const cameraPosition = new THREE.Vector3(7.5, 7, 7.5);
-  const couchPosition = new THREE.Vector3(2, 2, 0);
-  const lerp = cameraPosition.lerp(couchPosition, animationPercentage);
+  const cameraPosition = new THREE.Vector3(7.5, 4, 7.5);
+  const couchPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
+  const lerp = cameraPosition.lerp(
+    new THREE.Vector3(2, 2, 0),
+    animationPercentage
+  );
+  const lerpCamera = new THREE.Vector3(0, 0, 0).lerp(
+    new THREE.Vector3(
+      couchPosition.x - 0.4,
+      couchPosition.y + 0.3,
+      couchPosition.z + 0.5
+    ),
+    animationPercentage
+  );
 
   const ref = useRef();
   const data = useScroll();
 
   useFrame((state) => {
-    console.log({ state });
-    // console.log(data.scroll.current);
     setAnimationPercentage(data.scroll.current);
-    state.camera.position.set(lerp.x, lerp.y, lerp.z);
 
-    state.camera.lookAt(
-      data.offset > 0.5 ? ref.current.position.x - 0.4 : 0,
-      data.offset > 0.5 ? ref.current.position.y + 0.3 : 0,
-      data.offset > 0.5 ? ref.current.position.z + 0.5 : 0
-    );
+    state.camera.position.set(lerp.x, lerp.y, lerp.z);
+    state.camera.lookAt(lerpCamera.x, lerpCamera.y, lerpCamera.z);
   });
 
   return (

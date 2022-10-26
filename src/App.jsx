@@ -31,7 +31,7 @@ function App() {
       shadows
       dpr={[1, 2]}
       // orthographic
-      camera={{ position: [7.5, 7, 7.5], fov: 30 }}
+      camera={{ fov: 30 }}
     >
       <Scene />
       {/* <OrbitControls makeDefault /> */}
