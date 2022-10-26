@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useMemo } from "react";
+import React, { useRef, useState, useLayoutEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   useGLTF,
@@ -13,6 +13,30 @@ import { angleToRadians } from "../utils/angle";
 
 export default function Room(props) {
   const group = useRef();
+  const graciousColors = {
+    floor: "#0B9A74",
+    walls: "#1e3064",
+    couch: "#F7BC5F",
+    chair: "#F7BC5F",
+    rug: "#F8CD88",
+    pillow: "#0B9A74",
+    plate: "#FFE8C2",
+    pot: "#FFE8C2",
+    lamp: "#FFE8C2",
+  };
+
+  const happyHorzionsColors = {
+    floor: "#fae716",
+    walls: "#050634",
+    couch: "#abb8c3",
+    chair: "#abb8c3",
+    rug: "#F8CD88",
+    pillow: "#fae716",
+    plate: "#FFE8C2",
+    pot: "#FFE8C2",
+    lamp: "#fae716",
+  };
+  const [selectedColors, setSelectedColors] = useState(graciousColors);
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
 
   const ref = useRef();
@@ -52,29 +76,34 @@ export default function Room(props) {
             material={materials.Material}
             position={[0.04, 1.8, 0.07]}
             rotation={[Math.PI, 0, Math.PI]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.walls} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Floor.geometry}
-            material={materials["Material.001"]}
             position={[0.04, 1.8, 0.07]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.floor} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Rug.geometry}
             material={materials.Material}
             position={[0.54, 0.46, 0.62]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.rug} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Couch.geometry}
-            material={materials.Material}
             position={[0.5, 0.55, -0.95]}
             scale={0.95}
           >
+            <meshStandardMaterial color={selectedColors.couch} />
             <mesh
               castShadow
               receiveShadow
@@ -89,7 +118,9 @@ export default function Room(props) {
               position={[-0.39, 0.59, -0.08]}
               rotation={[1.15, 0, 0]}
               scale={[0.35, 0.13, 0.32]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.couch} />
+            </mesh>
             <mesh
               castShadow
               receiveShadow
@@ -98,23 +129,27 @@ export default function Room(props) {
               position={[0.38, 0.59, -0.08]}
               rotation={[1.15, 0, 0]}
               scale={[0.35, 0.13, 0.32]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.couch} />
+            </mesh>
             <mesh
               castShadow
               receiveShadow
               geometry={nodes.Pillow.geometry}
-              material={materials.Pillows}
               position={[-0.62, 0.41, 0.29]}
               rotation={[0.11, 0.49, -0.27]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.pillow} />
+            </mesh>
             <mesh
               castShadow
               receiveShadow
               geometry={nodes.Pillow001.geometry}
-              material={materials.Pillows}
               position={[0.6, 0.4, 0.24]}
               rotation={[-2.46, 1.3, 2.62]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.pillow} />
+            </mesh>
           </mesh>
           <mesh
             ref={ref}
@@ -126,6 +161,7 @@ export default function Room(props) {
             rotation={[0, Math.PI / 2, 0]}
             scale={0.95}
           >
+            <meshStandardMaterial color={selectedColors.chair} />
             <mesh
               castShadow
               receiveShadow
@@ -141,7 +177,9 @@ export default function Room(props) {
               position={[-0.39, 0.59, -0.08]}
               rotation={[1.15, 0, 0]}
               scale={[0.35, 0.13, 0.32]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.chair} />
+            </mesh>
             <mesh
               castShadow
               receiveShadow
@@ -149,7 +187,9 @@ export default function Room(props) {
               material={materials.Pillows}
               position={[-0.15, 0.47, 0.19]}
               rotation={[-2.67, -1.25, 2.51]}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.pillow} />
+            </mesh>
           </mesh>
           <group position={[0.28, 2.3, -1.42]} scale={0.78}>
             <mesh
@@ -343,6 +383,7 @@ export default function Room(props) {
             position={[-0.84, 2.69, -1.45]}
             rotation={[Math.PI / 2, 0, 0]}
           >
+            <meshStandardMaterial color={selectedColors.lamp} />
             <mesh
               castShadow
               receiveShadow
@@ -351,7 +392,9 @@ export default function Room(props) {
               position={[-0.01, 0.33, 0.35]}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={0.12}
-            />
+            >
+              <meshStandardMaterial color={selectedColors.lamp} />
+            </mesh>
           </mesh>
           <group position={[-1.45, 2.51, 1.17]} rotation={[0, 0, -Math.PI / 2]}>
             <mesh
@@ -470,10 +513,10 @@ export default function Room(props) {
             castShadow
             receiveShadow
             geometry={nodes.Coffeee_mug.geometry}
-            material={nodes.Coffeee_mug.material}
             position={[0.42, 0.75, 0.59]}
             scale={[0.08, 0.05, 0.06]}
           >
+            <meshStandardMaterial color={selectedColors.plate} />
             <mesh
               castShadow
               receiveShadow
@@ -486,18 +529,20 @@ export default function Room(props) {
             castShadow
             receiveShadow
             geometry={nodes.Circle.geometry}
-            material={nodes.Circle.material}
             position={[0.42, 0.74, 0.59]}
             scale={0.04}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Circle002.geometry}
-            material={nodes.Circle002.material}
             position={[0.76, 0.74, 0.59]}
             scale={0.06}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -1482,6 +1527,7 @@ export default function Room(props) {
             position={[-0.87, 1.32, -0.95]}
             scale={[0.11, 0.09, 0.11]}
           >
+            <meshStandardMaterial color={selectedColors.pot} />
             <mesh
               castShadow
               receiveShadow
