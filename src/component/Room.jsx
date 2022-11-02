@@ -110,16 +110,16 @@ export default function Room({ pages }) {
 
     animPercentage = startingPercentage / goToPercentage;
 
-    if (animPercentage < 0 && currentPage - 1 !== 0) {
+    if (animPercentage < 0) {
       page = currentPage - 1;
-      // animPercentage = 1;
+      animPercentage = 1;
     }
-    if (animPercentage >= 1 && currentPage + 1 !== pages) {
-      // animPercentage = 0;
+    if (animPercentage > 1 && currentPage + 1 !== pages) {
+      animPercentage = 0;
       page = currentPage + 1;
     }
 
-    setCurrentPage(Math.max(0, Math.min(pages, page)));
+    setCurrentPage(Math.max(1, Math.min(pages, page)));
     setAnimationPercentage(Math.max(0, Math.min(1, animPercentage)));
 
     state.camera.position.set(lerp.x, lerp.y, lerp.z);
