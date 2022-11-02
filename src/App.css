@@ -1,5 +1,9 @@
 body {
-  background-color: #0f544e;;
+  background-color: #0f544e;
+  overflow: hidden;
+}
+h1 {
+  color: white;
 }
 
 #three-canvas-container {

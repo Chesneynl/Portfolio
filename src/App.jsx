@@ -17,12 +17,7 @@ import Lights from "./component/Lights";
 import Floor from "./component/Floor";
 import { angleToRadians } from "../src/utils/angle";
 
-// softShadows();
-
-// const useStore = create((set) => ({
-//   position: [0, 0, 10],
-//   setPosition: (position) => set({ position }),
-// }));
+const PAGES = 4;
 
 function App() {
   return (
@@ -42,18 +37,19 @@ function App() {
 function Scene() {
   return (
     <ScrollControls
-      pages={3} // Each page takes 100% of the height of the canvas
-      distance={3} // A factor that increases scroll bar travel (default: 1)
-      damping={4} // Friction, higher is faster (default: 4)
+      pages={PAGES} // Each page takes 100% of the height of the canvas
+      distance={1} // A factor that increases scroll bar travel (default: 1)
+      damping={5} // Friction, higher is faster (default: 4)
       infinite={false} // Can also scroll infinitely (default: false)
     >
       <Lights />
       <Floor />
-      <Room />
+      <Room pages={PAGES} />
       <Scroll html>
         <h1>First page</h1>
         <h1 style={{ top: "100vh" }}>Second page</h1>
         <h1 style={{ top: "200vh" }}>Third page</h1>
+        <h1 style={{ top: "300vh" }}>Fourth page</h1>
       </Scroll>
     </ScrollControls>
   );

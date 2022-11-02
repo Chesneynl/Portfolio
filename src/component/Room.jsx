@@ -18,63 +18,117 @@ import {
 } from "@react-three/drei";
 import { angleToRadians } from "../utils/angle";
 
-export default function Room(props) {
-  const group = useRef();
-  const graciousColors = {
-    floor: "#0B9A74",
-    walls: "#1e3064",
-    couch: "#F7BC5F",
-    chair: "#F7BC5F",
-    rug: "#F8CD88",
-    pillow: "#0B9A74",
-    plate: "#FFE8C2",
-    pot: "#FFE8C2",
-    lamp: "#FFE8C2",
-  };
+const graciousColors = {
+  floor: "#0B9A74",
+  walls: "#1e3064",
+  couch: "#F7BC5F",
+  chair: "#F7BC5F",
+  rug: "#F8CD88",
+  pillow: "#0B9A74",
+  plate: "#FFE8C2",
+  pot: "#FFE8C2",
+  lamp: "#F7BC5F",
+  sideTable: "#c89e54",
+};
 
-  const happyHorzionsColors = {
-    floor: "#fae716",
-    walls: "#050634",
-    couch: "#abb8c3",
-    chair: "#abb8c3",
-    rug: "#F8CD88",
-    pillow: "#fae716",
-    plate: "#FFE8C2",
-    pot: "#FFE8C2",
-    lamp: "#fae716",
-  };
-  const [selectedColors, setSelectedColors] = useState(graciousColors);
-  const [animationPercentage, setAnimationPercentage] = useState(0);
-  const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
-  const cameraPosition = new THREE.Vector3(5, 5, 5);
-  const couchPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
-  const lerp = cameraPosition.lerp(
-    new THREE.Vector3(2, 2, 0),
-    animationPercentage
-  );
-  const lerpCamera = new THREE.Vector3(0, 1.3, 0).lerp(
-    new THREE.Vector3(
-      couchPosition.x - 0.4,
-      couchPosition.y + 0.3,
-      couchPosition.z + 0.5
-    ),
-    animationPercentage
-  );
+const happyHorzionsColors = {
+  floor: "#fae716",
+  walls: "#050634",
+  couch: "#abb8c3",
+  chair: "#abb8c3",
+  rug: "#F8CD88",
+  pillow: "#fae716",
+  plate: "#FFE8C2",
+  pot: "#FFE8C2",
+  lamp: "#fae716",
+  sideTable: "#c89e54",
+};
 
+export default function Room({ pages }) {
   const ref = useRef();
   const data = useScroll();
 
+  const [selectedColors, setSelectedColors] = useState(graciousColors);
+  const [animationPercentage, setAnimationPercentage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
+
+  const couchPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
+  const potPosition = new THREE.Vector3(-0.87, 1.32, -0.95);
+  const currentObjectVectors = [
+    {
+      cameraPosition: new THREE.Vector3(5, 5, 5),
+      cameraLookAt: new THREE.Vector3(0, 1.3, 0),
+      object: "startingCamera",
+    },
+    {
+      cameraPosition: new THREE.Vector3(3, 3, 3),
+      cameraLookAt: new THREE.Vector3(0, 1.3, 0),
+      object: "SceneMoveIn",
+    },
+    {
+      cameraPosition: new THREE.Vector3(2, 2, 0),
+      cameraLookAt: new THREE.Vector3(
+        couchPosition.x - 0.4,
+        couchPosition.y + 0.3,
+        couchPosition.z + 0.5
+      ),
+      object: "chair",
+    },
+    {
+      cameraPosition: new THREE.Vector3(0, 2, 0.4),
+      cameraLookAt: new THREE.Vector3(
+        potPosition.x,
+        potPosition.y + 0.05,
+        potPosition.z + 0.1
+      ),
+      object: "plant",
+    },
+  ];
+
+  const lerp = currentObjectVectors[currentPage - 1].cameraPosition.lerp(
+    currentObjectVectors[currentPage].cameraPosition,
+    animationPercentage
+  );
+  const lookAtCamera = currentObjectVectors[currentPage - 1].cameraLookAt.lerp(
+    currentObjectVectors[currentPage].cameraLookAt,
+    animationPercentage
+  );
+  const amountOfAnimations = pages - 1;
+  const percentagePerAnimation = 1 / amountOfAnimations;
+
   useFrame((state) => {
-    setAnimationPercentage(data.scroll.current);
+    const scrollAmount = data.scroll.current;
+    let animPercentage = 0;
+    let page = currentPage;
+
+    const startingPercentage =
+      scrollAmount - percentagePerAnimation * (page - 1);
+    const goToPercentage = [1, pages - 1].includes(page)
+      ? percentagePerAnimation
+      : 1 - percentagePerAnimation * page;
+
+    animPercentage = startingPercentage / goToPercentage;
+
+    if (animPercentage < 0 && currentPage - 1 !== 0) {
+      page = currentPage - 1;
+      // animPercentage = 1;
+    }
+    if (animPercentage >= 1 && currentPage + 1 !== pages) {
+      // animPercentage = 0;
+      page = currentPage + 1;
+    }
+
+    setCurrentPage(Math.max(0, Math.min(pages, page)));
+    setAnimationPercentage(Math.max(0, Math.min(1, animPercentage)));
 
     state.camera.position.set(lerp.x, lerp.y, lerp.z);
-    state.camera.lookAt(lerpCamera.x, lerpCamera.y, lerpCamera.z);
+    state.camera.lookAt(lookAtCamera.x, lookAtCamera.y, lookAtCamera.z);
   });
 
   return (
-    <group {...props} dispose={null}>
+    <group dispose={null}>
       <mesh
-        castShadow
         receiveShadow
         geometry={nodes.Walls.geometry}
         material={materials.Material}
@@ -202,12 +256,9 @@ export default function Room(props) {
           geometry={nodes.Cube008.geometry}
           material={materials["Material.016"]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube008_1.geometry}
-          material={materials["Material.007"]}
-        />
+        <mesh castShadow receiveShadow geometry={nodes.Cube008_1.geometry}>
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
       </group>
       <group
         position={[-0.05, 1.8, 0.07]}
@@ -383,7 +434,6 @@ export default function Room(props) {
         castShadow
         receiveShadow
         geometry={nodes.Lamp.geometry}
-        material={materials["Material.006"]}
         position={[-0.84, 2.69, -1.45]}
         rotation={[Math.PI / 2, 0, 0]}
       >
@@ -512,7 +562,9 @@ export default function Room(props) {
         material={materials.Table}
         position={[0.61, 0.46, 0.59]}
         scale={[0.89, 0.55, 0.55]}
-      />
+      >
+        <meshStandardMaterial color={selectedColors.sideTable} />
+      </mesh>
       <mesh
         castShadow
         receiveShadow
@@ -1468,60 +1520,66 @@ export default function Room(props) {
         castShadow
         receiveShadow
         geometry={nodes.Side_table.geometry}
-        material={materials["Material.007"]}
         position={[-0.87, 1.18, -0.95]}
       >
+        <meshStandardMaterial color={selectedColors.sideTable} />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cube011.geometry}
-          material={materials["Material.007"]}
           position={[0, -0.03, 0]}
           scale={0.03}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cube012.geometry}
-          material={materials["Material.007"]}
           position={[0, -0.03, 0]}
           rotation={[0, 1.57, 0]}
           scale={0.03}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cube013.geometry}
-          material={materials["Material.007"]}
           position={[-0.02, -0.03, 0]}
           rotation={[-Math.PI, 0.02, -Math.PI]}
           scale={0.03}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cube014.geometry}
-          material={materials["Material.007"]}
           position={[0, -0.03, 0]}
           rotation={[0, -1.54, 0]}
           scale={0.03}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cylinder001_1.geometry}
-          material={materials["Material.007"]}
           position={[0, -0.03, 0]}
           scale={0.95}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cylinder002_2.geometry}
-          material={materials["Material.007"]}
           position={[0, -0.48, 0]}
           scale={0.95}
-        />
+        >
+          <meshStandardMaterial color={selectedColors.sideTable} />
+        </mesh>
       </mesh>
       <mesh
         castShadow
