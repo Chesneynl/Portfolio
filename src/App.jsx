@@ -8,6 +8,8 @@ import {
   Environment,
   PivotControls,
   useScroll,
+  Html,
+  useProgress,
   ScrollControls,
   Scroll,
 } from "@react-three/drei";
@@ -19,17 +21,25 @@ import { angleToRadians } from "../src/utils/angle";
 
 const PAGES = 5;
 
+function Loader() {
+  const { progress } = useProgress();
+  console.log({ progress });
+  return <Html center>{progress} % loaded</Html>;
+}
+
 function App() {
   return (
     <Canvas
+      frameloop="demand"
+      performance={{ min: 0.5 }}
       id="three-canvas-container"
       shadows
       dpr={[1, 2]}
-      // orthographic
       camera={{ fov: 40 }}
     >
-      <Scene />
-      {/* <OrbitControls makeDefault /> */}
+      <Suspense fallback={<Loader />}>
+        <Scene />
+      </Suspense>
     </Canvas>
   );
 }

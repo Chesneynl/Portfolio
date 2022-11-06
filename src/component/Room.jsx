@@ -20,6 +20,7 @@ import { angleToRadians } from "../utils/angle";
 
 const graciousColors = {
   floor: "#0B9A74",
+  donut: "#0B9A74",
   walls: "#1e3064",
   couch: "#F7BC5F",
   chair: "#F7BC5F",
@@ -125,7 +126,6 @@ export default function Room({ pages }) {
 
     if (animPercentage > 1 && currentPage + 1 !== pages) {
       animPercentage = 0;
-      console.log("setting");
       page = currentPage + 1;
     }
 
@@ -136,25 +136,29 @@ export default function Room({ pages }) {
     state.camera.lookAt(lookAtCamera.x, lookAtCamera.y, lookAtCamera.z);
   });
 
+  const walls = new THREE.MeshLambertMaterial({ color: selectedColors.walls });
+  const floor = new THREE.MeshLambertMaterial({ color: selectedColors.floor });
+  const couch = new THREE.MeshLambertMaterial({ color: selectedColors.couch });
+  const pillow = new THREE.MeshLambertMaterial({
+    color: selectedColors.pillow,
+  });
+
   return (
     <group dispose={null}>
       <mesh
         receiveShadow
         geometry={nodes.Walls.geometry}
-        material={materials.Material}
+        material={walls}
         position={[0.04, 1.8, 0.07]}
         rotation={[Math.PI, 0, Math.PI]}
-      >
-        <meshStandardMaterial color={selectedColors.walls} />
-      </mesh>
+      />
       <mesh
         castShadow
         receiveShadow
+        material={floor}
         geometry={nodes.Floor.geometry}
         position={[0.04, 1.8, 0.07]}
-      >
-        <meshStandardMaterial color={selectedColors.floor} />
-      </mesh>
+      />
       <mesh
         castShadow
         receiveShadow
@@ -167,11 +171,11 @@ export default function Room({ pages }) {
       <mesh
         castShadow
         receiveShadow
+        material={couch}
         geometry={nodes.Couch.geometry}
         position={[0.5, 0.55, -0.95]}
         scale={0.95}
       >
-        <meshStandardMaterial color={selectedColors.couch} />
         <mesh
           castShadow
           receiveShadow
@@ -182,42 +186,36 @@ export default function Room({ pages }) {
           castShadow
           receiveShadow
           geometry={nodes.Cushion.geometry}
-          material={materials.Material}
+          material={couch}
           position={[-0.39, 0.59, -0.08]}
           rotation={[1.15, 0, 0]}
           scale={[0.35, 0.13, 0.32]}
-        >
-          <meshStandardMaterial color={selectedColors.couch} />
-        </mesh>
+        ></mesh>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cushion001.geometry}
-          material={materials.Material}
+          material={couch}
           position={[0.38, 0.59, -0.08]}
           rotation={[1.15, 0, 0]}
           scale={[0.35, 0.13, 0.32]}
-        >
-          <meshStandardMaterial color={selectedColors.couch} />
-        </mesh>
+        />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Pillow.geometry}
+          material={pillow}
           position={[-0.62, 0.41, 0.29]}
           rotation={[0.11, 0.49, -0.27]}
-        >
-          <meshStandardMaterial color={selectedColors.pillow} />
-        </mesh>
+        />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Pillow001.geometry}
+          material={pillow}
           position={[0.6, 0.4, 0.24]}
           rotation={[-2.46, 1.3, 2.62]}
-        >
-          <meshStandardMaterial color={selectedColors.pillow} />
-        </mesh>
+        />
       </mesh>
       <mesh
         ref={ref}
@@ -252,12 +250,10 @@ export default function Room({ pages }) {
           castShadow
           receiveShadow
           geometry={nodes.Pillow002.geometry}
-          material={materials.Pillows}
+          material={pillow}
           position={[-0.15, 0.47, 0.19]}
           rotation={[-2.67, -1.25, 2.51]}
-        >
-          <meshStandardMaterial color={selectedColors.pillow} />
-        </mesh>
+        />
       </mesh>
       <group position={[0.28, 2.3, -1.42]} scale={0.78}>
         <mesh
@@ -622,26 +618,29 @@ export default function Room({ pages }) {
           castShadow
           receiveShadow
           geometry={nodes.Torus016.geometry}
-          material={materials["Material.011"]}
+          // material={materials["Material.011"]}
         >
+          <meshStandardMaterial color={selectedColors.donut} />
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Cube015_2.geometry}
-            material={materials["Material.014"]}
             position={[0.12, 0.04, -0.05]}
             rotation={[1.22, -0.71, -2.41]}
             scale={0.01}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
             geometry={nodes.Cube016_2.geometry}
-            material={materials["Material.015"]}
             position={[0.13, 0.03, -0.01]}
             rotation={[1.38, -1.1, -2.71]}
             scale={[0, 0.01, 0]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -650,28 +649,24 @@ export default function Room({ pages }) {
             position={[0.14, 0.02, -0.01]}
             rotation={[1.02, -1.36, -2.05]}
             scale={[0, 0.01, 0]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_3.geometry}
-            material={materials["Material.014"]}
             position={[0.12, 0.04, -0.05]}
             rotation={[1.22, -0.71, 2.26]}
             scale={0.01}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_3.geometry}
-            material={materials["Material.015"]}
             position={[0.13, 0.03, -0.01]}
             rotation={[1.38, -1.1, 2.11]}
             scale={[0, 0.01, 0]}
-          />
+          ></mesh>
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_3.geometry}
             material={nodes.Cube017_3.material}
             position={[0.11, 0.05, -0.01]}
@@ -679,8 +674,6 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_4.geometry}
             material={materials["Material.014"]}
             position={[0.07, 0.05, -0.03]}
@@ -688,8 +681,6 @@ export default function Room({ pages }) {
             scale={0}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_4.geometry}
             material={materials["Material.015"]}
             position={[0.09, 0.05, -0.01]}
@@ -697,8 +688,6 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_4.geometry}
             material={nodes.Cube017_4.material}
             position={[0.11, 0.05, -0.01]}
@@ -706,26 +695,20 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_5.geometry}
-            material={materials["Material.014"]}
             position={[0.04, 0.02, -0.02]}
             rotation={[2.28, 1.01, 0.74]}
             scale={0.01}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.plate} />
+          </mesh>
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_5.geometry}
-            material={materials["Material.015"]}
             position={[0.11, 0.03, -0.08]}
             rotation={[0.72, -0.81, 0.18]}
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_5.geometry}
             material={nodes.Cube017_5.material}
             position={[0.09, 0.05, -0.07]}
@@ -733,26 +716,18 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_6.geometry}
-            material={materials["Material.014"]}
             position={[0.05, 0.05, -0.06]}
             rotation={[1.84, 0.21, -2.98]}
             scale={0.01}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_6.geometry}
-            material={materials["Material.015"]}
             position={[0.08, 0.05, -0.05]}
             rotation={[1.59, 0.03, 1.3]}
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_6.geometry}
             material={nodes.Cube017_6.material}
             position={[0.09, 0.05, -0.07]}
@@ -760,8 +735,6 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_7.geometry}
             material={materials["Material.014"]}
             position={[0.05, 0.05, -0.06]}
@@ -769,8 +742,6 @@ export default function Room({ pages }) {
             scale={0.01}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_7.geometry}
             material={materials["Material.015"]}
             position={[0.08, 0.05, -0.05]}
@@ -778,8 +749,6 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_7.geometry}
             material={nodes.Cube017_7.material}
             position={[0.09, 0.05, -0.07]}
@@ -787,26 +756,18 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_8.geometry}
-            material={materials["Material.014"]}
             position={[0.05, 0.05, -0.06]}
             rotation={[1.84, 0.21, 0.61]}
             scale={0.01}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube016_8.geometry}
-            material={materials["Material.015"]}
             position={[0.06, 0.03, -0.12]}
             rotation={[0.5, -0.38, 1.25]}
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube017_8.geometry}
             material={nodes.Cube017_8.material}
             position={[0.05, 0.05, -0.1]}
@@ -814,14 +775,13 @@ export default function Room({ pages }) {
             scale={[0, 0.01, 0]}
           />
           <mesh
-            castShadow
-            receiveShadow
             geometry={nodes.Cube015_9.geometry}
-            material={materials["Material.014"]}
             position={[0.01, 0.05, -0.08]}
             rotation={[1.91, 0.05, 1.22]}
             scale={0.01}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.donut} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
@@ -830,7 +790,9 @@ export default function Room({ pages }) {
             position={[0.04, 0.05, -0.09]}
             rotation={[1.61, 0.02, 0.93]}
             scale={[0, 0.01, 0]}
-          />
+          >
+            <meshStandardMaterial color={selectedColors.donut} />
+          </mesh>
           <mesh
             castShadow
             receiveShadow
