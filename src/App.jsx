@@ -17,7 +17,7 @@ import Lights from "./component/Lights";
 import Floor from "./component/Floor";
 import { angleToRadians } from "../src/utils/angle";
 
-const PAGES = 4;
+const PAGES = 5;
 
 function App() {
   return (
@@ -47,9 +47,10 @@ function Scene() {
       <Room pages={PAGES} />
       <Scroll html>
         <h1>First page</h1>
-        <h1 style={{ top: "100vh" }}>Second page</h1>
-        <h1 style={{ top: "200vh" }}>Third page</h1>
-        <h1 style={{ top: "300vh" }}>Fourth page</h1>
+        <h1 style={{ top: "100vh" }}>Room page</h1>
+        <h1 style={{ top: "200vh" }}>Chair page</h1>
+        <h1 style={{ top: "300vh" }}>Plant page</h1>
+        <h1 style={{ top: "400vh" }}>Donut page</h1>
       </Scroll>
     </ScrollControls>
   );

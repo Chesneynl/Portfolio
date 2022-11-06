@@ -55,6 +55,7 @@ export default function Room({ pages }) {
 
   const couchPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
   const potPosition = new THREE.Vector3(-0.87, 1.32, -0.95);
+  const donutPosition = new THREE.Vector3(0.8, 0.79, 0.59);
   const currentObjectVectors = [
     {
       cameraPosition: new THREE.Vector3(5, 5, 5),
@@ -84,6 +85,15 @@ export default function Room({ pages }) {
       ),
       object: "plant",
     },
+    {
+      cameraPosition: new THREE.Vector3(0.5, 1.2, 1),
+      cameraLookAt: new THREE.Vector3(
+        donutPosition.x,
+        donutPosition.y,
+        donutPosition.z
+      ),
+      object: "donut",
+    },
   ];
 
   const lerp = currentObjectVectors[currentPage - 1].cameraPosition.lerp(
@@ -98,24 +108,24 @@ export default function Room({ pages }) {
   const percentagePerAnimation = 1 / amountOfAnimations;
 
   useFrame((state) => {
-    const scrollAmount = data.scroll.current;
-    let animPercentage = 0;
     let page = currentPage;
+    const scrollAmount = data.scroll.current;
+    const startPercetages = [...Array(pages).keys()].map(
+      (page) => page * percentagePerAnimation
+    );
+    const percentageOffset = startPercetages[page - 1];
 
-    const startingPercentage =
-      scrollAmount - percentagePerAnimation * (page - 1);
-    const goToPercentage = [1, pages - 1].includes(page)
-      ? percentagePerAnimation
-      : 1 - percentagePerAnimation * page;
-
-    animPercentage = startingPercentage / goToPercentage;
+    let animPercentage =
+      (scrollAmount - percentageOffset) / percentagePerAnimation;
 
     if (animPercentage < 0) {
       page = currentPage - 1;
       animPercentage = 1;
     }
+
     if (animPercentage > 1 && currentPage + 1 !== pages) {
       animPercentage = 0;
+      console.log("setting");
       page = currentPage + 1;
     }
 
