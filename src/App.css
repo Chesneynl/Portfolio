@@ -2,17 +2,38 @@ body {
   background-color: #0f544e;
   overflow: hidden;
 }
+
 h1 {
   color: white;
+  margin:0;
 }
 
 #three-canvas-container {
   height: 100vh !important;
-
+  color:white;
 }
 
 #three-canvas-container h1 {
     position:absolute;
+}
+
+.welcome-message {
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  left:0;
+  right: 0;
+  font-size: 48px;
+  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f544e;
+}
+
+.welcome-message.active {
+  opacity: 0;
+  transition: opacity 4s;
 }
 
 #container {

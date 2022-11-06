@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useState, useEffect } from "react";
 import {
   useGLTF,
   OrbitControls,
@@ -45,6 +45,11 @@ function App() {
 }
 
 function Scene() {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
     <ScrollControls
       pages={PAGES} // Each page takes 100% of the height of the canvas
@@ -55,8 +60,10 @@ function Scene() {
       <Lights />
       <Floor />
       <Room pages={PAGES} />
-      <Scroll html>
-        <h1>First page</h1>
+      <Scroll html style={{ width: "100%" }}>
+        <div className={loaded ? "welcome-message active" : "welcome-message"}>
+          Welcome
+        </div>
         <h1 style={{ top: "100vh" }}>Room page</h1>
         <h1 style={{ top: "200vh" }}>Chair page</h1>
         <h1 style={{ top: "300vh" }}>Plant page</h1>
