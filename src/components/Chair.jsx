@@ -1,4 +1,7 @@
-import { Html } from "@react-three/drei";
+import { Html, useScroll } from "@react-three/drei";
+import { Suspense, useState, useEffect, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import anime from "animejs";
 
 export default function Chair({
   nodes,
@@ -7,6 +10,35 @@ export default function Chair({
   pillowColor,
   position,
 }) {
+  const data = useScroll();
+  const animation = useRef(null);
+  console.log("Chair".replace(/\S/g, "<span class='letter'>$&</span>"));
+
+  useFrame((state) => {});
+
+  useEffect(() => {
+    if (animation.current) {
+      animation.current = anime
+        .timeline({ loop: true })
+        .add({
+          targets: ".ml2 .letter",
+          scale: [4, 1],
+          opacity: [0, 1],
+          translateZ: 0,
+          easing: "easeOutExpo",
+          duration: 950,
+          delay: (el, i) => 70 * i,
+        })
+        .add({
+          targets: ".ml2",
+          opacity: 0,
+          duration: 1000,
+          easing: "easeOutExpo",
+          delay: 1000,
+        });
+    }
+  }, []);
+
   return (
     <group>
       <mesh
@@ -19,7 +51,13 @@ export default function Chair({
         scale={0.95}
       >
         <Html position={[-1, 1, 0]} transform>
-          <div className="annotation">Chair</div>
+          <div ref={animation} className="ml2">
+            <span class="letter">C</span>
+            <span class="letter">h</span>
+            <span class="letter">a</span>
+            <span class="letter">i</span>
+            <span class="letter">r</span>
+          </div>
         </Html>
         <meshStandardMaterial color={color} />
         <mesh

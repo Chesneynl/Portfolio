@@ -36,12 +36,11 @@ function Loader() {
 
 function App() {
   const { progress } = useProgress();
-  console.log({ progress });
 
   return (
     <>
       <StyledCanvas
-        // frameloop="demand"
+        frameloop="demand"
         id="three-canvas-container"
         shadows
         dpr={[1, 2]}
@@ -89,17 +88,6 @@ function Scene() {
           <OrbitControls />
         </>
       ) : ( */}
-      <Chair
-        color="red"
-        nodes={nodes}
-        materials={materials}
-        position={[-0.91, 0.55, 0.24]}
-        pillowColor={
-          new THREE.MeshLambertMaterial({
-            color: "#fae716",
-          })
-        }
-      />
 
       <Room pages={PAGES} materials={materials} nodes={nodes} />
       <ScrollControls
@@ -108,9 +96,22 @@ function Scene() {
         damping={5} // Friction, higher is faster (default: 4)
         infinite={false} // Can also scroll infinitely (default: false)
       >
+        <Chair
+          color="red"
+          nodes={nodes}
+          materials={materials}
+          position={[-0.91, 0.55, 0.24]}
+          pillowColor={
+            new THREE.MeshLambertMaterial({
+              color: "#fae716",
+            })
+          }
+        />
         <Floor />
 
-        <Camera pages={PAGES} materials={materials} nodes={nodes} />
+        <Scroll>
+          <Camera pages={PAGES} materials={materials} nodes={nodes} />
+        </Scroll>
         {/* <Scroll html style={{ width: "100%" }}>
           <WelcomeMessage
             className={
