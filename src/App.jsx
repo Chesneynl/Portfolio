@@ -47,7 +47,9 @@ function App() {
         dpr={[1, 2]}
         camera={{ fov: 40 }}
       >
-        <Suspense fallback={null}></Suspense>
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </StyledCanvas>
     </>
   );
