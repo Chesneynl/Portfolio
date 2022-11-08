@@ -9,20 +9,6 @@ export default function Chair({
 }) {
   return (
     <group>
-      <mesh>
-        <Html
-          scale={100}
-          rotation={[Math.PI / 2, 0, 0]}
-          position={[180, -350, 50]}
-          transform
-          occlude
-        >
-          <div className="annotation">
-            6.550 $ <span style={{ fontSize: "1.5em" }}>🥲</span>
-          </div>
-        </Html>
-      </mesh>
-
       <mesh
         castShadow
         receiveShadow
@@ -32,6 +18,9 @@ export default function Chair({
         rotation={[0, Math.PI / 2, 0]}
         scale={0.95}
       >
+        <Html position={[-1, 1, 0]} transform>
+          <div className="annotation">Chair</div>
+        </Html>
         <meshStandardMaterial color={color} />
         <mesh
           castShadow
