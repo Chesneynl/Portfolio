@@ -1,12 +1,11 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import {
   useGLTF,
   OrbitControls,
   Center,
   softShadows,
   Environment,
-  PivotControls,
   useScroll,
   Html,
   useProgress,
@@ -26,6 +25,7 @@ import {
 import { angleToRadians } from "../src/utils/angle";
 import Chair from "./components/Chair";
 import * as THREE from "three";
+import Camera from "./components/Camera";
 
 const PAGES = 5;
 
@@ -69,7 +69,7 @@ function Scene() {
   return (
     <>
       <Lights />
-      {focusMesh ? (
+      {/* {focusMesh ? (
         <>
           <Chair
             color="red"
@@ -88,32 +88,46 @@ function Scene() {
           </Html>
           <OrbitControls />
         </>
-      ) : (
-        <ScrollControls
-          pages={PAGES} // Each page takes 100% of the height of the canvas
-          distance={1} // A factor that increases scroll bar travel (default: 1)
-          damping={5} // Friction, higher is faster (default: 4)
-          infinite={false} // Can also scroll infinitely (default: false)
-        >
-          <Floor />
-          <Room pages={PAGES} materials={materials} nodes={nodes} />
-          <Scroll html style={{ width: "100%" }}>
-            <WelcomeMessage
-              className={
-                progress === 100 ? "welcome-message active" : "welcome-message"
-              }
-            >
-              Welcome
-            </WelcomeMessage>
-            <h1 style={{ top: "100vh" }}>Room page</h1>
-            <h1 style={{ top: "200vh" }} onClick={() => setFocusMesh(true)}>
-              Chair page Click to show
-            </h1>
-            <h1 style={{ top: "300vh" }}>Plant page</h1>
-            <h1 style={{ top: "400vh" }}>Donut page</h1>
-          </Scroll>
-        </ScrollControls>
-      )}
+      ) : ( */}
+      <Chair
+        color="red"
+        nodes={nodes}
+        materials={materials}
+        position={[-0.91, 0.55, 0.24]}
+        pillowColor={
+          new THREE.MeshLambertMaterial({
+            color: "#fae716",
+          })
+        }
+      />
+
+      <Room pages={PAGES} materials={materials} nodes={nodes} />
+      <ScrollControls
+        pages={PAGES} // Each page takes 100% of the height of the canvas
+        distance={1} // A factor that increases scroll bar travel (default: 1)
+        damping={5} // Friction, higher is faster (default: 4)
+        infinite={false} // Can also scroll infinitely (default: false)
+      >
+        <Floor />
+
+        <Camera pages={PAGES} materials={materials} nodes={nodes} />
+        {/* <Scroll html style={{ width: "100%" }}>
+          <WelcomeMessage
+            className={
+              progress === 100 ? "welcome-message active" : "welcome-message"
+            }
+          >
+            Welcome
+          </WelcomeMessage>
+          <h1 style={{ top: "100vh" }}>Room page</h1>
+          <h1 style={{ top: "200vh" }} onClick={() => setFocusMesh(true)}>
+            Chair page Click to show
+          </h1>
+          <h1 style={{ top: "300vh" }}>Plant page</h1>
+          <h1 style={{ top: "400vh" }}>Donut page</h1>
+        </Scroll> */}
+      </ScrollControls>
+      {/* )} */}
     </>
   );
 }
