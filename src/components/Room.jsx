@@ -19,7 +19,6 @@ import {
 } from "@react-three/drei";
 import Chair from "./Chair";
 import { angleToRadians } from "../utils/angle";
-import { ModelLabel } from "../App.tsx";
 
 const graciousColors = {
   floor: "#0B9A74",
@@ -48,7 +47,7 @@ const happyHorzionsColors = {
   sideTable: "#c89e54",
 };
 
-export default function Room({ pages, nodes, materials }) {
+export default function Room({ hide, nodes, materials }) {
   const ref = useRef();
   const data = useScroll();
 
@@ -60,6 +59,8 @@ export default function Room({ pages, nodes, materials }) {
   const pillow = new THREE.MeshLambertMaterial({
     color: selectedColors.pillow,
   });
+
+  if (hide) return <></>;
 
   return (
     <group dispose={null}>

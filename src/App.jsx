@@ -21,11 +21,12 @@ import {
   StyledCanvas,
   CloseButton,
   Container,
-} from "./App.tsx";
+} from "./App.styled";
 import { angleToRadians } from "../src/utils/angle";
 import Chair from "./components/Chair";
 import * as THREE from "three";
 import Camera from "./components/Camera";
+import React from "react";
 
 const PAGES = 5;
 
@@ -40,7 +41,7 @@ function App() {
   return (
     <>
       <StyledCanvas
-        frameloop="demand"
+        // frameloop="demand"
         id="three-canvas-container"
         shadows
         dpr={[1, 2]}
@@ -56,41 +57,37 @@ function App() {
 
 function Scene() {
   const [focusMesh, setFocusMesh] = useState(false);
+  const [focusAnimationDone, setFocusAnimationDone] = useState(false);
   const { progress } = useProgress();
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
+  const chairPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
 
-  useThree(({ camera }) => {
-    if (focusMesh) {
-      camera.position.set(2.4, 1, -0.8);
+  useFrame(({ camera }) => {
+    if (focusMesh === "chair" && !focusAnimationDone) {
+      camera.position.lerp(new THREE.Vector3(2, 2, 0), 0.1);
+      camera.lookAt(
+        new THREE.Vector3(
+          chairPosition.x - 0.4,
+          chairPosition.y + 0.3,
+          chairPosition.z + 0.5
+        )
+      );
+      camera.updateProjectionMatrix();
     }
   });
 
   return (
     <>
       <Lights />
-      {/* {focusMesh ? (
-        <>
-          <Chair
-            color="red"
-            nodes={nodes}
-            materials={materials}
-            position={[0, -0.3, -0.35]}
-            pillowColor={
-              new THREE.MeshLambertMaterial({
-                color: "#fae716",
-              })
-            }
-          />
-          <axesHelper args={[2, 2, 2]} />
-          <Html fullscreen>
-            <CloseButton onClick={() => setFocusMesh(false)}>Close</CloseButton>
-          </Html>
-          <OrbitControls />
-        </>
-      ) : ( */}
 
-      <Room pages={PAGES} materials={materials} nodes={nodes} />
+      <Room
+        hide={focusMesh}
+        pages={PAGES}
+        materials={materials}
+        nodes={nodes}
+      />
       <ScrollControls
+        enabled={!focusMesh}
         pages={PAGES} // Each page takes 100% of the height of the canvas
         distance={1} // A factor that increases scroll bar travel (default: 1)
         damping={5} // Friction, higher is faster (default: 4)
@@ -99,6 +96,8 @@ function Scene() {
         <Chair
           color="red"
           nodes={nodes}
+          isFocused={focusMesh === "chair"}
+          setFocusMesh={setFocusMesh}
           materials={materials}
           position={[-0.91, 0.55, 0.24]}
           pillowColor={
@@ -107,28 +106,15 @@ function Scene() {
             })
           }
         />
+
         <Floor />
 
-        <Scroll>
-          <Camera pages={PAGES} materials={materials} nodes={nodes} />
-        </Scroll>
-        {/* <Scroll html style={{ width: "100%" }}>
-          <WelcomeMessage
-            className={
-              progress === 100 ? "welcome-message active" : "welcome-message"
-            }
-          >
-            Welcome
-          </WelcomeMessage>
-          <h1 style={{ top: "100vh" }}>Room page</h1>
-          <h1 style={{ top: "200vh" }} onClick={() => setFocusMesh(true)}>
-            Chair page Click to show
-          </h1>
-          <h1 style={{ top: "300vh" }}>Plant page</h1>
-          <h1 style={{ top: "400vh" }}>Donut page</h1>
-        </Scroll> */}
+        {!focusMesh && (
+          <Scroll>
+            <Camera pages={PAGES} materials={materials} nodes={nodes} />
+          </Scroll>
+        )}
       </ScrollControls>
-      {/* )} */}
     </>
   );
 }

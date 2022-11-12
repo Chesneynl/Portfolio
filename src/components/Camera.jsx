@@ -19,7 +19,6 @@ import {
 } from "@react-three/drei";
 import Chair from "./Chair";
 import { angleToRadians } from "../utils/angle";
-import { ModelLabel } from "../App.tsx";
 
 const graciousColors = {
   floor: "#0B9A74",

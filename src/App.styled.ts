@@ -32,6 +32,32 @@ export const StyledCanvas = styled(Canvas)`
   }
 `;
 
+export const ViewButton = styled.div`
+  cursor: pointer;
+  display: block;
+  font-size: 5px;
+  background: black;
+  border-radius: 20px;
+  text-align: center;
+  padding: 2px 0px;
+  margin-top: 3px;
+  width: 29px;
+
+  &:hover {
+    background: white;
+    color: black;
+  }
+`;
+
+export const ClickToShow = styled.div`
+  opacity: 0;
+  transition: opacity 1s;
+
+  &.active {
+    opacity: 1;
+  }
+`;
+
 export const ModelLabel = styled.div`
   cursor: pointer;
   outline: none;
