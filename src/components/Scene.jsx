@@ -1,5 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useState, useEffect, useRef } from "react";
+import { SketchPicker } from "react-color";
 import {
   useGLTF,
   OrbitControls,
@@ -21,11 +22,14 @@ import {
   StyledCanvas,
   CloseButton,
   Container,
+  Modal,
+  ColorPicker,
 } from "../App.styled";
 import Chair from "./Chair";
 import * as THREE from "three";
 import Camera from "./Camera";
 import React from "react";
+import Pot from "./Pot";
 
 const PAGES = 5;
 
@@ -34,84 +38,85 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>;
 }
 
-function Scene() {
-  return (
-    <StyledCanvas
-      // frameloop="demand"
-      id="three-canvas-container"
-      shadows
-      dpr={[1, 2]}
-      camera={{ fov: 40 }}
-    >
-      <Suspense fallback={null}>
-        <RoomScene />
-      </Suspense>
-    </StyledCanvas>
-  );
-}
-
 function RoomScene() {
-  const [focusMesh, setFocusMesh] = useState(false);
+  const [focusMesh, setFocusMesh] = useState(null);
+  const [selecteColors, setSelecteColors] = useState({
+    chair: "#F7BC5F",
+    chairCushion: "#0B9A74",
+    pot: "#FFE8C2",
+  });
   const [focusAnimationDone, setFocusAnimationDone] = useState(false);
   const { progress } = useProgress();
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
-  const chairPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
 
-  useFrame(({ camera }) => {
-    if (focusMesh === "chair" && !focusAnimationDone) {
-      camera.position.lerp(new THREE.Vector3(2, 2, 0), 0.1);
-      camera.lookAt(
-        new THREE.Vector3(
-          chairPosition.x - 0.4,
-          chairPosition.y + 0.3,
-          chairPosition.z + 0.5
-        )
-      );
-      camera.updateProjectionMatrix();
-    }
-  });
+  const chairPosition = new THREE.Vector3(-0.91, 0.55, 0.24);
 
   return (
     <>
-      <Lights />
-
-      <Room
-        hide={focusMesh}
-        pages={PAGES}
-        materials={materials}
-        nodes={nodes}
-      />
-      <ScrollControls
-        enabled={!focusMesh}
-        pages={PAGES} // Each page takes 100% of the height of the canvas
-        distance={1} // A factor that increases scroll bar travel (default: 1)
-        damping={5} // Friction, higher is faster (default: 4)
-        infinite={false} // Can also scroll infinitely (default: false)
+      <Modal className={focusMesh ? "active" : ""}>
+        <div>
+          <ColorPicker>
+            <span>Chair</span>
+            <SketchPicker
+              color={selecteColors.chair}
+              onChangeComplete={(color) =>
+                setSelecteColors({ ...selecteColors, chair: color.hex })
+              }
+            />
+          </ColorPicker>
+          <ColorPicker>
+            <span>Cushion</span>
+            <SketchPicker
+              color={selecteColors.chairCushion}
+              onChangeComplete={(color) =>
+                setSelecteColors({ ...selecteColors, chairCushion: color.hex })
+              }
+            />
+          </ColorPicker>
+        </div>
+      </Modal>
+      <StyledCanvas
+        // frameloop="demand"
+        id="three-canvas-container"
+        shadows
+        dpr={[1, 2]}
+        camera={{ fov: 40 }}
       >
-        <Chair
-          color="red"
-          nodes={nodes}
-          isFocused={focusMesh === "chair"}
-          setFocusMesh={setFocusMesh}
-          materials={materials}
-          position={[-0.91, 0.55, 0.24]}
-          pillowColor={
-            new THREE.MeshLambertMaterial({
-              color: "#fae716",
-            })
-          }
-        />
+        <Suspense fallback={null}>
+          <Lights />
 
-        <Floor />
+          <Room hide={focusMesh} materials={materials} nodes={nodes} />
+          <ScrollControls
+            pages={PAGES} // Each page takes 100% of the height of the canvas
+            distance={1} // A factor that increases scroll bar travel (default: 1)
+            damping={5} // Friction, higher is faster (default: 4)
+            infinite={false} // Can also scroll infinitely (default: false)
+          >
+            <Chair
+              color={selecteColors.chair}
+              nodes={nodes}
+              setFocusMesh={setFocusMesh}
+              materials={materials}
+              pillowColor={selecteColors.chairCushion}
+            />
 
-        {!focusMesh && (
-          <Scroll>
-            <Camera pages={PAGES} materials={materials} nodes={nodes} />
-          </Scroll>
-        )}
-      </ScrollControls>
+            {/* <Pot
+              color={selecteColors.pot}
+              nodes={nodes}
+              setFocusMesh={setFocusMesh}
+              materials={materials}
+            /> */}
+
+            <Floor />
+
+            <Scroll>
+              <Camera pages={PAGES} materials={materials} nodes={nodes} />
+            </Scroll>
+          </ScrollControls>
+        </Suspense>
+      </StyledCanvas>
     </>
   );
 }
 
-export default Scene;
+export default RoomScene;

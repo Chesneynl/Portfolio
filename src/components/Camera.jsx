@@ -70,11 +70,11 @@ export default function Camera({ pages, nodes, materials }) {
       object: "SceneMoveIn",
     },
     {
-      cameraPosition: new THREE.Vector3(2, 2, 0),
+      cameraPosition: new THREE.Vector3(2, 2, -1),
       cameraLookAt: new THREE.Vector3(
         chairPosition.x - 0.4,
         chairPosition.y + 0.3,
-        chairPosition.z + 0.5
+        chairPosition.z - 0.4
       ),
       object: "chair",
     },

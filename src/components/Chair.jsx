@@ -4,75 +4,41 @@ import {
   PresentationControls,
   useScroll,
 } from "@react-three/drei";
-import { Suspense, useState, useEffect, useRef } from "react";
+import React, { Suspense, useState, useEffect, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React from "react";
+import * as THREE from "three";
 import { ClickToShow, ViewButton } from "../App.styled";
 
 export default function Chair({
   nodes,
   color,
   materials,
-  isFocused,
   setFocusMesh,
   pillowColor,
-  position,
 }) {
   const data = useScroll();
-  const [showButtons, setShowButtons] = useState(false);
 
   useFrame(({ camera }) => {
     const scrollAmount = data.scroll.current;
     if (scrollAmount > 0.32 && scrollAmount < 0.55) {
-      setShowButtons(true);
+      setFocusMesh("pot");
     } else {
-      setShowButtons(false);
+      setFocusMesh(null);
     }
   });
 
   return (
     <>
-      <OrbitControls
-        enabled={isFocused} // the controls can be disabled by setting this to false
-      />
       <group>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Chair.geometry}
           material={materials.Material}
-          position={position}
+          position={[-0.91, 0.55, 0.24]}
           rotation={[0, Math.PI / 2, 0]}
           scale={0.95}
         >
-          <axesHelper />
-          {!isFocused ? (
-            <Html position={[-1, 1, 0]} transform>
-              <ClickToShow className={showButtons ? "active" : ""}>
-                Chair
-                <ViewButton
-                  onClick={() => {
-                    setFocusMesh("chair");
-                  }}
-                >
-                  View
-                </ViewButton>
-              </ClickToShow>
-            </Html>
-          ) : (
-            <Html position={[-1, 1, 0]} transform>
-              <ClickToShow className={"active"}>
-                <ViewButton
-                  onClick={() => {
-                    setFocusMesh(null);
-                  }}
-                >
-                  Close
-                </ViewButton>
-              </ClickToShow>
-            </Html>
-          )}
-
           <meshStandardMaterial color={color} />
           <mesh
             castShadow
@@ -96,7 +62,11 @@ export default function Chair({
             castShadow
             receiveShadow
             geometry={nodes.Pillow002.geometry}
-            material={pillowColor}
+            material={
+              new THREE.MeshLambertMaterial({
+                color: pillowColor,
+              })
+            }
             position={[-0.15, 0.47, 0.19]}
             rotation={[-2.67, -1.25, 2.51]}
           />

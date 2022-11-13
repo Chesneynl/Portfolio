@@ -32,6 +32,46 @@ export const StyledCanvas = styled(Canvas)`
   }
 `;
 
+export const ColorPicker = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    display: block;
+  }
+`;
+
+export const Modal = styled.div`
+  position: fixed;
+  box-sizing: border-box;
+  background: white;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 600px;
+  right: -600px;
+  transition: right 0.2s;
+  z-index: 100;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > div {
+    width: 100%;
+  }
+
+  &.active {
+    right: 0;
+  }
+`;
+
 export const ViewButton = styled.div`
   cursor: pointer;
   display: block;

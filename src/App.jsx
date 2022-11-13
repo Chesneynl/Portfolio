@@ -21,6 +21,7 @@ import {
   StyledCanvas,
   CloseButton,
   Container,
+  Modal,
 } from "./App.styled";
 import { angleToRadians } from "../src/utils/angle";
 import Chair from "./components/Chair";
@@ -39,11 +40,7 @@ function Loader() {
 function App() {
   const { progress } = useProgress();
 
-  return (
-    <>
-      <Scene />
-    </>
-  );
+  return <Scene />;
 }
 
 export default App;

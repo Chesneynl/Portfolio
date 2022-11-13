@@ -34,19 +34,6 @@ const graciousColors = {
   sideTable: "#c89e54",
 };
 
-const happyHorzionsColors = {
-  floor: "#fae716",
-  walls: "#050634",
-  couch: "#abb8c3",
-  chair: "#abb8c3",
-  rug: "#F8CD88",
-  pillow: "#fae716",
-  plate: "#FFE8C2",
-  pot: "#FFE8C2",
-  lamp: "#fae716",
-  sideTable: "#c89e54",
-};
-
 export default function Room({ hide, nodes, materials }) {
   const ref = useRef();
   const data = useScroll();
@@ -1442,25 +1429,7 @@ export default function Room({ hide, nodes, materials }) {
           <meshStandardMaterial color={selectedColors.sideTable} />
         </mesh>
       </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Pot.geometry}
-        material={nodes.Pot.material}
-        position={[-0.87, 1.32, -0.95]}
-        scale={[0.11, 0.09, 0.11]}
-      >
-        <meshStandardMaterial color={selectedColors.pot} />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube020.geometry}
-          material={materials["Material.008"]}
-          position={[0.02, 0.51, 0]}
-          rotation={[Math.PI, -1.4, Math.PI]}
-          scale={[0.22, 0.27, 0.32]}
-        />
-      </mesh>
+
       <mesh
         castShadow
         receiveShadow
@@ -1488,5 +1457,3 @@ export default function Room({ hide, nodes, materials }) {
     </group>
   );
 }
-
-useGLTF.preload("/models/Room-glb.gltf");
