@@ -1,34 +1,8 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useState, useEffect, useRef } from "react";
-import {
-  useGLTF,
-  OrbitControls,
-  Center,
-  softShadows,
-  Environment,
-  useScroll,
-  Html,
-  useProgress,
-  ScrollControls,
-  PresentationControls,
-  Scroll,
-} from "@react-three/drei";
-import Room from "./components/Room";
-import Lights from "./components/Lights";
-import Floor from "./components/Floor";
-import {
-  WelcomeMessage,
-  StyledCanvas,
-  CloseButton,
-  Container,
-  Modal,
-} from "./App.styled";
-import { angleToRadians } from "../src/utils/angle";
-import Chair from "./components/Chair";
-import * as THREE from "three";
-import Camera from "./components/Camera";
+import { Html, useProgress } from "@react-three/drei";
 import React from "react";
-import Scene from "./components/Scene";
+import RoomScene from "./components/RoomScene";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import RayMarcher from "./components/RayMarcher";
 
 const PAGES = 5;
 
@@ -40,7 +14,14 @@ function Loader() {
 function App() {
   const { progress } = useProgress();
 
-  return <Scene />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<RoomScene />} />
+        <Route path="raymarcher" element={<RayMarcher />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
