@@ -24,7 +24,7 @@ const graciousColors = {
   floor: "#946B53",
   donut: "#0B9A74",
   walls: "#cb997e",
-  couch: "#C1C3C4",
+  couch: "#D0C6C6",
   chair: "#BABABA",
   rug: "#cb997e",
   pillow: "#e9edc9",
