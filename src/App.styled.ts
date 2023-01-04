@@ -22,7 +22,7 @@ export const WelcomeMessage = styled.div`
 `;
 
 export const StyledCanvas = styled(Canvas)`
-  background-color: #0f544e;
+  background-color: #ede0d4;
   height: 100vh !important;
   color: white;
   overflow: hidden;

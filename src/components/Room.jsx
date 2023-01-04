@@ -21,17 +21,16 @@ import Chair from "./Chair";
 import { angleToRadians } from "../utils/angle";
 
 const graciousColors = {
-  floor: "#0B9A74",
+  floor: "#946B53",
   donut: "#0B9A74",
-  walls: "#1e3064",
-  couch: "#F7BC5F",
-  chair: "#F7BC5F",
-  rug: "#F8CD88",
-  pillow: "#0B9A74",
+  walls: "#cb997e",
+  couch: "#C1C3C4",
+  chair: "#BABABA",
+  rug: "#cb997e",
+  pillow: "#e9edc9",
   plate: "#FFE8C2",
   pot: "#FFE8C2",
-  lamp: "#F7BC5F",
-  sideTable: "#c89e54",
+  sideTable: "#d4a373",
 };
 
 export default function Room({ nodes, materials }) {

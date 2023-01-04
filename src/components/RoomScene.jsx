@@ -42,8 +42,8 @@ function Loader() {
 function RoomScene() {
   const [focusMesh, setFocusMesh] = useState(null);
   const [selecteColors, setSelecteColors] = useState({
-    chair: "#F7BC5F",
-    chairCushion: "#0B9A74",
+    chair: "#C1C3C4",
+    chairCushion: "#e9edc9",
     pot: "#A59476",
     plant: "#299359",
     donutGlaze: "#F97AAF",
