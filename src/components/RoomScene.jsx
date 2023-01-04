@@ -22,14 +22,15 @@ import {
   StyledCanvas,
   CloseButton,
   Container,
-  Modal,
   ColorPicker,
 } from "../App.styled";
 import Chair from "./Chair";
 import * as THREE from "three";
 import Camera from "./Camera";
 import React from "react";
-import Pot from "./Pot";
+import Plant from "./Plant";
+import Donut from "./Donut";
+import Modal from "./Modal";
 
 const PAGES = 5;
 
@@ -43,7 +44,11 @@ function RoomScene() {
   const [selecteColors, setSelecteColors] = useState({
     chair: "#F7BC5F",
     chairCushion: "#0B9A74",
-    pot: "#FFE8C2",
+    pot: "#A59476",
+    plant: "#299359",
+    donutGlaze: "#F97AAF",
+    sprinkles: "#78D7B1",
+    donutColor: "#E5BF82",
   });
   const [focusAnimationDone, setFocusAnimationDone] = useState(false);
   const { progress } = useProgress();
@@ -51,28 +56,11 @@ function RoomScene() {
 
   return (
     <>
-      <Modal className={focusMesh ? "active" : ""}>
-        <div>
-          <ColorPicker>
-            <span>Chair</span>
-            <SketchPicker
-              color={selecteColors.chair}
-              onChange={(color) =>
-                setSelecteColors({ ...selecteColors, chair: color.hex })
-              }
-            />
-          </ColorPicker>
-          <ColorPicker>
-            <span>Cushion</span>
-            <SketchPicker
-              color={selecteColors.chairCushion}
-              onChange={(color) =>
-                setSelecteColors({ ...selecteColors, chairCushion: color.hex })
-              }
-            />
-          </ColorPicker>
-        </div>
-      </Modal>
+      <Modal
+        focusMesh={focusMesh}
+        selecteColors={selecteColors}
+        setSelecteColors={setSelecteColors}
+      />
       <StyledCanvas
         // frameloop="demand"
         id="three-canvas-container"
@@ -83,7 +71,7 @@ function RoomScene() {
         <Suspense fallback={null}>
           <Lights />
 
-          <Room hide={focusMesh} materials={materials} nodes={nodes} />
+          <Room materials={materials} nodes={nodes} />
           <ScrollControls
             pages={PAGES} // Each page takes 100% of the height of the canvas
             distance={1} // A factor that increases scroll bar travel (default: 1)
@@ -98,12 +86,21 @@ function RoomScene() {
               pillowColor={selecteColors.chairCushion}
             />
 
-            {/* <Pot
-              color={selecteColors.pot}
+            <Plant
+              potColor={selecteColors.pot}
+              plantColor={selecteColors.plant}
               nodes={nodes}
               setFocusMesh={setFocusMesh}
               materials={materials}
-            /> */}
+            />
+
+            <Donut
+              sprinkleColor={selecteColors.sprinkles}
+              nodes={nodes}
+              color={selecteColors.donutColor}
+              donutColor={selecteColors.donutGlaze}
+              setFocusMesh={setFocusMesh}
+            />
 
             <Floor />
 

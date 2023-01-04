@@ -21,7 +21,7 @@ export default function Chair({
   useFrame(({ camera }) => {
     const scrollAmount = data.scroll.current;
     if (scrollAmount > 0.32 && scrollAmount < 0.55) {
-      setFocusMesh("pot");
+      setFocusMesh("chair");
     } else {
       setFocusMesh(null);
     }
@@ -34,7 +34,6 @@ export default function Chair({
           castShadow
           receiveShadow
           geometry={nodes.Chair.geometry}
-          material={materials.Material}
           position={[-0.91, 0.55, 0.24]}
           rotation={[0, Math.PI / 2, 0]}
           scale={0.95}
@@ -51,7 +50,6 @@ export default function Chair({
             castShadow
             receiveShadow
             geometry={nodes.Cushion002.geometry}
-            material={materials.Material}
             position={[-0.39, 0.59, -0.08]}
             rotation={[1.15, 0, 0]}
             scale={[0.35, 0.13, 0.32]}

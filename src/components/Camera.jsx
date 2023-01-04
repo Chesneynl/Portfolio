@@ -79,19 +79,19 @@ export default function Camera({ pages, nodes, materials }) {
       object: "chair",
     },
     {
-      cameraPosition: new THREE.Vector3(0, 2, 0.4),
+      cameraPosition: new THREE.Vector3(0, 1.8, 0.4),
       cameraLookAt: new THREE.Vector3(
-        potPosition.x,
-        potPosition.y + 0.05,
-        potPosition.z + 0.1
+        potPosition.x - 0.4,
+        potPosition.y - 0.3,
+        potPosition.z - 2
       ),
       object: "plant",
     },
     {
       cameraPosition: new THREE.Vector3(0.5, 1.2, 1),
       cameraLookAt: new THREE.Vector3(
-        donutPosition.x,
-        donutPosition.y,
+        donutPosition.x + 0.2,
+        donutPosition.y - 0.1,
         donutPosition.z
       ),
       object: "donut",

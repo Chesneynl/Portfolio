@@ -1253,11 +1253,6 @@ three-mesh-bvh@^0.5.7:
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.17.tgz#1f9bdcd7992e86dc3665664c1fe5cedd7be4bd9f"
   integrity sha512-0iyqZe0Op6tH7nqVI4L2Ae1tACiYliJvx0cFvehrVzzfZRW8p4c9GYnqGPPN5+x7Q8L5WjJC8kgoA8Z+/+1oAQ==
 
-three-raymarcher@^0.2.21:
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/three-raymarcher/-/three-raymarcher-0.2.21.tgz#796cfb1f5395850df45c8b0c5343532d0cb79b9d"
-  integrity sha512-in4TU0s9K6RueLMQbLa5TOcsCjDBjy5Ort2gH+Xedjx//crOTCUp1AwHuiDMqnTEIbLSOQQ+/qV5sMR3TNsgOA==
-
 three-stdlib@^2.8.9:
   version "2.17.3"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.17.3.tgz#f92d322810d81379a51344b21e0a2e941b84cb8f"

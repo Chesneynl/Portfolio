@@ -18,8 +18,7 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^6.4.3",
     "styled-components": "^5.3.6",
-    "three": "0.144.0",
-    "three-raymarcher": "^0.2.21"
+    "three": "0.144.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",

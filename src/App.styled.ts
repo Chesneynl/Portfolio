@@ -47,9 +47,10 @@ export const ColorPicker = styled.div`
   }
 `;
 
-export const Modal = styled.div`
+export const StyledModal = styled.div`
   position: fixed;
   box-sizing: border-box;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   background: white;
   right: 0;
   top: 0;
