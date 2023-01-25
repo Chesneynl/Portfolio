@@ -13,13 +13,7 @@ function Loader() {
 function App() {
   const { progress } = useProgress();
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<RoomScene />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RoomScene />;
 }
 
 export default App;
