@@ -2,7 +2,6 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 function CubeShader() {
-  console.log("hallo");
   return (
     <>
       <Helmet>

@@ -169,7 +169,6 @@ scene.add(bg);
 
 composer = null;
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
 onWindowResize();
 if ("ontouchstart" in window) {
   document.addEventListener("touchmove", move);

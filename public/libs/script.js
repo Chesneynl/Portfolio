@@ -52,7 +52,9 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 100;
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -169,7 +171,6 @@ scene.add(bg);
 
 composer = null;
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
 onWindowResize();
 if ("ontouchstart" in window) {
   document.addEventListener("touchmove", move);
