@@ -20,6 +20,7 @@ function CubeShader() {
         <script type="text/javascript" src="../libs/three-pp.js"></script>
         <script type="text/javascript" src="../libs/script.js"></script>
       </Helmet>
+      <div id="cube-shader-container" />
     </>
   );
 }

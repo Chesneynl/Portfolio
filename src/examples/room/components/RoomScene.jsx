@@ -1,31 +1,16 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useState, useEffect, useRef } from "react";
-import { SketchPicker } from "react-color";
+import { Suspense, useState, useTransition } from "react";
 import {
   useGLTF,
-  OrbitControls,
-  Center,
-  softShadows,
-  Environment,
-  useScroll,
   Html,
   useProgress,
   ScrollControls,
-  PresentationControls,
   Scroll,
 } from "@react-three/drei";
 import Room from "./Room";
 import Lights from "./Lights";
 import Floor from "./Floor";
-import {
-  WelcomeMessage,
-  StyledCanvas,
-  CloseButton,
-  Container,
-  ColorPicker,
-} from "../App.styled";
+import { StyledCanvas } from "../App.styled";
 import Chair from "./Chair";
-import * as THREE from "three";
 import Camera from "./Camera";
 import React from "react";
 import Plant from "./Plant";
@@ -40,6 +25,7 @@ function Loader() {
 }
 
 function RoomScene() {
+  const [isPending, startTransition] = useTransition();
   const [focusMesh, setFocusMesh] = useState(null);
   const [selecteColors, setSelecteColors] = useState({
     chair: "#D5A3A3",
@@ -50,25 +36,27 @@ function RoomScene() {
     sprinkles: "#78D7B1",
     donutColor: "#E5BF82",
   });
-  const [focusAnimationDone, setFocusAnimationDone] = useState(false);
-  const { progress } = useProgress();
   const { materials, nodes } = useGLTF("/models/Room-glb.gltf");
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <>
-      <Modal
-        focusMesh={focusMesh}
-        selecteColors={selecteColors}
-        setSelecteColors={setSelecteColors}
-      />
-      <StyledCanvas
-        // frameloop="demand"
-        id="three-canvas-container"
-        shadows
-        dpr={[1, 2]}
-        camera={{ fov: 40 }}
-      >
-        <Suspense fallback={null}>
+      <Suspense fallback={null}>
+        <Modal
+          focusMesh={focusMesh}
+          selecteColors={selecteColors}
+          setSelecteColors={setSelecteColors}
+        />
+        <StyledCanvas
+          // frameloop="demand"
+          id="three-canvas-container"
+          shadows
+          dpr={[1, 2]}
+          camera={{ fov: 40 }}
+        >
           <Lights />
 
           <Room materials={materials} nodes={nodes} />
@@ -108,8 +96,8 @@ function RoomScene() {
               <Camera pages={PAGES} materials={materials} nodes={nodes} />
             </Scroll>
           </ScrollControls>
-        </Suspense>
-      </StyledCanvas>
+        </StyledCanvas>
+      </Suspense>
     </>
   );
 }
