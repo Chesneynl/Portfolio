@@ -55,6 +55,7 @@ camera.position.z = 100;
 var renderer = new THREE.WebGLRenderer({
   antialias: true,
 });
+renderer.physicallyCorrectLights = true;
 renderer.setSize(window.innerWidth, window.innerHeight);
 var cubeShaderContainer = document.getElementById("cube-shader-container");
 // document.body.appendChild(renderer.domElement);

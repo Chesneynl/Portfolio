@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-function CubeShader() {
+function RayMarching() {
   return (
     <>
       <Helmet>
@@ -20,12 +20,12 @@ function CubeShader() {
         <script type="text/javascript" src="../libs/three-pp.js"></script>
         <script
           type="text/javascript"
-          src="../src/examples/cubeShader/script.js"
+          src="../src/examples/rayMarching/script.js"
         ></script>
       </Helmet>
-      <div id="cube-shader-container" />
+      <div id="ray-marching-container" />
     </>
   );
 }
 
-export default CubeShader;
+export default RayMarching;
