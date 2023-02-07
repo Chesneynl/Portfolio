@@ -52,7 +52,7 @@ var renderer = new THREE.WebGLRenderer({
 });
 renderer.physicallyCorrectLights = true;
 renderer.setSize(window.innerWidth, window.innerHeight);
-var cubeShaderContainer = document.getElementById("cube-shader-container");
+var cubeShaderContainer = document.getElementById("wave-container");
 // document.body.appendChild(renderer.domElement);
 cubeShaderContainer.appendChild(renderer.domElement);
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
