@@ -6,7 +6,7 @@ function Menu() {
   return (
     <MenuContainer>
       <Link to="/">Room</Link>
-      <Link to="/cube-shader">Cube Shader</Link>
+      {/* <Link to="/cube">Cube Shader</Link> */}
       <Link to="/wave">Wave</Link>
     </MenuContainer>
   );

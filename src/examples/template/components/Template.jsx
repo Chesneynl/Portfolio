@@ -50,7 +50,7 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>;
 }
 
-function Wave() {
+function Template() {
   const mesh = useRef();
   const uniforms = useMemo(
     () => ({
@@ -78,4 +78,4 @@ function Wave() {
   );
 }
 
-export default Wave;
+export default Template;

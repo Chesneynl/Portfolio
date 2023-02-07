@@ -1,7 +1,6 @@
 import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CubeShader from "./examples/cubeShader/CubeShader.jsx";
 import RoomScene from "./examples/room/RoomScene.jsx";
 import Menu from "./menu/Menu.jsx";
 import RayMarching from "./examples/rayMarching/RayMarching.jsx";
@@ -18,7 +17,6 @@ function App() {
         <Menu />
         <Routes>
           <Route index element={<RoomScene />} />
-          <Route path="cube-shader" element={<CubeShader />} />
           <Route path="wave" element={<WaveScene />} />
           <Route path="shimano" element={<Shimano />} />
           <Route path="ray-marching" element={<RayMarching />} />
