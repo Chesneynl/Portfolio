@@ -28,9 +28,9 @@ export default (props) => {
     p5.background(0, 10);
     for (let i = 0; i < num; i++) {
       let p = particles[i];
-      let red = p5.map(p.x, 0, p5.windowWidth, 0, 255); // map the x-position to a range of red values
-      let green = p5.map(p.x, 0, p5.windowWidth, 255, 0); // map the x-position to a range of green values
-      let blue = p5.map(p.x, 0, p5.windowWidth, 0, 255); // map the x-position to a range of blue values
+      let red = p5.map(p.x, 0, 255, 0, 255); // map the x-position to a range of red values
+      let green = p5.map(p.x, 0, p5.width, 255, 0); // map the x-position to a range of green values
+      let blue = p5.map(p.y, 0, p5.width, 0, 255); // map the x-position to a range of blue values
       p5.stroke(red, green, blue);
       p5.point(p.x, p.y);
       let n = p5.noise(
