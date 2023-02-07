@@ -23,6 +23,7 @@ export default (props) => {
     // And comment out the background() line in draw
     p5.stroke(255, 50);
     p5.clear();
+    p5.background(0);
   };
 
   const draw = (p5) => {
