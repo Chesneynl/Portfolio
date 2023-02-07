@@ -18,14 +18,14 @@ export default (props) => {
       particles.push(v1);
     }
 
+    // p5.stroke(255);
     // For a cool effect try uncommenting this line
     // And comment out the background() line in draw
-
+    p5.stroke(255, 50);
     p5.clear();
   };
 
   const draw = (p5) => {
-    p5.background(0, 10);
     for (let i = 0; i < num; i++) {
       let p = particles[i];
       let red = p5.map(p.x, 0, 255, 0, 255); // map the x-position to a range of red values
