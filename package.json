@@ -12,6 +12,9 @@
     "@react-three/fiber": "8.8.7",
     "@types/styled-components": "^5.1.26",
     "@types/three": "0.144.0",
+    "babel-plugin-macros": "^3.1.0",
+    "browserify": "^17.0.0",
+    "glsl-noise": "^0.0.0",
     "gsap": "^3.9.1",
     "react": "18.2.0",
     "react-color": "^2.19.3",
@@ -19,7 +22,8 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.4.3",
     "styled-components": "^5.3.6",
-    "three": "0.144.0"
+    "three": "0.144.0",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",

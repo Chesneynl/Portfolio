@@ -7,6 +7,7 @@ function Menu() {
     <MenuContainer>
       <Link to="/room">Room</Link>
       <Link to="/cube-shader">Cube Shader</Link>
+      <Link to="/wave">Wave</Link>
     </MenuContainer>
   );
 }

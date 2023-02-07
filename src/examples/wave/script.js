@@ -1,40 +1,39 @@
 var vshader = `
   uniform float u_time;
-  varying vec3 vPosition;
+  varying vec3 pos;
+  varying vec4 vPos;
+  float ampl = 4.0;
 
-
- // create a noise functions that randomly changes the z position of the vertices
-  float cnoise(vec3 p) {
-    float c = 0.0;
-    for (int i = 0; i < 3; i++) {
-      c += sin(p.x + p.y + p.z + u_time * 0.1);
-      p *= 2.0;
-    }
-    return c;
-  }
-
-  
-  
   void main() {
-    vPosition = position;
-    vec3 newPosition = position + normal * cnoise(position + u_time);
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-    
+    vec4 result;
+    pos = position;
+    result = vec4( position.x, ampl*sin(position.z/4.0 + u_time) + position.y, position.z, 1.0);
+    vPos = result;
+    gl_Position = projectionMatrix * modelViewMatrix * result;
   }
 `;
 var fshader = `
+
+  varying vec3 pos;
+  varying vec4 vPos;
   uniform float u_time;
-  varying vec3 vPosition;
-
-  vec3 color_1 = vec3(1.0, 0.0, 0.0);
-  vec3 color_2 = vec3(1.0, 0.0, 1.0);
-
+  uniform vec3 u_color_a;
 
   void main() {
-    if (vPosition.z > 1.0) { 
-      gl_FragColor = vec4(mix(color_1, color_2, sin(u_time * 0.1)), 1.0);
-    } else {
-      gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+    vec3 color = vec3(1.0, 1.0, 1.0);
+    float normalY = (vPos.y + 6.0) / 11.0;
+    float normalX = (vPos.x + 12.0) / 12.0;
+    float normalZ = (vPos.z + 12.0) / 12.0;
+
+    float colorX = 0.8 * normalY;
+    float colorY = sin( normalY + u_time) * normalY;
+    float colorZ = cos((normalZ) * normalY + u_time) * sin(u_time) * normalY;
+
+
+    if (vPos.x == 0.0) {
+      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+    }  else {
+      gl_FragColor = vec4( vec3(colorX, colorY, colorZ) , 1.0);
     }
   }
 `;
@@ -64,8 +63,12 @@ var clock = new THREE.Clock();
 var ambient = new THREE.HemisphereLight(0x444444, 0x111111, 1);
 var light = new THREE.DirectionalLight(0xcccccc, 0.8);
 light.position.set(0, 6, 2);
+scene.background = new THREE.Color(0xb5faea);
 scene.add(ambient);
 scene.add(light);
+
+// const axesHelper = new THREE.AxesHelper(30);
+// scene.add(axesHelper);
 
 // Uniforms
 var uniforms = THREE.UniformsUtils.merge([
@@ -80,7 +83,7 @@ uniforms.u_color_a = { value: new THREE.Color(0xffff00) };
 uniforms.u_color_b = { value: new THREE.Color(0xf0ffff) };
 
 // Objects
-var geometry = new THREE.PlaneBufferGeometry(500, 500, 1000);
+var geometry = new THREE.BoxGeometry(30, 4, 30, 30, 4, 30);
 
 var material = new THREE.ShaderMaterial({
   uniforms: uniforms,
@@ -89,9 +92,13 @@ var material = new THREE.ShaderMaterial({
   lights: true,
   wireframe: false,
 });
+camera.position.z = 30;
+camera.position.x = -50;
+camera.position.y = 20;
+camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 var ball = new THREE.Mesh(geometry, material);
-ball.position.z = -35;
+
 scene.add(ball);
 
 onWindowResize();
