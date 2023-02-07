@@ -1,57 +1,12 @@
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  useGLTF,
-  OrbitControls,
-  Center,
-  softShadows,
-  Environment,
-  PresentationControls,
-  Html,
-  useScroll,
-} from "@react-three/drei";
-import Chair from "./Chair";
-import { angleToRadians } from "../utils/angle";
+import { useFrame } from "@react-three/fiber";
+import { useScroll } from "@react-three/drei";
 
-const graciousColors = {
-  floor: "#0B9A74",
-  donut: "#0B9A74",
-  walls: "#1e3064",
-  couch: "#F7BC5F",
-  chair: "#F7BC5F",
-  rug: "#F8CD88",
-  pillow: "#0B9A74",
-  plate: "#FFE8C2",
-  pot: "#FFE8C2",
-  lamp: "#F7BC5F",
-  sideTable: "#c89e54",
-};
-
-const happyHorzionsColors = {
-  floor: "#fae716",
-  walls: "#050634",
-  couch: "#abb8c3",
-  chair: "#abb8c3",
-  rug: "#F8CD88",
-  pillow: "#fae716",
-  plate: "#FFE8C2",
-  pot: "#FFE8C2",
-  lamp: "#fae716",
-  sideTable: "#c89e54",
-};
-
-export default function Camera({ pages, nodes, materials }) {
+export default function Camera({ pages }) {
   const ref = useRef();
   const data = useScroll();
 
-  const [selectedColors, setSelectedColors] = useState(graciousColors);
   const [animationPercentage, setAnimationPercentage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 

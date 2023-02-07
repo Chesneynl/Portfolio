@@ -1,24 +1,6 @@
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  useGLTF,
-  OrbitControls,
-  Center,
-  softShadows,
-  Environment,
-  PresentationControls,
-  Html,
-  useScroll,
-} from "@react-three/drei";
-import Chair from "./Chair";
-import { angleToRadians } from "../utils/angle";
+import { useScroll } from "@react-three/drei";
 
 const graciousColors = {
   floor: "#946B53",

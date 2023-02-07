@@ -1,5 +1,0 @@
-{
-    "plugins": ["babel-plugin-glsl", {
-      "extensions": [".glsl", ".vert", ".frag"]
-    }]
-  }

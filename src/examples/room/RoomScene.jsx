@@ -6,16 +6,16 @@ import {
   ScrollControls,
   Scroll,
 } from "@react-three/drei";
-import Room from "./Room";
-import Lights from "./Lights";
-import Floor from "./Floor";
-import { StyledCanvas } from "../App.styled";
-import Chair from "./Chair";
-import Camera from "./Camera";
+import Room from "./components/Room";
+import Lights from "./components/Lights";
+import Floor from "./components/Floor";
+import { StyledCanvas } from "./App.styled";
+import Chair from "./components/Chair";
+import Camera from "./components/Camera";
 import React from "react";
-import Plant from "./Plant";
-import Donut from "./Donut";
-import Modal from "./Modal";
+import Plant from "./components/Plant";
+import Donut from "./components/Donut";
+import Modal from "./components/Modal";
 
 const PAGES = 5;
 

@@ -5,7 +5,7 @@ import { MenuContainer } from "./Menu.styled";
 function Menu() {
   return (
     <MenuContainer>
-      <Link to="/room">Room</Link>
+      <Link to="/">Room</Link>
       <Link to="/cube-shader">Cube Shader</Link>
       <Link to="/wave">Wave</Link>
     </MenuContainer>
