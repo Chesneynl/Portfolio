@@ -9,6 +9,8 @@ import Shimano from "./examples/shimano/components/Shimano.jsx";
 import WaveScene from "./examples/wave/WaveScene.jsx";
 import FlowField from "./examples/flowField/FlowField.jsx";
 import PixelPaint from "./examples/pixelPaint/PixelPaint.jsx";
+import VoronoiDiagram from "./examples/voronoi/VoronoiDiagram.jsx";
+import Perlin from "./examples/perlin/Perlin.jsx";
 
 const PAGES = 5;
 
@@ -23,6 +25,8 @@ function App() {
           <Route path="flow-field" element={<FlowField />} />
           <Route path="pixel-paint" element={<PixelPaint />} />
           <Route path="shimano" element={<Shimano />} />
+          <Route path="voronoi" element={<VoronoiDiagram />} />
+          <Route path="perlin" element={<Perlin />} />
           <Route path="ray-marching" element={<RayMarching />} />
           <Route path="ray-marching-2" element={<RayMarching2 />} />
         </Routes>
