@@ -8,6 +8,7 @@ import RayMarching2 from "./examples/rayMarching-2/RayMarching2.jsx";
 import Shimano from "./examples/shimano/components/Shimano.jsx";
 import WaveScene from "./examples/wave/WaveScene.jsx";
 import FlowField from "./examples/flowField/FlowField.jsx";
+import PixelPaint from "./examples/pixelPaint/PixelPaint.jsx";
 
 const PAGES = 5;
 
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<RoomScene />} />
           <Route path="wave" element={<WaveScene />} />
           <Route path="flow-field" element={<FlowField />} />
+          <Route path="pixel-paint" element={<PixelPaint />} />
           <Route path="shimano" element={<Shimano />} />
           <Route path="ray-marching" element={<RayMarching />} />
           <Route path="ray-marching-2" element={<RayMarching2 />} />

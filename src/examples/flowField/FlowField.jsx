@@ -42,7 +42,10 @@ export default (props) => {
       let a = p5.TAU * n;
       p.x += p5.cos(a);
       p.y += p5.sin(a);
-      if (!onScreen(p, p5) && p5.frameCount < 1000) {
+
+      const stopFrameCount = p5.width < 780 ? 500 : 1000;
+
+      if (!onScreen(p, p5) && p5.frameCount < stopFrameCount) {
         p.x = p5.random(p5.width);
         p.y = p5.random(p5.height);
       }
@@ -55,6 +58,7 @@ export default (props) => {
 
   const windowResized = (p5) => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+    p5.background(0);
   };
 
   const onScreen = (v, p5) => {
