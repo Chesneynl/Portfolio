@@ -11,6 +11,7 @@ import FlowField from "./examples/flowField/FlowField.jsx";
 import PixelPaint from "./examples/pixelPaint/PixelPaint.jsx";
 import VoronoiDiagram from "./examples/voronoi/VoronoiDiagram.jsx";
 import Perlin from "./examples/perlin/Perlin.jsx";
+import Cardioid from "examples/cardioid/Cardioid.jsx";
 
 const PAGES = 5;
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="shimano" element={<Shimano />} />
           <Route path="voronoi" element={<VoronoiDiagram />} />
           <Route path="perlin" element={<Perlin />} />
+          <Route path="cardioid" element={<Cardioid />} />
           <Route path="ray-marching" element={<RayMarching />} />
           <Route path="ray-marching-2" element={<RayMarching2 />} />
         </Routes>
