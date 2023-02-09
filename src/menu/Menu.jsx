@@ -5,8 +5,8 @@ import { MenuContainer } from "./Menu.styled";
 function Menu() {
   return (
     <MenuContainer>
-      <Link to="/">Room</Link>
-      <Link to="/flow-field">Flow Field</Link>
+      <Link to="/room">Room</Link>
+      <Link to="/">Flow Field</Link>
       <Link to="/pixel-paint">Pixel Paint</Link>
       <Link to="/perlin">Perlin</Link>
       {/* <Link to="/cardioid">Cardioid</Link> */}

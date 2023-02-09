@@ -11,7 +11,7 @@ import FlowField from "./examples/flowField/FlowField.jsx";
 import PixelPaint from "./examples/pixelPaint/PixelPaint.jsx";
 import VoronoiDiagram from "./examples/voronoi/VoronoiDiagram.jsx";
 import Perlin from "./examples/perlin/Perlin.jsx";
-import Cardioid from "examples/cardioid/Cardioid.jsx";
+import Cardioid from "./examples/cardioid/Cardioid.jsx";
 
 const PAGES = 5;
 
@@ -21,9 +21,9 @@ function App() {
       <BrowserRouter>
         <Menu />
         <Routes>
-          <Route index element={<RoomScene />} />
+          <Route index element={<FlowField />} />
+          <Route path="room" element={<RoomScene />} />
           <Route path="wave" element={<WaveScene />} />
-          <Route path="flow-field" element={<FlowField />} />
           <Route path="pixel-paint" element={<PixelPaint />} />
           <Route path="shimano" element={<Shimano />} />
           <Route path="voronoi" element={<VoronoiDiagram />} />
