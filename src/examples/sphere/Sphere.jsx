@@ -36,11 +36,17 @@ export default (props) => {
 
     select = p5.createSelect();
     select.style("display", "block");
-    select.option("Sphere Lissajous");
-    select.option("Bumpy Sphere");
     select.option("Normal Sphere");
     select.option("Spherical Spiral");
-    select.selected("Sphere Lissajous");
+    select.option("Sphere Lissajous");
+    select.option("Bumpy Sphere");
+    select.option("Explosion");
+    select.option("Hour Glass");
+    select.option("Flower Field");
+    select.option("Bullet");
+    select.option("Universe");
+    // select.selected("Normal Sphere");
+    select.selected("Universe");
     select.parent(sliders);
 
     thetaMax = p5.createDiv();
@@ -105,8 +111,6 @@ export default (props) => {
         thetaMaxSlider.show();
         phiMax.show();
         phiMaxSlider.show();
-        // density.show();
-        // densitySlider.show();
         bumpySphere(p5);
         break;
       case "Spherical Spiral":
@@ -116,6 +120,46 @@ export default (props) => {
         density.show();
         densitySlider.show();
         sphericalSpiral(p5);
+        break;
+      case "Bullet":
+        resetDivs();
+        thetaMax.show();
+        thetaMaxSlider.show();
+        phiMax.show();
+        phiMaxSlider.show();
+        bullet(p5);
+        break;
+      case "Flower Field":
+        resetDivs();
+        thetaMax.show();
+        thetaMaxSlider.show();
+        phiMax.show();
+        phiMaxSlider.show();
+        flowerField(p5);
+        break;
+      case "Hour Glass":
+        resetDivs();
+        thetaMax.show();
+        thetaMaxSlider.show();
+        phiMax.show();
+        phiMaxSlider.show();
+        hourGlass(p5);
+        break;
+      case "Explosion":
+        resetDivs();
+        thetaMax.show();
+        thetaMaxSlider.show();
+        phiMax.show();
+        phiMaxSlider.show();
+        explosion(p5);
+        break;
+      case "Universe":
+        resetDivs();
+        thetaMax.show();
+        thetaMaxSlider.show();
+        phiMax.show();
+        phiMaxSlider.show();
+        universe(p5);
         break;
       case "Sphere Lissajous":
         resetDivs();
@@ -182,6 +226,121 @@ export default (props) => {
       p5.vertex(x, y, z);
     }
     p5.endShape(p5.LINES);
+  }
+
+  function bullet(p5) {
+    for (let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+      p5.beginShape(p5.POINTS);
+      for (let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+        let x =
+          r * (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) * p5.tan(phi);
+        let y =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi * 0.5) *
+          p5.sin(theta);
+        let z =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi * 0.5) *
+          p5.cos(theta);
+        p5.stroke(p5.map(phi, 0, 180, 0, 360), 100, 100);
+        p5.vertex(x, y, z);
+      }
+      p5.endShape();
+    }
+  }
+
+  function flowerField(p5) {
+    for (let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+      p5.beginShape(p5.POINTS);
+      for (let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+        let x =
+          r * (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) * p5.cos(phi);
+        let y =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi * 1) *
+          p5.sin(theta);
+        let z =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi * 1) *
+          p5.cos(theta);
+        p5.stroke(p5.map(phi, 0, 180, 0, 360), 100, 100);
+        p5.vertex(x, y, z);
+      }
+      p5.endShape();
+    }
+  }
+
+  function explosion(p5) {
+    for (let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+      p5.beginShape(p5.POINTS);
+      for (let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+        let x =
+          r * (1 + 0.2 * p5.tan(theta * 6) * p5.sin(phi * 5)) * p5.cos(phi);
+        let y =
+          r *
+          (1 + 0.2 * p5.tan(theta * 6) * p5.sin(phi * 5)) *
+          p5.sin(phi) *
+          p5.sin(theta);
+        let z =
+          r *
+          (1 + 0.2 * p5.tan(theta * 6) * p5.sin(phi * 5)) *
+          p5.sin(phi) *
+          p5.cos(theta);
+        p5.stroke(p5.map(phi, 0, 180, 0, 360), 100, 100);
+        p5.vertex(x, y, z);
+      }
+      p5.endShape();
+    }
+  }
+
+  function hourGlass(p5) {
+    for (let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+      p5.beginShape(p5.POINTS);
+      for (let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+        let x =
+          r * (1 + 0.2 * p5.tan(theta * 6) * p5.sin(phi * 5)) * p5.tan(phi);
+        let y =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi) *
+          p5.sin(theta);
+        let z =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.tan(phi) *
+          p5.cos(theta);
+        p5.stroke(p5.map(phi, 0, 180, 0, 360), 100, 100);
+        p5.vertex(x, y, z);
+      }
+      p5.endShape();
+    }
+  }
+
+  function universe(p5) {
+    for (let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+      p5.beginShape(p5.POINTS);
+      for (let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+        let x =
+          r * (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) * p5.cos(phi);
+        let y =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.sin(phi * 5)) *
+          p5.sin(phi) *
+          p5.tan(theta);
+        let z =
+          r *
+          (1 + 0.2 * p5.sin(theta * 6) * p5.cos(phi * 5)) *
+          p5.tan(phi) *
+          p5.cos(theta);
+        p5.stroke(p5.map(phi, 0, 180, 0, 360), 100, 100);
+        p5.vertex(x, y, z);
+      }
+      p5.endShape();
+    }
   }
 
   function bumpySphere(p5) {
