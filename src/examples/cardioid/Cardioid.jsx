@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Sketch from "react-p5";
 
 export default (props) => {
-  let pallete = ["#ccd5ae", "#e9edc9", "#d4a373", "#faedcd", "#fefae0"];
-  let total = 200;
   let factor = 0;
   let r;
   const Y_AXIS = 1;
@@ -57,22 +55,11 @@ export default (props) => {
     return v;
   };
 
-  const mouseReleased = (p5) => {
-    p5.noiseSeed(p5.millis());
-  };
-
   const windowResized = (p5) => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
     r = p5.constrain(p5.windowWidth / 2 - 80, 0, 350);
     p5.background(0);
   };
 
-  return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      windowResized={windowResized}
-      mouseReleased={mouseReleased}
-    />
-  );
+  return <Sketch setup={setup} draw={draw} windowResized={windowResized} />;
 };

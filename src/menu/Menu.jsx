@@ -10,7 +10,8 @@ function Menu() {
       {/* <Link to="/pixel-paint">Pixel Paint</Link> */}
       {/* <Link to="/perlin">Perlin</Link> */}
       <Link to="/cardioid">Cardioid</Link>
-      <Link to="/wave">Wave</Link>
+      <Link to="/sphere">Sphere</Link>
+      {/* <Link to="/wave">Wave</Link> */}
     </MenuContainer>
   );
 }
