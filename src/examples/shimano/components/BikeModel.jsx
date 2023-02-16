@@ -10,6 +10,7 @@ import React, { useRef, useState } from "react";
 import { Html, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect } from "react";
+import * as THREE from "three";
 
 export default function Model({ activePart, setActivePart, ...props }) {
   const { nodes, materials } = useGLTF("./models/bike.glb");
