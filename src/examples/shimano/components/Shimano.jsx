@@ -29,7 +29,6 @@ function Shimano() {
       <Suspense fallback={null}>
         {activePart && (
           <div
-            className="yoyo"
             style={{
               position: "absolute",
               top: "55px",

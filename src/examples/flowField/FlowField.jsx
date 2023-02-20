@@ -6,7 +6,6 @@ export default (props) => {
   const num = 1000;
 
   const noiseScale = 0.01 / 2;
-  console.log("yoyoy");
 
   const setup = (p5, canvasParentRef) => {
     // use parent to render the canvas in this ref
