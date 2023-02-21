@@ -37,9 +37,9 @@ export default (props) => {
       var xoff = 0;
       for (var x = 0; x < cols; x++) {
         terrain[x][y] = p5.map(p5.noise(xoff, yoff), 0, 1, -100, 100);
-        xoff += 0.2;
+        xoff += 0.15;
       }
-      yoff += 0.2;
+      yoff += 0.15;
     }
 
     p5.background(0);

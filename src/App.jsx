@@ -12,6 +12,7 @@ import Perlin from "./examples/perlin/Perlin.jsx";
 import Cardioid from "./examples/cardioid/Cardioid.jsx";
 import Sphere from "./examples/sphere/Sphere.jsx";
 import Terrain from "./examples/terrain/Terrain.jsx";
+import FlowFieldCircle from "./examples/flowFieldCircle/flowFieldCircle.jsx";
 
 const PAGES = 5;
 
@@ -22,6 +23,7 @@ function App() {
         <Menu />
         <Routes>
           <Route index element={<FlowField />} />
+          <Route path="flow-field-circle" element={<FlowFieldCircle />} />
           <Route path="room" element={<RoomScene />} />
           <Route path="wave" element={<WaveScene />} />
           <Route path="terrain" element={<Terrain />} />

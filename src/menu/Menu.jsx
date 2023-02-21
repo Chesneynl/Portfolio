@@ -6,6 +6,7 @@ function Menu() {
   return (
     <MenuContainer>
       <Link to="/">Flow Field</Link>
+      <Link to="/flow-field-circle">Flow Field Circle</Link>
       <Link to="/room">Room</Link>
       {/* <Link to="/pixel-paint">Pixel Paint</Link> */}
       {/* <Link to="/perlin">Perlin</Link> */}
