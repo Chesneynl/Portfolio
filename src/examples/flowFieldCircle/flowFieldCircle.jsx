@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sketch from "react-p5";
 
 var particles = [];
-var n = 1000; //number of particle
+var n = 500; //number of particle
 var noiseScale = 800; //noise scale;
 
 export default (props) => {
