@@ -11,6 +11,7 @@ function Menu() {
       {/* <Link to="/perlin">Perlin</Link> */}
       <Link to="/cardioid">Cardioid</Link>
       <Link to="/sphere">Sphere</Link>
+      <Link to="/terrain">Terrain</Link>
       {/* <Link to="/wave">Wave</Link> */}
     </MenuContainer>
   );

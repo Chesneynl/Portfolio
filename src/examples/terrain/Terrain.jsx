@@ -15,6 +15,8 @@ export default (props) => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL).parent(
       canvasParentRef
     );
+    p5.angleMode(p5.DEGREES);
+
     w = p5.windowWidth;
     h = p5.windowHeight;
     cols = w / scl;
@@ -41,9 +43,8 @@ export default (props) => {
     }
 
     p5.background(0);
-    p5.translate(0, 50);
-    p5.rotateX(p5.PI / 3);
-    // p5.fill(200, 200, 200, 150);
+    p5.translate(0, 0, 400);
+    p5.rotateX(70);
 
     p5.noFill();
     p5.translate(-w / 2, -h / 2);
@@ -55,7 +56,7 @@ export default (props) => {
         // p5.noStroke();
         p5.fill(color, 0, 50);
         p5.vertex(x * scl, y * scl, terrain[x][y]);
-        p5.fill(color, 0, 50);
+        p5.fill(color2, 0, 50);
         p5.vertex(x * scl, (y + 1) * scl, terrain[x][y + 1]);
       }
       p5.endShape();
