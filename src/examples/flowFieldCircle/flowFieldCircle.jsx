@@ -11,8 +11,9 @@ export default (props) => {
       canvasParentRef
     );
 
+    // p5.noiseSeed(62);
     p5.background(0);
-    p5.noiseDetail(2, 0.75);
+    p5.noiseDetail(3, 0.8);
 
     for (var i = 0; i < n; i++) {
       var particle = new Object();
@@ -23,7 +24,7 @@ export default (props) => {
 
   //get gradient vector
   function curl(x, y, p5) {
-    var EPSILON = 0.1; //sampling interval
+    var EPSILON = 0.001; //sampling interval
     //Find rate of change in X direction
     var n1 = p5.noise(x + EPSILON, y);
     var n2 = p5.noise(x - EPSILON, y);
@@ -61,11 +62,11 @@ export default (props) => {
       var yPosition = p.pos.y / noiseScale;
       var noisePos = p5.noise(xPosition, yPosition);
 
-      var rColor = p5.map(noisePos, 0, 0.5, 0, 60);
-      var gColor = p5.map(noisePos, 0, 0.5, 0, 180);
-      var bColor = p5.map(noisePos, 0, 0.5, 150, 0);
+      var rColor = p5.map(noisePos, 0, 0.5, 0, 40);
+      var gColor = p5.map(noisePos, 0, 0.5, 0, 100);
+      var bColor = p5.map(noisePos, 0, 0.5, 150, 30);
 
-      p5.colorMode(p5.HSB, 90);
+      p5.colorMode(p5.HSL, 90);
       p5.stroke(rColor, gColor, bColor);
       p.pos.add(curl(xPosition, yPosition, p5));
       p5.point(p.pos.x, p.pos.y);
