@@ -55,7 +55,6 @@ function Shimano() {
           }}
         >
           <Lights />
-          <Html onClick={() => console.log("yoyoyo")}>divjs</Html>
           <Floor />
           <BikeModel activePart={activePart} setActivePart={setActivePart} />
         </StyledCanvas>
