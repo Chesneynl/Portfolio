@@ -27,9 +27,10 @@ export default function MeshWithLabel({
       ? screenPosition.x + dialogueBoxWidth
       : screenPosition.x;
 
-  useFrame(() => {
+  useFrame((state) => {
     if (!mesh || !mesh.current) return;
 
+    const elapsedTime = state.clock.getElapsedTime();
     // get the position of the mesh
     const worldPosition = new Vector3();
     const meshPosition = mesh.current.getWorldPosition(worldPosition);
@@ -41,6 +42,7 @@ export default function MeshWithLabel({
     const x = ((screenPosition.x + 1) / 2) * window.innerWidth;
     const y = ((-screenPosition.y + 1) / 2) * window.innerHeight;
 
+    //TODO - this is messing up the click
     setScreenPosition({ x, y });
   });
 
@@ -63,6 +65,7 @@ export default function MeshWithLabel({
     return (
       <DialogueWrapper
         className={position}
+        onClick={onClick}
         style={{
           height: dialogueBoxHeight,
           width: dialogueBoxWidth,
@@ -87,12 +90,8 @@ export default function MeshWithLabel({
     );
   };
 
-  function handleClick() {
-    console.log("Html clicked!");
-  }
-
   return (
-    <Html onClick={handleClick}>
+    <Html>
       <HtmlContent />
     </Html>
   );
