@@ -21,12 +21,69 @@ export const WelcomeMessage = styled.div`
   }
 `;
 
+export const DialogueWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  color: black;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    bottom: -5px;
+    background: white;
+    width: 10px;
+    height: 10px;
+    z-index: 20;
+  }
+`;
+
+export const LineWrapper = styled.div`
+  width: 100%;
+  height: calc(100% - 50px);
+  padding-top: 50px;
+  position: relative;
+  z-index: 10;
+`;
+
+export const DialogueText = styled.div`
+  color: white;
+  font-weight: bold;
+  padding: 1px 0 0 10px;
+`;
+
+export const DialogueBoxWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.5);
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border: 1px solid white;
+  display: flex;
+  margin-left: 40px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    background: white;
+    width: 42px;
+    height: 3px;
+    z-index: 20;
+  }
+`;
+
 export const StyledCanvas = styled(Canvas)`
   background-color: #ede0d4;
   height: 100vh !important;
   color: white;
   overflow: hidden;
 
+  > div > div {
+    transform: none !important;
+  }
   h1 {
     position: absolute;
   }

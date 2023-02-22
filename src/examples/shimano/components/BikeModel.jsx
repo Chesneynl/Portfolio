@@ -11,33 +11,51 @@ import { Html, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect } from "react";
 import * as THREE from "three";
+import Lines from "./Lines";
 
 export default function Model({ activePart, setActivePart, ...props }) {
   const { nodes, materials } = useGLTF("./models/bike.glb");
-  const group = useRef();
+  const chainRef = useRef();
+  const handleBarRef = useRef();
+  const tiresRef = useRef();
+
+  const cameraPostions = [
+    {
+      name: "Chain",
+      lookAtCamera: new THREE.Vector3(-0.33, 0, 0),
+      cameraPosition: new THREE.Vector3(-0.9, 0.1, 0.6),
+    },
+    {
+      name: "Handlebar",
+      lookAtCamera: new THREE.Vector3(1, 0, 0),
+      cameraPosition: new THREE.Vector3(-0.3, 1.4, 0.0),
+    },
+    {
+      name: "Handlebar",
+      lookAtCamera: new THREE.Vector3(1, 0.3, 0.2),
+      cameraPosition: new THREE.Vector3(1.3, 0.3, 0.3),
+    },
+  ];
 
   useFrame((state) => {
     if (activePart === "chain") {
-      const lookAtCamera = new THREE.Vector3(-0.33, 0, 0);
-      const cameraPosition = new THREE.Vector3(-0.9, 0.1, 0.6);
+      const { lookAtCamera, cameraPosition } = cameraPostions[0];
 
       state.camera.position.lerp(cameraPosition, 0.01);
       state.camera.lookAt(lookAtCamera.lerp(lookAtCamera, 0.01));
     } else if (activePart === "handlebar") {
-      const lookAtCamera = new THREE.Vector3(1, 0, 0);
-      const cameraPosition = new THREE.Vector3(-0.3, 1.4, -0.0);
+      const { lookAtCamera, cameraPosition } = cameraPostions[1];
 
       state.camera.position.lerp(cameraPosition, 0.01);
       state.camera.lookAt(lookAtCamera.lerp(lookAtCamera, 0.01));
     } else if (activePart === "tires") {
-      const lookAtCamera = new THREE.Vector3(1, 0.3, 0.2);
-      const cameraPosition = new THREE.Vector3(1.3, 0.3, 0.3);
+      const { lookAtCamera, cameraPosition } = cameraPostions[2];
 
       state.camera.position.lerp(cameraPosition, 0.01);
       state.camera.lookAt(lookAtCamera.lerp(lookAtCamera, 0.01));
     } else {
-      const lookAtCamera = new THREE.Vector3(0, 0.2, 0);
-      const cameraPosition = new THREE.Vector3(-1.8, 1, 2);
+      const lookAtCamera = new THREE.Vector3(0.2, 0.2, 0);
+      const cameraPosition = new THREE.Vector3(2.5, 0.31, 2);
 
       state.camera.position.lerp(cameraPosition, 0.01);
       state.camera.lookAt(lookAtCamera.lerp(lookAtCamera, 0.01));
@@ -48,11 +66,15 @@ export default function Model({ activePart, setActivePart, ...props }) {
     <>
       <group {...props} dispose={null}>
         <group position={[-0.17, 0, 0]} rotation={[-Math.PI, 0, 0]}>
+          <Lines mesh={chainRef} position="bottom-left" />
+          <Lines mesh={handleBarRef} position="top-right" />
+          <Lines mesh={tiresRef} />
           <mesh
             onClick={() => setActivePart("chain")}
             visible={activePart !== "chain"}
             scale={0.06}
             position={[0, 0.1, -0.1]}
+            ref={chainRef}
           >
             <sphereGeometry />
             <meshPhongMaterial color="royalblue" />
@@ -62,6 +84,7 @@ export default function Model({ activePart, setActivePart, ...props }) {
             visible={activePart !== "handlebar"}
             scale={0.06}
             position={[0.6, -0.7, -0.1]}
+            ref={handleBarRef}
           >
             <sphereGeometry />
             <meshPhongMaterial color="royalblue" />
@@ -71,6 +94,7 @@ export default function Model({ activePart, setActivePart, ...props }) {
             visible={activePart !== "tires"}
             scale={0.06}
             position={[1.0, -0.1, -0.1]}
+            ref={tiresRef}
           >
             <sphereGeometry />
             <meshPhongMaterial color="royalblue" />

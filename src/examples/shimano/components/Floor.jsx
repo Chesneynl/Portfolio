@@ -4,7 +4,6 @@ import * as THREE from "three";
 
 export default function Floor() {
   const texture = useLoader(THREE.TextureLoader, "textures/road.jpeg");
-  console.log({ img });
 
   return (
     <mesh

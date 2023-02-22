@@ -13,6 +13,7 @@ import { StyledCanvas } from "../App.styled";
 import React from "react";
 import BikeModel from "./BikeModel";
 import { useFrame } from "@react-three/fiber";
+import Lines from "./Lines";
 
 const PAGES = 5;
 
@@ -45,8 +46,7 @@ function Shimano() {
           </div>
         )}
         <StyledCanvas
-          // frameloop="demand"
-
+          frameloop="demand"
           id="three-canvas-container"
           shadows
           dpr={[1, 2]}
