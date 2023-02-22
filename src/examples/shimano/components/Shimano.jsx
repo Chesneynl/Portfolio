@@ -46,7 +46,7 @@ function Shimano() {
           </div>
         )}
         <StyledCanvas
-          frameloop="demand"
+          // frameloop="demand"
           id="three-canvas-container"
           shadows
           dpr={[1, 2]}
@@ -55,6 +55,7 @@ function Shimano() {
           }}
         >
           <Lights />
+          <Html onClick={() => console.log("yoyoyo")}>divjs</Html>
           <Floor />
           <BikeModel activePart={activePart} setActivePart={setActivePart} />
         </StyledCanvas>

@@ -18,6 +18,7 @@ export default function Model({ activePart, setActivePart, ...props }) {
   const chainRef = useRef();
   const handleBarRef = useRef();
   const tiresRef = useRef();
+  const saddleRef = useRef();
 
   const cameraPostions = [
     {
@@ -54,7 +55,7 @@ export default function Model({ activePart, setActivePart, ...props }) {
       state.camera.position.lerp(cameraPosition, 0.01);
       state.camera.lookAt(lookAtCamera.lerp(lookAtCamera, 0.01));
     } else {
-      const lookAtCamera = new THREE.Vector3(0.2, 0.2, 0);
+      const lookAtCamera = new THREE.Vector3(0.2, 0.3, 0);
       const cameraPosition = new THREE.Vector3(2.5, 0.31, 2);
 
       state.camera.position.lerp(cameraPosition, 0.01);
@@ -66,38 +67,65 @@ export default function Model({ activePart, setActivePart, ...props }) {
     <>
       <group {...props} dispose={null}>
         <group position={[-0.17, 0, 0]} rotation={[-Math.PI, 0, 0]}>
-          <Lines mesh={chainRef} position="bottom-left" />
-          <Lines mesh={handleBarRef} position="top-right" />
-          <Lines mesh={tiresRef} />
+          <Lines
+            mesh={chainRef}
+            position="bottom-left"
+            onClick={() => setActivePart("chain")}
+          />
+          <Lines
+            mesh={handleBarRef}
+            position="top-right"
+            onClick={() => setActivePart("handlebar")}
+          />
+          <Lines
+            mesh={tiresRef}
+            position="bottom-right"
+            onClick={() => setActivePart("tires")}
+          />
+          <Lines
+            mesh={saddleRef}
+            position="top-left"
+            onClick={() => setActivePart("saddle")}
+          />
+          <mesh
+            onClick={() => setActivePart("saddle")}
+            visible={activePart !== "saddle"}
+            scale={0.06}
+            position={[-0.1, -0.5, -0]}
+            ref={saddleRef}
+          >
+            {/* <sphereGeometry />
+            <meshPhongMaterial color="royalblue" /> */}
+          </mesh>
           <mesh
             onClick={() => setActivePart("chain")}
             visible={activePart !== "chain"}
             scale={0.06}
-            position={[0, 0.1, -0.1]}
+            position={[0, -0.01, -0.1]}
             ref={chainRef}
           >
-            <sphereGeometry />
-            <meshPhongMaterial color="royalblue" />
+            {/* <sphereGeometry />
+            <meshPhongMaterial color="royalblue" /> */}
           </mesh>
           <mesh
             onClick={() => setActivePart("handlebar")}
             visible={activePart !== "handlebar"}
             scale={0.06}
-            position={[0.6, -0.7, -0.1]}
+            position={[0.6, -0.6, 0]}
             ref={handleBarRef}
           >
-            <sphereGeometry />
-            <meshPhongMaterial color="royalblue" />
+            {/* <sphereGeometry />
+            <meshPhongMaterial color="royalblue" /> */}
           </mesh>
           <mesh
             onClick={() => setActivePart("tires")}
             visible={activePart !== "tires"}
             scale={0.06}
-            position={[1.0, -0.1, -0.1]}
+            position={[1.0, -0.2, 0]}
             ref={tiresRef}
           >
-            <sphereGeometry />
-            <meshPhongMaterial color="royalblue" />
+            {/* <sphereGeometry />
+            <meshPhongMaterial color="royalblue" /> */}
           </mesh>
           <mesh
             castShadow

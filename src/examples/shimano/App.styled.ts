@@ -21,45 +21,37 @@ export const WelcomeMessage = styled.div`
   }
 `;
 
-export const DialogueWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  color: black;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: -5px;
-    bottom: -5px;
-    background: white;
-    width: 10px;
-    height: 10px;
-    z-index: 20;
-  }
-`;
-
 export const LineWrapper = styled.div`
   width: 100%;
-  height: calc(100% - 50px);
-  padding-top: 50px;
   position: relative;
   z-index: 10;
 `;
 
 export const DialogueText = styled.div`
   color: white;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 98px;
   font-weight: bold;
-  padding: 1px 0 0 10px;
+  position: relative;
+  align-items: center;
+
+  span {
+    color: #019fe3;
+    opacity: 0;
+    transition: 0.2s;
+    width: 100%;
+  }
 `;
 
 export const DialogueBoxWrapper = styled.div`
   background: rgba(255, 255, 255, 0.5);
-  width: 100px;
-  height: 100px;
+  width: 98px;
+  height: 98px;
   flex-shrink: 0;
-  border: 1px solid white;
+  border: 3px solid white;
   display: flex;
-  margin-left: 40px;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -67,11 +59,170 @@ export const DialogueBoxWrapper = styled.div`
   &::before {
     content: "";
     position: absolute;
-    right: 100%;
     background: white;
+    top: 50%;
     width: 42px;
     height: 3px;
     z-index: 20;
+  }
+`;
+
+export const DialogueWrapper = styled.div`
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  color: black;
+  pointer-events: all;
+
+  line {
+    stroke: white;
+  }
+
+  :hover {
+    line {
+      stroke: #019fe3;
+    }
+
+    ${DialogueBoxWrapper} {
+      border-color: #019fe3;
+
+      &::before {
+        background: #019fe3;
+      }
+    }
+
+    ${DialogueText} {
+      span {
+        opacity: 1;
+      }
+    }
+
+    &:before {
+      background: #019fe3;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: white;
+    width: 10px;
+    height: 10px;
+    z-index: 20;
+  }
+
+  &.top-left {
+    flex-direction: row-reverse;
+    transform: translateX(-100%);
+
+    ${LineWrapper} {
+      height: calc(100% - 50px);
+      padding-top: 50px;
+    }
+
+    ${DialogueBoxWrapper} {
+      margin-right: 40px;
+
+      &:before {
+        left: calc(100% + 3px);
+        top: calc(50% - 2px);
+      }
+    }
+
+    ${DialogueText} {
+      padding: 1px 10px 0 0;
+      text-align: right;
+    }
+
+    &:before {
+      right: -5px;
+      bottom: -5px;
+    }
+  }
+
+  &.bottom-left {
+    flex-direction: row-reverse;
+    transform: translateX(-100%);
+    align-items: flex-end;
+
+    ${LineWrapper} {
+      height: calc(100% - 50px);
+      padding-bottom: 50px;
+    }
+
+    ${DialogueBoxWrapper} {
+      margin-right: 40px;
+
+      &:before {
+        left: calc(100% + 3px);
+      }
+    }
+
+    ${DialogueText} {
+      padding: 1px 10px 0 0;
+      text-align: right;
+    }
+
+    &:before {
+      right: -5px;
+      top: -5px;
+    }
+  }
+
+  &.bottom-right {
+    flex-direction: row;
+    transform: translateX(-100%);
+    align-items: flex-end;
+
+    ${LineWrapper} {
+      height: calc(100% - 50px);
+      padding-bottom: 50px;
+    }
+
+    ${DialogueBoxWrapper} {
+      margin-left: 40px;
+
+      &:before {
+        right: calc(100% + 3px);
+      }
+    }
+
+    ${DialogueText} {
+      padding: 1px 0 0 10px;
+      text-align: left;
+    }
+
+    &:before {
+      left: -5px;
+      top: -5px;
+    }
+  }
+
+  &.top-right {
+    flex-direction: row;
+
+    ${LineWrapper} {
+      height: calc(100% - 50px);
+      padding-top: 50px;
+    }
+
+    ${DialogueBoxWrapper} {
+      margin-left: 40px;
+
+      &:before {
+        right: calc(100% + 3px);
+        top: calc(50% - 2px);
+      }
+    }
+
+    ${DialogueText} {
+      padding: 1px 0 0 10px;
+    }
+
+    &:before {
+      left: -5px;
+      bottom: -5px;
+    }
   }
 `;
 
