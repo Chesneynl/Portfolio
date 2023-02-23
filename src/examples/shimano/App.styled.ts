@@ -232,9 +232,6 @@ export const StyledCanvas = styled(Canvas)`
   color: white;
   overflow: hidden;
 
-  > div > div {
-    transform: none !important;
-  }
   h1 {
     position: absolute;
   }

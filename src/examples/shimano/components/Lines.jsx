@@ -20,31 +20,9 @@ export default function MeshWithLabel({
   const dialogueBoxHeight = 200;
   const dialogueBoxWidth = 400;
   const topOffset = ["top-left", "top-right"].includes(position)
-    ? screenPosition.y - dialogueBoxHeight
-    : screenPosition.y;
-  const leftOffset =
-    position === "bottom-right"
-      ? screenPosition.x + dialogueBoxWidth
-      : screenPosition.x;
-
-  useFrame((state) => {
-    if (!mesh || !mesh.current) return;
-
-    const elapsedTime = state.clock.getElapsedTime();
-    // get the position of the mesh
-    const worldPosition = new Vector3();
-    const meshPosition = mesh.current.getWorldPosition(worldPosition);
-
-    // project the position onto the screen
-    const screenPosition = meshPosition.project(camera);
-
-    // convert the screen position to CSS coordinates
-    const x = ((screenPosition.x + 1) / 2) * window.innerWidth;
-    const y = ((-screenPosition.y + 1) / 2) * window.innerHeight;
-
-    //TODO - this is messing up the click
-    setScreenPosition({ x, y });
-  });
+    ? -dialogueBoxHeight
+    : 0;
+  const leftOffset = position === "bottom-right" ? dialogueBoxWidth : 0;
 
   const { camera } = useThree();
 

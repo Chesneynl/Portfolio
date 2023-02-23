@@ -13,6 +13,7 @@ import Cardioid from "./examples/cardioid/Cardioid.jsx";
 import Sphere from "./examples/sphere/Sphere.jsx";
 import Terrain from "./examples/terrain/Terrain.jsx";
 import FlowFieldCircle from "./examples/flowFieldCircle/flowFieldCircle.jsx";
+import BeesAndBombs from "./examples/beesAndBombs/beesAndBombs.jsx";
 
 const PAGES = 5;
 
@@ -24,8 +25,9 @@ function App() {
         <Routes>
           <Route index element={<FlowField />} />
           <Route path="flow-field-circle" element={<FlowFieldCircle />} />
-          <Route path="room" element={<RoomScene />} />
           <Route path="wave" element={<WaveScene />} />
+          <Route path="bees-and-bombs" element={<BeesAndBombs />} />
+          <Route path="room" element={<RoomScene />} />
           <Route path="terrain" element={<Terrain />} />
           <Route path="shimano" element={<Shimano />} />
           <Route path="perlin" element={<Perlin />} />

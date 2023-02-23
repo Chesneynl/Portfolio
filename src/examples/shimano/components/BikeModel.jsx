@@ -67,26 +67,6 @@ export default function Model({ activePart, setActivePart, ...props }) {
     <>
       <group {...props} dispose={null}>
         <group position={[-0.17, 0, 0]} rotation={[-Math.PI, 0, 0]}>
-          <Lines
-            mesh={chainRef}
-            position="bottom-left"
-            onClick={() => setActivePart("chain")}
-          />
-          <Lines
-            mesh={handleBarRef}
-            position="top-right"
-            onClick={() => setActivePart("handlebar")}
-          />
-          <Lines
-            mesh={tiresRef}
-            position="bottom-right"
-            onClick={() => setActivePart("tires")}
-          />
-          <Lines
-            mesh={saddleRef}
-            position="top-left"
-            onClick={() => setActivePart("saddle")}
-          />
           <mesh
             onClick={() => setActivePart("saddle")}
             visible={activePart !== "saddle"}
@@ -94,8 +74,11 @@ export default function Model({ activePart, setActivePart, ...props }) {
             position={[-0.1, -0.5, -0]}
             ref={saddleRef}
           >
-            {/* <sphereGeometry />
-            <meshPhongMaterial color="royalblue" /> */}
+            <Lines
+              mesh={saddleRef}
+              position="top-left"
+              onClick={() => setActivePart("saddle")}
+            />
           </mesh>
           <mesh
             onClick={() => setActivePart("chain")}
@@ -104,8 +87,11 @@ export default function Model({ activePart, setActivePart, ...props }) {
             position={[0, -0.01, -0.1]}
             ref={chainRef}
           >
-            {/* <sphereGeometry />
-            <meshPhongMaterial color="royalblue" /> */}
+            <Lines
+              mesh={chainRef}
+              position="bottom-left"
+              onClick={() => setActivePart("chain")}
+            />
           </mesh>
           <mesh
             onClick={() => setActivePart("handlebar")}
@@ -114,8 +100,11 @@ export default function Model({ activePart, setActivePart, ...props }) {
             position={[0.6, -0.6, 0]}
             ref={handleBarRef}
           >
-            {/* <sphereGeometry />
-            <meshPhongMaterial color="royalblue" /> */}
+            <Lines
+              mesh={handleBarRef}
+              position="top-right"
+              onClick={() => setActivePart("handlebar")}
+            />
           </mesh>
           <mesh
             onClick={() => setActivePart("tires")}
@@ -124,8 +113,11 @@ export default function Model({ activePart, setActivePart, ...props }) {
             position={[1.0, -0.2, 0]}
             ref={tiresRef}
           >
-            {/* <sphereGeometry />
-            <meshPhongMaterial color="royalblue" /> */}
+            <Lines
+              mesh={tiresRef}
+              position="bottom-right"
+              onClick={() => setActivePart("tires")}
+            />
           </mesh>
           <mesh
             castShadow
