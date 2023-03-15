@@ -24,7 +24,7 @@
     "react-router-dom": "^6.4.3",
     "styled-components": "^5.3.6",
     "three": "0.144.0",
-    "webpack": "^5.75.0"
+    "webpack": "^5.76.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
