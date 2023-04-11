@@ -40,7 +40,7 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
       />
       <group rotation={[0, 0.5, 0]}>
         <group ref={group}>
-          {/* {positions.map((x, i) => (
+          {positions.map((x, i) => (
             <Lightformer
               key={i}
               form="circle"
@@ -49,7 +49,7 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
               position={[x, 4, i * 4]}
               scale={[3, 1, 1]}
             />
-          ))} */}
+          ))}
         </group>
       </group>
       {/* Sides */}
@@ -73,10 +73,10 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
       <Float speed={5} floatIntensity={2} rotationIntensity={2}>
         <Lightformer
           form="ring"
-          color="red"
+          color="white"
           intensity={1}
-          scale={5}
-          position={[-15, 0, -10]}
+          scale={10}
+          position={[0, 0, 0]}
           target={[0, 0, 0]}
         />
       </Float>
@@ -86,14 +86,13 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
         <DebugLayerMaterial side={THREE.BackSide}>
           <Color color="#000" alpha={0.1} mode="multiply" />
           <Noise
-            resolution={[1024, 1024]}
             ref={bg}
-            colorA="#000000"
-            colorB="#313131"
-            colorC="#070202"
-            colorD="#000000"
+            colorA={"#1A5276"}
+            colorB={"#2E86C1"}
+            colorC={"#0E4D92"}
+            colorD={"#5499C7"}
             alpha={1}
-            mode="multiply"
+            mode="normal"
             near={0}
             offset={[0, 0, 0]}
             far={300}

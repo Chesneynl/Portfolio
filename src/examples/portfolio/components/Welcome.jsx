@@ -1,39 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "@react-three/drei";
-import { useSpring, a } from "@react-spring/three";
-import { SuggestMe } from "../App.styled";
-import { useFrame } from "@react-three/fiber";
+import { useSpring, animated } from "@react-spring/three";
+
+const AnimatedText = animated(Text);
 
 export default function Welcome() {
-  const { colorProps, scaleProps } = useSpring({
-    colorProps: {
-      color: "red" || "white",
-      config: { duration: 1000 },
-    },
-    scaleProps: {
-      scale: [3, 3, 3],
-      config: { duration: 1000 },
-    },
+  const [visible, setVisible] = useState(false);
+
+  const fadeProps = useSpring({
+    opacity: visible ? 1 : 0,
+    config: { duration: 5000 },
   });
 
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    const scaleFactor = Math.sin(t * 2) + 1;
-    // Update the animated properties here
-    scaleProps.scale = [scaleFactor, scaleFactor, scaleFactor];
-  });
+  useEffect(() => {
+    setVisible(true);
+  }, []);
 
   return (
-    <a.mesh>
-      <Text
-        color={colorProps.color}
-        scale={scaleProps.scale}
-        font="calibri"
+    <animated.group>
+      <AnimatedText
+        material-props={fadeProps}
+        // color={colorProps.color}
+        font="/fonts/inter-bold.woff"
         anchorX="center"
         anchorY="middle"
+        // color={springs.color}
+        position={[0, 0, -1]}
       >
         Hi, i'm{"\n"}Chesney
-      </Text>
-    </a.mesh>
+      </AnimatedText>
+    </animated.group>
   );
 }

@@ -13,12 +13,12 @@ import {
 } from "lamina";
 import * as THREE from "three";
 
-const particles = Array.from({ length: 50 }, () => ({
-  factor: MathUtils.randInt(2, 80),
+const particles = Array.from({ length: 20 }, () => ({
+  factor: MathUtils.randInt(2, 3),
   speed: MathUtils.randFloat(0.01, 1),
-  xFactor: MathUtils.randFloatSpread(30),
-  yFactor: MathUtils.randFloatSpread(40),
-  zFactor: MathUtils.randFloatSpread(90),
+  xFactor: MathUtils.randFloatSpread(10),
+  yFactor: MathUtils.randFloatSpread(10),
+  zFactor: MathUtils.randFloatSpread(10),
 }));
 
 export default function Bubbles() {
@@ -39,10 +39,10 @@ export default function Bubbles() {
       ref={ref}
       castShadow
       receiveShadow
-      position={[0, 10, 0]}
+      position={[0, 0, 0]}
     >
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial roughness={0} color="#000" />
+      <meshStandardMaterial roughness={0} color="#e594fe" />
       {particles.map((data, i) => (
         <Bubble key={i} {...data} />
       ))}
@@ -53,8 +53,8 @@ export default function Bubbles() {
 function Bubble({ factor, speed, xFactor, yFactor, zFactor }) {
   const ref = useRef();
   useFrame((state) => {
-    const t = factor + state.clock.elapsedTime * (speed / 3);
-    ref.current.scale.setScalar(Math.max(1.0, Math.cos(t) * 3));
+    const t = factor + state.clock.elapsedTime * (speed / 2);
+    ref.current.scale.setScalar(Math.max(0.3, Math.cos(t) * 0.5));
     ref.current.position.set(
       Math.cos(t) +
         Math.sin(t * 1) / 10 +

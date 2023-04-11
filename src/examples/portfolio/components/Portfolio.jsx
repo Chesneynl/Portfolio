@@ -48,17 +48,12 @@ function Portfolio() {
           <Stats />
 
           {/* <color attach="background" args={["#000"]} /> */}
-          <fog attach="fog" args={["#000", 60, 110]} />
+          <fog attach="fog" args={["#4295c7", 1, 150]} />
 
           {/* <Picture /> */}
 
           <Bubbles />
           <Welcome />
-
-          {/* <Environment preset="city" /> */}
-
-          <ambientLight intensity={1} />
-          <pointLight position={[200, 200, 100]} intensity={0.5} />
 
           <Environment
             frames={degraded ? 1 : Infinity}
@@ -69,7 +64,6 @@ function Portfolio() {
             <Lights />
           </Environment>
 
-          {/* <Background /> */}
           {/* <Tubes /> */}
           {/* <PerspectiveCamera
             makeDefault
