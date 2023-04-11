@@ -5,7 +5,6 @@ import RoomScene from "./examples/room/RoomScene.jsx";
 import Menu from "./menu/Menu.jsx";
 import RayMarching from "./examples/rayMarching/RayMarching.jsx";
 import RayMarching2 from "./examples/rayMarching-2/RayMarching2.jsx";
-import Shimano from "./examples/shimano/components/Shimano.jsx";
 import WaveScene from "./examples/wave/WaveScene.jsx";
 import FlowField from "./examples/flowField/FlowField.jsx";
 import Perlin from "./examples/perlin/Perlin.jsx";
@@ -14,6 +13,7 @@ import Sphere from "./examples/sphere/Sphere.jsx";
 import Terrain from "./examples/terrain/Terrain.jsx";
 import FlowFieldCircle from "./examples/flowFieldCircle/flowFieldCircle.jsx";
 import BeesAndBombs from "./examples/beesAndBombs/beesAndBombs.jsx";
+import Portfolio from "./examples/portfolio/components/Portfolio.jsx";
 
 const PAGES = 5;
 
@@ -29,7 +29,7 @@ function App() {
           <Route path="bees-and-bombs" element={<BeesAndBombs />} />
           <Route path="room" element={<RoomScene />} />
           <Route path="terrain" element={<Terrain />} />
-          <Route path="shimano" element={<Shimano />} />
+          <Route path="portfolio" element={<Portfolio />} />
           <Route path="perlin" element={<Perlin />} />
           <Route path="cardioid" element={<Cardioid />} />
           <Route path="sphere" element={<Sphere />} />

@@ -2,25 +2,6 @@ import styled from "styled-components";
 
 import { Canvas } from "@react-three/fiber";
 
-export const WelcomeMessage = styled.div`
-  position: absolute;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-size: 48px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0f544e;
-
-  &.active {
-    opacity: 0;
-    transition: opacity 4s;
-  }
-`;
-
 export const StyledCanvas = styled(Canvas)`
   background-color: #ede0d4;
   height: 100vh !important;
