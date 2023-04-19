@@ -1,8 +1,24 @@
+@font-face {
+  font-family: 'inter-bold';
+  src: url('/fonts/inter-bold.woff') format('woff');
+  /* Additional font properties can be added here */
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "inter-bold",  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.word-1 {
+  transform: translateY(0);
+  font-size:200px;
+}
+.line-wrapper {
+  overflow:hidden;
+}
+
+.my-name {
+  color: purple;
 }

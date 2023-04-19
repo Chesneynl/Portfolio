@@ -1,34 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "@react-three/drei";
-import { useSpring, animated } from "@react-spring/three";
-
-const AnimatedText = animated(Text);
+import React, { useEffect, useRef } from "react";
+import { Html, Text } from "@react-three/drei";
+import gsap from "gsap";
 
 export default function Welcome() {
-  const [visible, setVisible] = useState(false);
-
-  const fadeProps = useSpring({
-    opacity: visible ? 1 : 0,
-    config: { duration: 5000 },
-  });
+  const textRef = useRef();
+  const nameRef = useRef();
 
   useEffect(() => {
-    setVisible(true);
+    setTimeout(() => {
+      const words = document.querySelectorAll(".word-1");
+
+      gsap.from(words, {
+        duration: 1,
+        y: "100%",
+        // stagger: 0.1,
+        ease: "power4.out",
+        // repeat: -1,
+        onRepeat: () => {
+          console.log("Animation repeat!");
+        },
+        onComplete: () => {
+          console.log("Animation complete!");
+        },
+      });
+    }, 10);
   }, []);
 
   return (
-    <animated.group>
-      <AnimatedText
-        material-props={fadeProps}
-        // color={colorProps.color}
-        font="/fonts/inter-bold.woff"
-        anchorX="center"
-        anchorY="middle"
-        // color={springs.color}
-        position={[0, 0, -1]}
-      >
-        Hi, i'm{"\n"}Chesney
-      </AnimatedText>
-    </animated.group>
+    <>
+      <Html center position={[0, 0, -50]}>
+        <div className="line-wrapper">
+          <div className="word-1">Hi, i'm</div>
+        </div>
+        <div className="line-wrapper">
+          <div className="word-1 my-name">Chesney</div>
+        </div>
+      </Html>
+    </>
   );
 }

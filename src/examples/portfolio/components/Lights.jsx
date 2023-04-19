@@ -1,4 +1,10 @@
-import { Environment, Float, Lightformer } from "@react-three/drei";
+import {
+  Float,
+  Lightformer,
+  PivotControls,
+  RandomizedLight,
+  useHelper,
+} from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Color, DebugLayerMaterial, Noise, Depth, LayerMaterial } from "lamina";
 import React, { useRef } from "react";
@@ -21,6 +27,7 @@ export default function Lights() {
 function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
   const group = useRef();
   const bg = useRef();
+  const spotlight = useRef();
   useFrame((state, delta) => {
     (group.current.position.z += delta * 10) > 20 &&
       (group.current.position.z = -60);
@@ -29,16 +36,56 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
     bg.current.offset.y = state.clock.elapsedTime * 0.1;
     // bg.offset.z = state.clock.elapsedTime * 0.1;
   });
+
+  useHelper(spotlight, THREE.SpotLightHelper);
   return (
     <>
       {/* Ceiling */}
       <Lightformer
-        intensity={0.75}
+        intensity={3.75}
         rotation-x={Math.PI / 2}
-        position={[0, 5, -9]}
-        scale={[10, 10, 1]}
+        position={[0, 1, -9]}
+        scale={[3, 10, 1]}
       />
-      <group rotation={[0, 0.5, 0]}>
+
+      <Lightformer
+        form="circle"
+        intensity={1}
+        rotation={[Math.PI / 2, 0, 0]}
+        position={[0, 4, -3]}
+        scale={[3, 1, 1]}
+      />
+
+      {/* <spotLight
+        intensity={3.5}
+        position={[0, 0, 2]}
+        angle={Math.PI}
+        penumbra={1}
+        ref={spotlight}
+        color="red"
+      /> */}
+
+      {/* <Lightformer
+        intensity={0.15}
+        position={[0, 0, 1]}
+        rotation-x={Math.PI}
+        scale={[3, 3, 1]}
+        color="white"
+      /> */}
+
+      {/* Floor */}
+      <Float speed={5} floatIntensity={2} rotationIntensity={2}>
+        <Lightformer
+          intensity={0.15}
+          position={[0, -1, -4]}
+          scale={[8, 2, 1]}
+          // rotation-x={Math.PI / 2}
+          form={"ring"}
+          color={"white"}
+        />
+      </Float>
+
+      <group rotation={[0, 0, 0]}>
         <group ref={group}>
           {positions.map((x, i) => (
             <Lightformer
@@ -47,42 +94,26 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
               intensity={2}
               rotation={[Math.PI / 2, 0, 0]}
               position={[x, 4, i * 4]}
-              scale={[3, 1, 1]}
+              scale={[6, 1, 1]}
             />
           ))}
         </group>
       </group>
-      {/* Sides */}
-      {/* <Lightformer
-        intensity={4}
-        rotation-y={Math.PI / 2}
-        position={[-5, 1, -1]}
-        scale={[20, 0.1, 1]}
-      />
-      <Lightformer
-        rotation-y={Math.PI / 2}
-        position={[-5, -1, -1]}
-        scale={[20, 0.5, 1]}
-      />
-      <Lightformer
-        rotation-y={-Math.PI / 2}
-        position={[10, 1, 0]}
-        scale={[20, 1, 1]}
-      /> */}
+
       {/* Accent (red) */}
       <Float speed={5} floatIntensity={2} rotationIntensity={2}>
         <Lightformer
           form="ring"
-          color="white"
+          color="red"
           intensity={1}
-          scale={10}
+          scale={1}
           position={[0, 0, 0]}
           target={[0, 0, 0]}
         />
       </Float>
       {/* Background */}
-      <mesh scale={10}>
-        <sphereGeometry args={[1, 220, 220]} />
+      <mesh scale={1}>
+        <sphereGeometry args={[80, 220, 220]} />
         <DebugLayerMaterial side={THREE.BackSide}>
           <Color color="#000" alpha={0.1} mode="multiply" />
           <Noise

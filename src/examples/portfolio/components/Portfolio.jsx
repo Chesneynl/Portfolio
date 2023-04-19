@@ -11,6 +11,8 @@ import {
   Stage,
   AsciiRenderer,
   Center,
+  Stars,
+  Sparkles,
 } from "@react-three/drei";
 
 import Lights from "./Lights";
@@ -47,13 +49,19 @@ function Portfolio() {
           <OrbitControls />
           <Stats />
 
-          {/* <color attach="background" args={["#000"]} /> */}
           <fog attach="fog" args={["#4295c7", 1, 150]} />
-
-          {/* <Picture /> */}
 
           <Bubbles />
           <Welcome />
+
+          <Stars
+            radius={100}
+            depth={50}
+            count={5000}
+            factor={4}
+            saturation={0}
+            fade
+          />
 
           <Environment
             frames={degraded ? 1 : Infinity}
