@@ -27,7 +27,8 @@ export default function Lights() {
 function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
   const group = useRef();
   const bg = useRef();
-  const spotlight = useRef();
+  const ceilingRef = useRef();
+
   useFrame((state, delta) => {
     (group.current.position.z += delta * 10) > 20 &&
       (group.current.position.z = -60);
@@ -35,9 +36,10 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
     bg.current.offset.x = state.clock.elapsedTime * 0.1;
     bg.current.offset.y = state.clock.elapsedTime * 0.1;
     // bg.offset.z = state.clock.elapsedTime * 0.1;
+
+    ceilingRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.6) * 2;
   });
 
-  useHelper(spotlight, THREE.SpotLightHelper);
   return (
     <>
       {/* Ceiling */}
@@ -49,29 +51,14 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
       />
 
       <Lightformer
+        ref={ceilingRef}
         form="circle"
-        intensity={1}
+        intensity={3}
+        color={"red"}
         rotation={[Math.PI / 2, 0, 0]}
         position={[0, 4, -3]}
-        scale={[3, 1, 1]}
+        scale={[3, 1, 3]}
       />
-
-      {/* <spotLight
-        intensity={3.5}
-        position={[0, 0, 2]}
-        angle={Math.PI}
-        penumbra={1}
-        ref={spotlight}
-        color="red"
-      /> */}
-
-      {/* <Lightformer
-        intensity={0.15}
-        position={[0, 0, 1]}
-        rotation-x={Math.PI}
-        scale={[3, 3, 1]}
-        color="white"
-      /> */}
 
       {/* Floor */}
       <Float speed={5} floatIntensity={2} rotationIntensity={2}>
@@ -90,6 +77,7 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
           {positions.map((x, i) => (
             <Lightformer
               key={i}
+              color={"red"}
               form="circle"
               intensity={2}
               rotation={[Math.PI / 2, 0, 0]}

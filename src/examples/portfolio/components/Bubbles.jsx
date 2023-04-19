@@ -14,7 +14,7 @@ import {
 import * as THREE from "three";
 
 const particles = Array.from({ length: 20 }, () => ({
-  factor: MathUtils.randInt(2, 3),
+  factor: MathUtils.randInt(0.1, 8),
   speed: MathUtils.randFloat(0.01, 1),
   xFactor: MathUtils.randFloatSpread(10),
   yFactor: MathUtils.randFloatSpread(10),
@@ -42,7 +42,8 @@ export default function Bubbles() {
       position={[0, 0, 0]}
     >
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial roughness={0} color="#e594fe" />
+      {/* <meshStandardMaterial roughness={0} color="#e594fe" /> */}
+      <meshStandardMaterial roughness={0} color="#000" />
       {particles.map((data, i) => (
         <Bubble key={i} {...data} />
       ))}
