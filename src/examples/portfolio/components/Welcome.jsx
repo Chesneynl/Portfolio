@@ -9,17 +9,20 @@ export default function Welcome() {
 
   useEffect(() => {
     gsap.from(hiImRef.current.position, {
-      x: 10,
+      x: 6,
       duration: 1,
       ease: "power4.out",
     });
 
     gsap.from(nameRef.current.position, {
-      x: 10,
+      x: 6,
       duration: 1,
       delay: 0.2,
       ease: "power4.out",
     });
+
+    gsap.from(hiImRef.current.material, { opacity: 0, duration: 1 });
+    gsap.from(nameRef.current.material, { opacity: 0, duration: 1.5 });
   }, []);
 
   return (

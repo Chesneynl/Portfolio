@@ -57,7 +57,7 @@ function Portfolio() {
           camera={{ fov: 30, position: [5, 0, 15] }}
         >
           <PerformanceMonitor onDecline={() => degrade(true)} />
-          <OrbitControls />
+          {/* <OrbitControls /> */}
           <Stats />
 
           {/* <fog attach="fog" args={["#4295c7", 1, 150]} /> */}
@@ -94,9 +94,9 @@ function Bg() {
   return (
     <mesh ref={mesh} scale={30}>
       <sphereGeometry args={[1, 64, 64]} />
-      <DebugLayerMaterial attach="material" side={THREE.BackSide}>
+      <LayerMaterial attach="material" side={THREE.BackSide}>
         <Gradient colorA={"#00b2ca"} colorB={"#fbd1a2"} />
-      </DebugLayerMaterial>
+      </LayerMaterial>
     </mesh>
   );
 }

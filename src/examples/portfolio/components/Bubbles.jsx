@@ -59,7 +59,7 @@ export default function Bubbles() {
             <meshPhysicalMaterial
               transmission={1}
               thickness={10}
-              roughness={0.15}
+              roughness={0.5}
             />
             <Bubble key={i} {...data} color={color} />
           </>
