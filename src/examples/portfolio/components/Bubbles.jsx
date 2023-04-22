@@ -13,12 +13,12 @@ import {
 } from "lamina";
 import * as THREE from "three";
 
-const particles = Array.from({ length: 20 }, () => ({
+const particles = Array.from({ length: 25 }, () => ({
   factor: MathUtils.randInt(0.1, 8),
-  speed: MathUtils.randFloat(0.01, 1),
-  xFactor: MathUtils.randFloatSpread(10),
-  yFactor: MathUtils.randFloatSpread(10),
-  zFactor: MathUtils.randFloatSpread(10),
+  speed: MathUtils.randFloat(0.01, 0.4),
+  xFactor: MathUtils.randFloatSpread(5),
+  yFactor: MathUtils.randFloatSpread(5),
+  zFactor: MathUtils.randFloatSpread(15),
 }));
 
 export default function Bubbles() {
@@ -42,20 +42,38 @@ export default function Bubbles() {
       position={[0, 0, 0]}
     >
       <sphereGeometry args={[1, 32, 32]} />
-      {/* <meshStandardMaterial roughness={0} color="#e594fe" /> */}
-      <meshStandardMaterial roughness={0} color="#000" />
-      {particles.map((data, i) => (
-        <Bubble key={i} {...data} />
-      ))}
+
+      {particles.map((data, i) => {
+        const colorPallete = [
+          "#7dcfb6",
+          "#1d4e89",
+          "#00b2ca",
+          "#fbd1a2",
+          "#f79256",
+        ];
+        const color =
+          colorPallete[Math.floor(Math.random() * colorPallete.length)];
+        return (
+          <>
+            {/* <meshStandardMaterial roughness={0.1} color={color} /> */}
+            <meshPhysicalMaterial
+              transmission={1}
+              thickness={10}
+              roughness={0.15}
+            />
+            <Bubble key={i} {...data} color={color} />
+          </>
+        );
+      })}
     </Instances>
   );
 }
 
-function Bubble({ factor, speed, xFactor, yFactor, zFactor }) {
+function Bubble({ factor, speed, xFactor, yFactor, zFactor, color }) {
   const ref = useRef();
   useFrame((state) => {
     const t = factor + state.clock.elapsedTime * (speed / 2);
-    ref.current.scale.setScalar(Math.max(0.3, Math.cos(t) * 0.5));
+    ref.current.scale.setScalar(Math.max(0.2, Math.cos(t) * 0.5));
     ref.current.position.set(
       Math.cos(t) +
         Math.sin(t * 1) / 10 +
@@ -74,5 +92,5 @@ function Bubble({ factor, speed, xFactor, yFactor, zFactor }) {
         (Math.sin(t * 3) * factor) / 10
     );
   });
-  return <Instance ref={ref} />;
+  return <Instance ref={ref} color={color} />;
 }

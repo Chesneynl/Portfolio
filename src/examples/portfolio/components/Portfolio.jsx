@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import {
   Html,
   useProgress,
@@ -11,8 +11,9 @@ import {
   Stage,
   AsciiRenderer,
   Center,
-  Stars,
   Sparkles,
+  Points,
+  PointMaterial,
 } from "@react-three/drei";
 
 import Lights from "./Lights";
@@ -25,6 +26,16 @@ import Tubes from "./Tubes";
 import Picture from "./Picture";
 import { EffectComposer, SSAO } from "@react-three/postprocessing";
 import Bubbles from "./Bubbles";
+import { useFrame } from "@react-three/fiber";
+import {
+  DebugLayerMaterial,
+  Noise,
+  LayerMaterial,
+  Normal,
+  Gradient,
+} from "lamina";
+import * as THREE from "three";
+import { useControls } from "leva";
 
 const PAGES = 5;
 
@@ -49,38 +60,44 @@ function Portfolio() {
           <OrbitControls />
           <Stats />
 
-          <fog attach="fog" args={["#4295c7", 1, 150]} />
+          {/* <fog attach="fog" args={["#4295c7", 1, 150]} /> */}
 
           <Bubbles />
           <Welcome />
 
-          <Stars
-            radius={100}
-            depth={50}
-            count={5000}
-            factor={4}
-            saturation={0}
-            fade
-          />
+          <Bg />
 
           <Environment
             frames={degraded ? 1 : Infinity}
             // resolution={720}
-            background
+            // background
             blur={1}
           >
             <Lights />
           </Environment>
 
           {/* <Tubes /> */}
-          {/* <PerspectiveCamera
-            makeDefault
-            position={[0, 0, 4]}
-            rotation={[0, 0.5, 0]}
-          /> */}
         </StyledCanvas>
       </Suspense>
     </>
+  );
+}
+
+function Bg() {
+  const mesh = useRef();
+  useFrame((state, delta) => {
+    mesh.current.rotation.x =
+      mesh.current.rotation.y =
+      mesh.current.rotation.z +=
+        delta * 0.4;
+  });
+  return (
+    <mesh ref={mesh} scale={30}>
+      <sphereGeometry args={[1, 64, 64]} />
+      <DebugLayerMaterial attach="material" side={THREE.BackSide}>
+        <Gradient colorA={"#00b2ca"} colorB={"#fbd1a2"} />
+      </DebugLayerMaterial>
+    </mesh>
   );
 }
 

@@ -33,10 +33,6 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
     (group.current.position.z += delta * 10) > 20 &&
       (group.current.position.z = -60);
 
-    bg.current.offset.x = state.clock.elapsedTime * 0.1;
-    bg.current.offset.y = state.clock.elapsedTime * 0.1;
-    // bg.offset.z = state.clock.elapsedTime * 0.1;
-
     ceilingRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.6) * 2;
   });
 
@@ -54,7 +50,7 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
         ref={ceilingRef}
         form="circle"
         intensity={3}
-        color={"red"}
+        color={"white"}
         rotation={[Math.PI / 2, 0, 0]}
         position={[0, 4, -3]}
         scale={[3, 1, 3]}
@@ -77,7 +73,7 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
           {positions.map((x, i) => (
             <Lightformer
               key={i}
-              color={"red"}
+              color={"white"}
               form="circle"
               intensity={2}
               rotation={[Math.PI / 2, 0, 0]}
@@ -92,33 +88,13 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
       <Float speed={5} floatIntensity={2} rotationIntensity={2}>
         <Lightformer
           form="ring"
-          color="red"
+          color="white"
           intensity={1}
           scale={1}
           position={[0, 0, 0]}
           target={[0, 0, 0]}
         />
       </Float>
-      {/* Background */}
-      <mesh scale={1}>
-        <sphereGeometry args={[80, 220, 220]} />
-        <DebugLayerMaterial side={THREE.BackSide}>
-          <Color color="#000" alpha={0.1} mode="multiply" />
-          <Noise
-            ref={bg}
-            colorA={"#1A5276"}
-            colorB={"#2E86C1"}
-            colorC={"#0E4D92"}
-            colorD={"#5499C7"}
-            alpha={1}
-            mode="normal"
-            near={0}
-            offset={[0, 0, 0]}
-            far={300}
-            origin={[100, 100, 100]}
-          />
-        </DebugLayerMaterial>
-      </mesh>
     </>
   );
 }

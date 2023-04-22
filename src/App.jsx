@@ -23,13 +23,13 @@ function App() {
       <BrowserRouter>
         <Menu />
         <Routes>
-          <Route index element={<FlowField />} />
+          <Route path="flow-field" element={<FlowField />} />
           <Route path="flow-field-circle" element={<FlowFieldCircle />} />
           <Route path="wave" element={<WaveScene />} />
           <Route path="bees-and-bombs" element={<BeesAndBombs />} />
           <Route path="room" element={<RoomScene />} />
           <Route path="terrain" element={<Terrain />} />
-          <Route path="portfolio" element={<Portfolio />} />
+          <Route index element={<Portfolio />} />
           <Route path="perlin" element={<Perlin />} />
           <Route path="cardioid" element={<Cardioid />} />
           <Route path="sphere" element={<Sphere />} />
