@@ -1,7 +1,15 @@
-import React, { useRef } from "react";
-import { Instance, Instances, Text } from "@react-three/drei";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Html,
+  Instance,
+  Instances,
+  ScrollControls,
+  Text,
+  useScroll,
+} from "@react-three/drei";
 import { SuggestMe } from "../App.styled";
 import { MathUtils } from "three";
+import gsap from "gsap";
 import { useFrame } from "@react-three/fiber";
 import {
   Color,
@@ -10,28 +18,51 @@ import {
   Depth,
   LayerMaterial,
   Displace,
+  Gradient,
+  Fresnel,
 } from "lamina";
 import * as THREE from "three";
+import { useControls } from "leva";
+import colors from "nice-color-palettes";
 
-const particles = Array.from({ length: 25 }, () => ({
+const particles = Array.from({ length: 20 }, () => ({
   factor: MathUtils.randInt(0.1, 8),
   speed: MathUtils.randFloat(0.01, 0.4),
   xFactor: MathUtils.randFloatSpread(5),
-  yFactor: MathUtils.randFloatSpread(5),
+  yFactor: MathUtils.randFloatSpread(6),
   zFactor: MathUtils.randFloatSpread(15),
 }));
 
 export default function Bubbles() {
   const ref = useRef();
-  useFrame(
-    (state, delta) =>
-      void (ref.current.rotation.y = MathUtils.damp(
-        ref.current.rotation.y,
-        (-state.mouse.x * Math.PI) / 6,
-        2.75,
-        delta
-      ))
-  );
+  const data = useScroll();
+  const { transmission, roughness, envMapIntensity } = useControls({
+    transmission: { value: 1, min: 0, max: 1 },
+    roughness: { value: 0.5, min: 0, max: 1 },
+    envMapIntensity: { value: 0.8, min: 0, max: 10 },
+  });
+
+  const timeline = gsap.timeline({ paused: true }).to(ref?.current?.position, {
+    duration: 1,
+    y: 10,
+  });
+
+  useEffect(() => {
+    timeline.progress(data.offset);
+  }, [data.offset]);
+
+  useFrame((state, delta) => {
+    ref.current.rotation.y = MathUtils.damp(
+      ref.current.rotation.y,
+      (-state.mouse.x * Math.PI) / 6,
+      2.75,
+      delta
+    );
+
+    ref.current.position.y = data.offset * 10;
+  });
+  timeline.progress(data.offset);
+  const [paletteIndex, setPaletteIndex] = useState(57);
 
   return (
     <Instances
@@ -44,23 +75,28 @@ export default function Bubbles() {
       <sphereGeometry args={[1, 32, 32]} />
 
       {particles.map((data, i) => {
-        const colorPallete = [
-          "#7dcfb6",
-          "#1d4e89",
-          "#00b2ca",
-          "#fbd1a2",
-          "#f79256",
-        ];
+        // const colorPallete = [
+        //   "#7dcfb6",
+        //   "#1d4e89",
+        //   "#00b2ca",
+        //   "#fbd1a2",
+        //   "#f79256",
+        // ];
+
+        // 1, 125, 137 index
+        const colorPallete = colors[paletteIndex];
         const color =
+          colorPallete[Math.floor(Math.random() * colorPallete.length)];
+        const color2 =
           colorPallete[Math.floor(Math.random() * colorPallete.length)];
         return (
           <>
-            {/* <meshStandardMaterial roughness={0.1} color={color} /> */}
             <meshPhysicalMaterial
-              transmission={1}
-              thickness={10}
-              roughness={0.5}
+              transmission={transmission}
+              roughness={roughness}
+              envMapIntensity={envMapIntensity}
             />
+
             <Bubble key={i} {...data} color={color} />
           </>
         );

@@ -39,11 +39,26 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
   return (
     <>
       {/* Ceiling */}
+
       <Lightformer
         intensity={3.75}
         rotation-x={Math.PI / 2}
         position={[0, 1, -9]}
         scale={[3, 10, 1]}
+      />
+
+      <Lightformer
+        intensity={0.75}
+        rotation-x={Math.PI / 3}
+        position={[0, 1, 0]}
+        scale={[3, 10, 3]}
+      />
+
+      <Lightformer
+        intensity={4.75}
+        rotation-x={Math.PI / 2}
+        position={[0, -30, 0]}
+        scale={[3, 10, 3]}
       />
 
       <Lightformer

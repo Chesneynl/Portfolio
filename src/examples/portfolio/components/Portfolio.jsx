@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import {
   Html,
   useProgress,
@@ -14,12 +14,15 @@ import {
   Sparkles,
   Points,
   PointMaterial,
+  ScrollControls,
 } from "@react-three/drei";
+import colors from "nice-color-palettes/200";
 
 import Lights from "./Lights";
 import { StyledCanvas } from "../App.styled";
 
 import React from "react";
+import gsap from "gsap";
 
 import Welcome from "./Welcome";
 import Tubes from "./Tubes";
@@ -35,7 +38,7 @@ import {
   Gradient,
 } from "lamina";
 import * as THREE from "three";
-import { useControls } from "leva";
+import Frontend from "./Frontend";
 
 const PAGES = 5;
 
@@ -46,12 +49,16 @@ function Loader() {
 
 function Portfolio() {
   const [degraded, degrade] = useState(false);
+  const timeline = gsap.timeline();
+  const welcomeTimeline = gsap.timeline();
+  const FrontendTimeline = gsap.timeline();
+  timeline.pause();
 
   return (
     <>
       <Suspense fallback={<span>loading...</span>}>
         <StyledCanvas
-          shadows
+          // shadows
           dpr={[1, 2]}
           // gl={{ antialias: false }}
           camera={{ fov: 30, position: [5, 0, 15] }}
@@ -59,43 +66,55 @@ function Portfolio() {
           <PerformanceMonitor onDecline={() => degrade(true)} />
           {/* <OrbitControls /> */}
           <Stats />
+          <ScrollControls pages={1}>
+            <Bubbles />
+            <Welcome timeline={timeline} />
+            <Frontend timeline={timeline} />
 
-          {/* <fog attach="fog" args={["#4295c7", 1, 150]} /> */}
-
-          <Bubbles />
-          <Welcome />
-
-          <Bg />
-
-          <Environment
-            frames={degraded ? 1 : Infinity}
-            // resolution={720}
-            // background
-            blur={1}
-          >
-            <Lights />
-          </Environment>
-
-          {/* <Tubes /> */}
+            <Tubes type="catmullrom" />
+            <Tubes type="centripetal" />
+            <Tubes type="chordal" />
+            <Bg timeline={timeline} />
+            <Environment frames={degraded ? 1 : Infinity} blur={1}>
+              <Lights />
+            </Environment>
+          </ScrollControls>
         </StyledCanvas>
       </Suspense>
     </>
   );
 }
 
-function Bg() {
+function Bg({ timeline }) {
   const mesh = useRef();
+  const backgroundRef = useRef();
+  const backgroundRef2 = useRef();
+
+  const [paletteIndex, setPaletteIndex] = useState(43);
   useFrame((state, delta) => {
     mesh.current.rotation.x =
       mesh.current.rotation.y =
       mesh.current.rotation.z +=
         delta * 0.4;
   });
+  const colorPallete = colors[paletteIndex];
+
   return (
     <mesh ref={mesh} scale={30}>
+      {/* <Html>
+        <div onClick={() => setPaletteIndex(paletteIndex - 1)}>
+          background -1
+        </div>
+        <div>{paletteIndex}</div>
+        <div onClick={() => setPaletteIndex(paletteIndex + 1)}>
+          background = 1
+        </div>
+      </Html> */}
       <sphereGeometry args={[1, 64, 64]} />
-      <LayerMaterial attach="material" side={THREE.BackSide}>
+      <LayerMaterial attach="material" reflectivity={1} side={THREE.BackSide}>
+        {/* <Gradient ref={backgroundRef} colorA={"#00b2ca"} colorB={"#fbd1a2"} /> */}
         <Gradient colorA={"#00b2ca"} colorB={"#fbd1a2"} />
+        {/* <Gradient colorA={colorPallete[0]} colorB={colorPallete[1]} /> */}
       </LayerMaterial>
     </mesh>
   );

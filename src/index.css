@@ -9,6 +9,8 @@ body {
   font-family: "inter-bold",  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow:hidden;
+  /* background: linear-gradient(to bottom, #00b2ca, #fbd1a2); */
 }
 
 .word-1 {
@@ -21,4 +23,20 @@ body {
 
 .my-name {
   color: purple;
+}
+
+/* Hide the scrollbar for webkit-based browsers */
+::-webkit-scrollbar {
+  width: 0.5em; /* Width of the scrollbar */
+  background-color: rgba(0, 0, 0, 0); /* Set the background color to transparent */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0); /* Set the thumb color to transparent */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0); /* Set the track color to transparent */
 }

@@ -21,20 +21,20 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Menu />
+        {/* <Menu /> */}
         <Routes>
-          <Route path="flow-field" element={<FlowField />} />
+          {/* <Route path="flow-field" element={<FlowField />} />
           <Route path="flow-field-circle" element={<FlowFieldCircle />} />
           <Route path="wave" element={<WaveScene />} />
           <Route path="bees-and-bombs" element={<BeesAndBombs />} />
           <Route path="room" element={<RoomScene />} />
-          <Route path="terrain" element={<Terrain />} />
+          <Route path="terrain" element={<Terrain />} /> */}
           <Route index element={<Portfolio />} />
-          <Route path="perlin" element={<Perlin />} />
+          {/* <Route path="perlin" element={<Perlin />} />
           <Route path="cardioid" element={<Cardioid />} />
           <Route path="sphere" element={<Sphere />} />
           <Route path="ray-marching" element={<RayMarching />} />
-          <Route path="ray-marching-2" element={<RayMarching2 />} />
+          <Route path="ray-marching-2" element={<RayMarching2 />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

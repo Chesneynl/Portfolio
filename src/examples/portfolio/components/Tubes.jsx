@@ -1,47 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Tube } from "@react-three/drei";
+import { Tube, useScroll } from "@react-three/drei";
+import { DebugLayerMaterial, Gradient, LayerMaterial } from "lamina";
 
-export default function Tubes() {
+export default function Tubes({ type }) {
   const curveRef = useRef(null);
   const objectRef = useRef(null);
-  const [time, setTime] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const data = useScroll();
 
   // Define the points that make up the spline curve
   const points = [
-    new THREE.Vector3(-2, 0, 0),
-    new THREE.Vector3(-1, 0.1, 0),
-    new THREE.Vector3(1, -0.1, 0.3),
-    new THREE.Vector3(2, 0, 0),
+    new THREE.Vector3(-3, 0, 0),
+    new THREE.Vector3(-1, 3, 0),
+    new THREE.Vector3(1, -3.1, 0.3),
+    new THREE.Vector3(3, 0, 0),
+    new THREE.Vector3(5, 0, 0),
   ];
 
   // Create a Catmull-Rom spline curve that passes through the points
-  const curve = new THREE.CatmullRomCurve3(points);
+  const curve = new THREE.CatmullRomCurve3(points, false, type, 0.8);
 
-  // Animate the object along the spline curve
-  useFrame(({ clock }) => {
-    const time = clock.getElapsedTime();
-
-    const position = curve.getPointAt((time % 4) / 4);
+  useFrame(({ camera }) => {
+    const position = curve.getPointAt(data.offset);
     objectRef.current.position.copy(position);
-
-    const tangent = curve.getTangentAt((time % 4) / 4).normalize();
-    objectRef.current.quaternion.setFromUnitVectors(
-      new THREE.Vector3(0, 1, 0),
-      tangent
-    );
   });
 
   return (
-    <group rotation={[Math.PI / 2, Math.PI / 2, 0]} position={[0, 0, 0.3]}>
+    <group rotation={[Math.PI / 2, -Math.PI / 2, 0]} position={[2, 0, 0]}>
       <mesh ref={objectRef}>
-        <sphereGeometry args={[0.1, 32, 32]} />
+        <sphereGeometry args={[0.03, 32, 32]} />
         <meshBasicMaterial color="white" />
       </mesh>
       <Tube args={[curve, 264, 0.01]}>
         <meshBasicMaterial attach="material" color="white" />
+        <LayerMaterial attach="material" side={THREE.BackSide}>
+          <Gradient colorA={"#1d4e89"} colorB={"#00b2ca"} />
+        </LayerMaterial>
       </Tube>
       <line ref={curveRef}>
         <lineDashedMaterial
