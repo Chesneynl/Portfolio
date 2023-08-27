@@ -59,25 +59,10 @@ export default function Welcome({ timeline }) {
     timeline.progress(data.offset);
   });
 
-  //   0
-  // :
-  // "#fc354c"
-  // 1
-  // :
-  // "#29221f"
-  // 2
-  // :
-  // "#13747d"
-  // 3
-  // :
-  // "#0abfbc"
-  // 4
-  // :
-  // "#fcf7c5"
   return (
     <>
       <Text
-        position={[-2, 0, 0]}
+        position={[-2, 0, 3]}
         anchorX="center"
         anchorY="middle"
         ref={textRef}

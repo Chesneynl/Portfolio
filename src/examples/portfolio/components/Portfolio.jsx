@@ -90,7 +90,7 @@ function Bg({ timeline }) {
   const backgroundRef = useRef();
   const backgroundRef2 = useRef();
 
-  const [paletteIndex, setPaletteIndex] = useState(43);
+  const [paletteIndex, setPaletteIndex] = useState(67);
   useFrame((state, delta) => {
     mesh.current.rotation.x =
       mesh.current.rotation.y =
@@ -98,6 +98,8 @@ function Bg({ timeline }) {
         delta * 0.4;
   });
   const colorPallete = colors[paletteIndex];
+
+  console.log({ timeline });
 
   return (
     <mesh ref={mesh} scale={30}>
@@ -111,10 +113,8 @@ function Bg({ timeline }) {
         </div>
       </Html> */}
       <sphereGeometry args={[1, 64, 64]} />
-      <LayerMaterial attach="material" reflectivity={1} side={THREE.BackSide}>
-        {/* <Gradient ref={backgroundRef} colorA={"#00b2ca"} colorB={"#fbd1a2"} /> */}
-        <Gradient colorA={"#00b2ca"} colorB={"#fbd1a2"} />
-        {/* <Gradient colorA={colorPallete[0]} colorB={colorPallete[1]} /> */}
+      <LayerMaterial attach="material" reflectivity={0} side={THREE.BackSide}>
+        <Gradient colorA={colorPallete[0]} colorB={colorPallete[1]} />
       </LayerMaterial>
     </mesh>
   );

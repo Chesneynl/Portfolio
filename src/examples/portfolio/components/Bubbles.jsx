@@ -36,11 +36,11 @@ const particles = Array.from({ length: 20 }, () => ({
 export default function Bubbles() {
   const ref = useRef();
   const data = useScroll();
-  const { transmission, roughness, envMapIntensity } = useControls({
-    transmission: { value: 1, min: 0, max: 1 },
-    roughness: { value: 0.5, min: 0, max: 1 },
-    envMapIntensity: { value: 0.8, min: 0, max: 10 },
-  });
+  // const { transmission, roughness, envMapIntensity } = useControls({
+  //   transmission: { value: 1, min: 0, max: 1 },
+  //   roughness: { value: 0.23, min: 0, max: 1 },
+  //   envMapIntensity: { value: 0.4, min: 0, max: 10 },
+  // });
 
   const timeline = gsap.timeline({ paused: true }).to(ref?.current?.position, {
     duration: 1,
@@ -75,15 +75,6 @@ export default function Bubbles() {
       <sphereGeometry args={[1, 32, 32]} />
 
       {particles.map((data, i) => {
-        // const colorPallete = [
-        //   "#7dcfb6",
-        //   "#1d4e89",
-        //   "#00b2ca",
-        //   "#fbd1a2",
-        //   "#f79256",
-        // ];
-
-        // 1, 125, 137 index
         const colorPallete = colors[paletteIndex];
         const color =
           colorPallete[Math.floor(Math.random() * colorPallete.length)];
@@ -92,9 +83,9 @@ export default function Bubbles() {
         return (
           <>
             <meshPhysicalMaterial
-              transmission={transmission}
-              roughness={roughness}
-              envMapIntensity={envMapIntensity}
+              transmission={1}
+              roughness={0.23}
+              envMapIntensity={0.4}
             />
 
             <Bubble key={i} {...data} color={color} />
