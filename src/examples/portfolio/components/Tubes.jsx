@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { Tube, useScroll } from "@react-three/drei";
-import { DebugLayerMaterial, Gradient, LayerMaterial } from "lamina";
+import { Gradient, LayerMaterial } from "lamina";
 
 export default function Tubes({ type }) {
   const curveRef = useRef(null);

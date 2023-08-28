@@ -47,10 +47,6 @@ export default function Bubbles() {
     y: 10,
   });
 
-  useEffect(() => {
-    timeline.progress(data.offset);
-  }, [data.offset]);
-
   useFrame((state, delta) => {
     ref.current.rotation.y = MathUtils.damp(
       ref.current.rotation.y,
@@ -61,7 +57,6 @@ export default function Bubbles() {
 
     ref.current.position.y = data.offset * 10;
   });
-  timeline.progress(data.offset);
   const [paletteIndex, setPaletteIndex] = useState(57);
 
   return (

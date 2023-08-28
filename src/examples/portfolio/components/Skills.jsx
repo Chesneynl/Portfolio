@@ -3,56 +3,37 @@ import { Center, Html, Text, useScroll } from "@react-three/drei";
 import gsap from "gsap";
 import { useFrame } from "@react-three/fiber";
 
-export default function Welcome({ timeline }) {
+export default function Skills({ timeline }) {
   const hiImRef = useRef();
-  const nameRef = useRef();
   const textRef = useRef();
-  const data = useScroll();
 
   useEffect(() => {
-    gsap.from(hiImRef.current.position, {
-      x: 10,
-      duration: 1,
-      ease: "power4.out",
-    });
-
-    gsap.from(nameRef.current.position, {
-      x: 10,
-      duration: 1,
-      delay: 0.2,
-      ease: "power4.out",
-    });
-
     timeline
       .to(
         textRef.current.position,
         {
-          y: 5,
+          x: -2,
           ease: "power4.out",
           duration: 0.3,
         },
-        0
+        1
       )
       .to(hiImRef.current.material, {
-        opacity: 0,
+        opacity: 1,
         ease: "power4.out",
-        duration: 0.1,
+        duration: 0.2,
       })
-      .to(nameRef.current.material, {
-        opacity: 0,
+      .to(textRef.current.material, {
+        x: -30,
         ease: "power4.out",
-        duration: 0.1,
+        duration: 0.2,
       });
   }, []);
-
-  useFrame(({ camera }) => {
-    timeline.progress(data.offset);
-  });
 
   return (
     <>
       <Text
-        position={[-2, 0, 0]}
+        position={[10, 0, 0]}
         anchorX="center"
         anchorY="middle"
         ref={textRef}
@@ -64,17 +45,7 @@ export default function Welcome({ timeline }) {
           font={"fonts/bebas.ttf"}
         >
           <meshBasicMaterial color={"#fc354c"} />
-          Chesney
-        </Text>
-        <Text
-          ref={nameRef}
-          position={[0, 0.22, 0]}
-          anchorY="top"
-          anchorX="left"
-          font={"fonts/bebas.ttf"}
-        >
-          Buitendijk
-          <meshBasicMaterial color={"#13747d"} />
+          Skills
         </Text>
       </Text>
     </>

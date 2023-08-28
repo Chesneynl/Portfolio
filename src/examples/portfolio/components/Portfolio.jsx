@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   Html,
   useProgress,
@@ -40,6 +40,7 @@ import {
 } from "lamina";
 import * as THREE from "three";
 import Frontend from "./Frontend";
+import Skills from "./Skills";
 
 const PAGES = 5;
 
@@ -68,6 +69,7 @@ function Portfolio() {
             <Bubbles />
             <Welcome timeline={timeline} />
             <Frontend timeline={timeline} />
+            <Skills timeline={timeline} />
 
             <Tubes type="catmullrom" />
             <Tubes type="centripetal" />
@@ -85,19 +87,47 @@ function Portfolio() {
 
 function Bg({ timeline }) {
   const mesh = useRef();
-  const backgroundRef = useRef();
-  const backgroundRef2 = useRef();
+  const data = useScroll();
 
-  const [paletteIndex, setPaletteIndex] = useState(67);
+  const lerpedColorRef = useRef(new THREE.Color());
+
+  const colorPallete = colors[67];
+  const colorStart = useMemo(() => new THREE.Color(colorPallete[0]), []);
+  const colorEnd = useMemo(() => new THREE.Color(colorPallete[1]), []);
+
+  const colorPallete2 = colors[102];
+  const colorStart2 = useMemo(() => new THREE.Color(colorPallete2[0]), []);
+  const colorEnd2 = useMemo(() => new THREE.Color(colorPallete2[1]), []);
+
+  const materialRef = useRef();
+  const gradientRef = useRef();
+
   useFrame((state, delta) => {
     mesh.current.rotation.x =
       mesh.current.rotation.y =
       mesh.current.rotation.z +=
         delta * 0.4;
-  });
-  const colorPallete = colors[paletteIndex];
 
-  console.log({ timeline });
+    let lerpColor = colorStart;
+    let lerpColor2 = colorEnd;
+
+    if (data.offset > 0.2) {
+      const lerpFactor = Math.sin(data.offset - 0.2);
+      lerpColor = new THREE.Color().lerpColors(
+        colorStart,
+        colorStart2,
+        lerpFactor
+      );
+      lerpColor2 = new THREE.Color().lerpColors(
+        colorEnd,
+        colorEnd2,
+        lerpFactor
+      );
+    }
+
+    gradientRef.current.colorA = lerpColor;
+    gradientRef.current.colorB = lerpColor2;
+  });
 
   return (
     <mesh ref={mesh} scale={30}>
@@ -110,9 +140,10 @@ function Bg({ timeline }) {
           background = 1
         </div>
       </Html> */}
+      <meshBasicMaterial ref={materialRef} />
       <sphereGeometry args={[1, 64, 64]} />
       <LayerMaterial attach="material" reflectivity={0} side={THREE.BackSide}>
-        <Gradient colorA={colorPallete[0]} colorB={colorPallete[1]} />
+        <Gradient ref={gradientRef} />
       </LayerMaterial>
     </mesh>
   );
