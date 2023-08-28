@@ -23,9 +23,6 @@ export default function Welcome({ timeline }) {
       ease: "power4.out",
     });
 
-    gsap.from(hiImRef.current.material, { opacity: 0, duration: 1 }, 0);
-    gsap.from(nameRef.current.material, { opacity: 0, duration: 1 }, 0);
-
     timeline.to(
       textRef.current.position,
       {

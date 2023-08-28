@@ -15,6 +15,7 @@ import {
   Points,
   PointMaterial,
   ScrollControls,
+  useScroll,
 } from "@react-three/drei";
 import colors from "nice-color-palettes/200";
 
@@ -50,9 +51,6 @@ function Loader() {
 function Portfolio() {
   const [degraded, degrade] = useState(false);
   const timeline = gsap.timeline();
-  const welcomeTimeline = gsap.timeline();
-  const FrontendTimeline = gsap.timeline();
-  timeline.pause();
 
   return (
     <>
