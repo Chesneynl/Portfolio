@@ -24,6 +24,11 @@ export default function Frontned({ timeline }) {
         x: -10,
         ease: "power4.out",
         duration: 0.2,
+      })
+      .to(textRef.current.position, {
+        y: 10,
+        ease: "power4.out",
+        duration: 0.2,
       });
   }, []);
 

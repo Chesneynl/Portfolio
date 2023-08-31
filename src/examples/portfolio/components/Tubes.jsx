@@ -33,10 +33,10 @@ export default function Tubes({ type }) {
         <meshBasicMaterial color="white" />
       </mesh>
       <Tube args={[curve, 264, 0.01]}>
-        <meshBasicMaterial attach="material" color="white" />
-        <LayerMaterial attach="material" side={THREE.BackSide}>
+        <meshBasicMaterial attach="material" color="black" />
+        {/* <LayerMaterial attach="material" side={THREE.BackSide}>
           <Gradient colorA={"#1d4e89"} colorB={"#00b2ca"} />
-        </LayerMaterial>
+        </LayerMaterial> */}
       </Tube>
       <line ref={curveRef}>
         <lineDashedMaterial

@@ -2,18 +2,10 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   Html,
   useProgress,
-  OrbitControls,
   PerformanceMonitor,
   Environment,
   Stats,
-  PerspectiveCamera,
   Text,
-  Stage,
-  AsciiRenderer,
-  Center,
-  Sparkles,
-  Points,
-  PointMaterial,
   ScrollControls,
   useScroll,
 } from "@react-three/drei";
@@ -27,7 +19,6 @@ import gsap from "gsap";
 
 import Welcome from "./Welcome";
 import Tubes from "./Tubes";
-import Picture from "./Picture";
 import { EffectComposer, SSAO } from "@react-three/postprocessing";
 import Bubbles from "./Bubbles";
 import { useFrame } from "@react-three/fiber";
@@ -41,6 +32,8 @@ import {
 import * as THREE from "three";
 import Frontend from "./Frontend";
 import Skills from "./Skills";
+import Projects from "./Projects";
+import { useControls } from "leva";
 
 const PAGES = 5;
 
@@ -70,6 +63,12 @@ function Portfolio() {
             <Welcome timeline={timeline} />
             <Frontend timeline={timeline} />
             <Skills timeline={timeline} />
+            <Projects timeline={timeline} />
+            {/* <Input
+              scale={2}
+              position={[0.4, 0.25, -1]}
+              rotation={[0.5, -0.5, -0.5]}
+            /> */}
 
             <Tubes type="catmullrom" />
             <Tubes type="centripetal" />
@@ -95,7 +94,7 @@ function Bg({ timeline }) {
   const colorStart = useMemo(() => new THREE.Color(colorPallete[0]), []);
   const colorEnd = useMemo(() => new THREE.Color(colorPallete[1]), []);
 
-  const colorPallete2 = colors[102];
+  const colorPallete2 = colors[5];
   const colorStart2 = useMemo(() => new THREE.Color(colorPallete2[0]), []);
   const colorEnd2 = useMemo(() => new THREE.Color(colorPallete2[1]), []);
 
@@ -146,6 +145,50 @@ function Bg({ timeline }) {
         <Gradient ref={gradientRef} />
       </LayerMaterial>
     </mesh>
+  );
+}
+
+export const ControlledInput = (props) => {
+  const { value, onChange, ...rest } = props;
+  const [cursor, setCursor] = useState(null);
+  const ref = useRef(null);
+  useEffect(() => {
+    const input = ref.current;
+    if (input) input.setSelectionRange(cursor, cursor);
+  }, [ref, cursor, value]);
+  const handleChange = (e) => {
+    setCursor(e.target.selectionStart);
+    onChange && onChange(e);
+  };
+  return <input ref={ref} value={value} onChange={handleChange} {...rest} />;
+};
+
+function Input(props) {
+  const [text, set] = useState("hello world ...");
+  return (
+    <group {...props}>
+      <Text
+        position={[-1.2, -0.022, 0]}
+        anchorX="0px"
+        font="/Inter-Regular.woff"
+        fontSize={0.335}
+        letterSpacing={-0.0}
+      >
+        {text}
+        <meshStandardMaterial color="black" />
+      </Text>
+      <mesh position={[0, -0.022, 0]} scale={[2.5, 0.48, 1]}>
+        <planeGeometry />
+        <meshBasicMaterial transparent opacity={0.3} depthWrite={false} />
+      </mesh>
+      <Html transform>
+        <ControlledInput
+          type={text}
+          onChange={(e) => set(e.target.value)}
+          value={text}
+        />
+      </Html>
+    </group>
   );
 }
 

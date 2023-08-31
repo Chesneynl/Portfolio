@@ -9,22 +9,18 @@ export default function Skills({ timeline }) {
 
   useEffect(() => {
     timeline
-      .to(
-        textRef.current.position,
-        {
-          x: -2,
-          ease: "power4.out",
-          duration: 0.3,
-        },
-        1
-      )
+      .to(textRef.current.position, {
+        x: 0,
+        ease: "power4.out",
+        duration: 0.3,
+      })
       .to(hiImRef.current.material, {
         opacity: 1,
         ease: "power4.out",
         duration: 0.2,
       })
-      .to(textRef.current.material, {
-        x: -30,
+      .to(textRef.current.position, {
+        x: -10,
         ease: "power4.out",
         duration: 0.2,
       });
@@ -33,15 +29,15 @@ export default function Skills({ timeline }) {
   return (
     <>
       <Text
-        position={[10, 0, 0]}
+        position={[30, 0, 0]}
         anchorX="center"
         anchorY="middle"
         ref={textRef}
       >
         <Text
           ref={hiImRef}
-          anchorY="bottom"
-          anchorX="left"
+          anchorY="middle"
+          anchorX="center"
           font={"fonts/bebas.ttf"}
         >
           <meshBasicMaterial color={"#fc354c"} />
