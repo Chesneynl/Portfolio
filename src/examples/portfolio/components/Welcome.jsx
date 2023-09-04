@@ -52,7 +52,7 @@ export default function Welcome({ timeline }) {
   return (
     <>
       <Text
-        position={[-2, 0, 0]}
+        position={[-4, 0, 0]}
         anchorX="center"
         anchorY="middle"
         ref={textRef}

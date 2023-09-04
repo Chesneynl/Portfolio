@@ -77,11 +77,15 @@ export default function Bubbles() {
           colorPallete[Math.floor(Math.random() * colorPallete.length)];
         return (
           <>
-            <meshPhysicalMaterial
+            {/* <meshPhysicalMaterial
               transmission={1}
               roughness={0.23}
               envMapIntensity={0.4}
-            />
+              clearcoatRoughness={0}
+              metalness={0.1}
+            /> */}
+
+            <meshStandardMaterial color="hotpink" />
 
             <Bubble key={i} {...data} color={color} />
           </>
