@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { Center, Html, Text, useScroll } from '@react-three/drei';
-import gsap from 'gsap';
+import { Center, Text, Html, useScroll } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
+import gsap from 'gsap';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 
 export default function Welcome({ timeline }) {
     const hiImRef = useRef();
@@ -10,28 +10,27 @@ export default function Welcome({ timeline }) {
     const data = useScroll();
 
     useEffect(() => {
-        gsap.from(hiImRef.current.position, {
-            x: 10,
-            duration: 1,
-            ease: 'power4.out',
-        });
-
-        gsap.from(nameRef.current.position, {
-            x: 10,
-            duration: 1,
-            ease: 'power4.out',
-        });
+        if (!nameRef.current) return;
+        console.log('yoyoyo');
+        // const tl = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: nameRef.current,
+        //         start: 'top bottom',
+        //         end: 'bottom 10%',
+        //         scrub: 1,
+        //     },
+        // });
 
         timeline
-            .to(
-                textRef.current.position,
-                {
-                    y: 5,
-                    ease: 'power4.out',
-                    duration: 0.3,
-                },
-                0,
-            )
+            // .to(
+            //     textRef.current.position,
+            //     {
+            //         y: 5,
+            //         ease: 'power4.out',
+            //         duration: 0.3,
+            //     },
+            //     0,
+            // )
             .to(hiImRef.current.material, {
                 opacity: 0,
                 ease: 'power4.out',
@@ -40,9 +39,15 @@ export default function Welcome({ timeline }) {
             .to(nameRef.current.material, {
                 opacity: 0,
                 ease: 'power4.out',
+                scrollTrigger: {
+                    trigger: textRef.current,
+                    start: 'top 50%',
+                    end: 'top 20%',
+                    scrub: true,
+                },
                 duration: 0.1,
             });
-    }, []);
+    }, [nameRef?.current]);
 
     useFrame(({ camera }) => {
         timeline.progress(data.offset);

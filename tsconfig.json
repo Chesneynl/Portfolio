@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "lib": ["es6", "dom", "dom.iterable", "esnext"],
+        "module": "ESNEXT",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2017",
+        "incremental": true
+    },
+    "exclude": ["node_modules", "../node_modules"],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.jsx",  "next-env.d.ts", "next.config.js", "src/examples/portfolio/components/Portfolio.jsx"]
+}

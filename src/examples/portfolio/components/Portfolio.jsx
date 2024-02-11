@@ -13,22 +13,30 @@ import {
     ScrollControls,
     Sparkles,
     Stars,
+    Line,
     useProgress,
     useScroll,
+    shaderMaterial,
+    Stats,
+    PerspectiveCamera,
 } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, SSAO, Vignette } from '@react-three/postprocessing';
 import gsap from 'gsap';
 import { DebugLayerMaterial, Gradient, LayerMaterial, Noise, Normal } from 'lamina';
 import { useControls } from 'leva';
 import colors from 'nice-color-palettes/200';
 import { forwardRef, Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
+import * as easings from 'd3-ease';
 import * as THREE from 'three';
 
 import { StyledCanvas } from '../App.styled';
 import Tubes from './Tubes';
 import Welcome from './Welcome';
+import FlowField from './FlowField';
+import Projects from './Projects';
+import { useTrailTexture } from './useTrailTexture';
 const AnimatedMaterial = a(MeshDistortMaterial);
 
 const PAGES = 5;
@@ -42,6 +50,10 @@ function Portfolio() {
     const [degraded, degrade] = useState(false);
     const timeline = gsap.timeline();
 
+    const { zIndex } = useControls('position', {
+        zIndex: { value: 0, min: 0, max: 30, step: 1 },
+    });
+
     return (
         <>
             <Suspense fallback={<span>loading...</span>}>
@@ -49,20 +61,24 @@ function Portfolio() {
                     shadows
                     dpr={[1, 2]}
                     // gl={{ antialias: false }}
-                    // camera={{ fov: 30, position: [5, 0, 15] }}
-                    camera={{ position: [-0.1, 0, 8], fov: 50 }}
+                    // camera={{ position: [-0.1, 0, 8], fov: 50 }}
                 >
                     {/* <Effects /> */}
-                    <BackgroundAndLights />
+
+                    <Stats />
+                    {/* <group rotation-x={Math.PI} position={[0, 0, zIndex]}>
+                        <Thing scale={3} />
+                    </group> */}
 
                     <Boxes timeline={timeline} />
+                    {/* <FlowField width={5} height={5} segments={100} /> */}
 
-                    {/*<PerformanceMonitor onDecline={() => degrade(true)} />*/}
-                    {/*/!* <OrbitControls /> *!/*/}
-                    {/*<Stats />*/}
                     <ScrollControls pages={1}>
-                        {/*<Bubbles />*/}
+                        <BackgroundAndLights />
                         <Welcome timeline={timeline} />
+                        <MovingCamera />
+                        <Projects timeline={timeline} />
+                        <Tubes />
 
                         <Environment preset="warehouse" />
                     </ScrollControls>
@@ -72,15 +88,97 @@ function Portfolio() {
     );
 }
 
+function MovingCamera() {
+    const cameraRef = useRef();
+    const timeline = gsap.timeline();
+    const { progress } = useProgress();
+    const { offset, scroll } = useScroll();
+    const data = useScroll();
+
+    useLayoutEffect(() => {
+        timeline.to(cameraRef.current.position, {
+            y: -10,
+            ease: 'power4.out',
+        });
+    }, []);
+
+    useFrame(() => {
+        timeline.progress(data.offset);
+    });
+
+    return <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 0, 8]} />;
+}
+
+const ParticleSystem = () => {
+    const splineRef = useRef();
+    const particlesRef = useRef();
+
+    useEffect(() => {
+        // Create a spline curve
+        const spline = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-5, 0, 0),
+            new THREE.Vector3(-2, 2, 0),
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(2, -2, 0),
+            new THREE.Vector3(5, 0, 0),
+        ]);
+
+        splineRef.current = spline;
+
+        // Create particles along the spline
+        const particles = new Array(1000).fill().map(() => {
+            const position = new THREE.Vector3();
+            const tangent = new THREE.Vector3();
+            const axis = new THREE.Vector3(0, 1, 0);
+
+            return { position, tangent, axis };
+        });
+
+        particlesRef.current = particles;
+    }, []);
+
+    useEffect(() => {
+        // Update particles along the spline
+        if (splineRef.current && particlesRef.current) {
+            const spline = splineRef.current;
+            const particles = particlesRef.current;
+
+            particles.forEach((particle, index) => {
+                const t = index / particles.length;
+                spline.getPointAt(t, particle.position);
+                spline.getTangentAt(t, particle.tangent);
+                particle.axis.crossVectors(particle.tangent, axis).normalize();
+            });
+        }
+    }, [splineRef, particlesRef]);
+
+    return (
+        <>
+            <mesh>
+                <tubeBufferGeometry args={[splineRef.current, 100, 0.1, 8, false]} />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+
+            {particlesRef.current.map((particle, index) => (
+                <Html key={index} center>
+                    <div style={{ position: 'absolute', transform: `translate(-50%, -50%)` }}>•</div>
+                </Html>
+            ))}
+        </>
+    );
+};
+
 function Bg({ timeline }) {
     const mesh = useRef();
-    // const data = useScroll();
+    const data = useScroll();
 
     const lerpedColorRef = useRef(new THREE.Color());
 
     const colorPallete = colors[67];
     const colorStart = useMemo(() => new THREE.Color('black'), []);
     const colorEnd = useMemo(() => new THREE.Color('#290345'), []);
+    const colorStart2 = useMemo(() => new THREE.Color('black'), []);
+    const colorEnd2 = useMemo(() => new THREE.Color('#450027'), []);
 
     const materialRef = useRef();
     const gradientRef = useRef();
@@ -91,11 +189,9 @@ function Bg({ timeline }) {
         let lerpColor = colorStart;
         let lerpColor2 = colorEnd;
 
-        // if (data.offset > 0.2) {
-        //     const lerpFactor = Math.sin(data.offset, 0.2);
-        //     lerpColor = new THREE.Color().lerpColors(colorStart, colorStart2, lerpFactor);
-        //     lerpColor2 = new THREE.Color().lerpColors(colorEnd, colorEnd2, lerpFactor);
-        // }
+        const lerpFactor = Math.sin(data.offset, 0.2);
+        lerpColor = new THREE.Color().lerpColors(colorStart, colorStart2, lerpFactor);
+        lerpColor2 = new THREE.Color().lerpColors(colorEnd, colorEnd2, lerpFactor);
 
         gradientRef.current.colorA = lerpColor;
         gradientRef.current.colorB = lerpColor2;
@@ -112,84 +208,150 @@ function Bg({ timeline }) {
     );
 }
 
+const DisplaceMaterial = shaderMaterial(
+    { map: null, color: new THREE.Color('black'), color2: new THREE.Color('white'), amount: 1 },
+    `
+      uniform sampler2D map;
+      uniform float amount;
+  
+      varying float vDisplace;
+      void main() {
+        float displace = texture2D(map, uv).r;
+        vDisplace = displace;
+  
+        vec3 pos = position;
+        pos.z += displace * amount;
+  
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
+    `,
+    `
+      uniform vec3 color;
+      uniform vec3 color2;
+  
+      varying float vDisplace;
+      void main() {
+        vec3 col = mix(color, color2, vDisplace);
+        gl_FragColor.rgba = vec4(col, 1.0);
+      }
+    `,
+);
+extend({ DisplaceMaterial });
+
+function Thing(props) {
+    const { debug, ease, zIndex, ...conf } = useControls('Trail', {
+        size: { value: 64, min: 8, max: 256, step: 8 },
+        radius: { value: 0.3, min: 0, max: 1 },
+        maxAge: { value: 750, min: 300, max: 1000 },
+        interpolate: { value: 0, min: 0, max: 2, step: 1 },
+        smoothing: { value: 0, min: 0, max: 0.99, step: 0.01 },
+        minForce: { value: 0.3, min: 0, max: 1, step: 0.1 },
+        intensity: { value: 0.2, min: 0, max: 1, step: 0.1 },
+        blend: { value: 'screen', options: ['source-over', 'screen'] },
+        ease: { value: 'easeCircleOut', options: Object.keys(easings) },
+        debug: false,
+    });
+    const disp = useControls('Displacement', {
+        amount: { value: 0.1, min: 0, max: 0.5 },
+    });
+
+    const { texture, onMove } = useTrailTexture({ ...conf, ease: easings[ease] });
+
+    return (
+        <>
+            <mesh onPointerMove={onMove} {...props}>
+                <planeGeometry args={[1, 1, 10, 10]} />
+                {debug && <meshBasicMaterial map={texture} />}
+                <displaceMaterial
+                    key={DisplaceMaterial.key}
+                    map={texture}
+                    side={THREE.DoubleSide}
+                    {...disp}
+                    wireframe
+                />
+            </mesh>
+        </>
+    );
+}
+
 function Boxes({ timeline }) {
     const box1 = useRef();
     const box2 = useRef();
     const box3 = useRef();
     const box4 = useRef();
 
-    const { color } = useControls({
+    const { color } = useControls('boxes', {
         color: '#111d2e',
     });
 
-    useEffect(() => {
-        gsap.from(box1.current.scale, {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 5,
-            ease: 'power4.out',
-        });
-        gsap.from(box2.current.scale, {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 2,
-            ease: 'power4.out',
-        });
-        gsap.from(box3.current.scale, {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 2.5,
-            ease: 'power4.out',
-        });
-        gsap.from(box4.current.scale, {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 4,
-            ease: 'power4.out',
-        });
+    // useLayoutEffect(() => {
+    //     gsap.from(box1.current.scale, {
+    //         x: 0,
+    //         y: 0,
+    //         z: 0,
+    //         duration: 5,
+    //         ease: 'power4.out',
+    //     });
+    //     gsap.from(box2.current.scale, {
+    //         x: 0,
+    //         y: 0,
+    //         z: 0,
+    //         duration: 2,
+    //         ease: 'power4.out',
+    //     });
+    //     gsap.from(box3.current.scale, {
+    //         x: 0,
+    //         y: 0,
+    //         z: 0,
+    //         duration: 2.5,
+    //         ease: 'power4.out',
+    //     });
+    //     gsap.from(box4.current.scale, {
+    //         x: 0,
+    //         y: 0,
+    //         z: 0,
+    //         duration: 4,
+    //         ease: 'power4.out',
+    //     });
 
-        timeline
-            .to(
-                box1.current.position,
-                {
-                    y: 10,
-                    ease: 'power4.out',
-                    duration: 0.3,
-                },
-                0,
-            )
-            .to(
-                box2.current.position,
-                {
-                    y: 10,
-                    ease: 'power4.out',
-                    duration: 0.3,
-                },
-                0,
-            )
-            .to(
-                box3.current.position,
-                {
-                    y: 10,
-                    ease: 'power4.out',
-                    duration: 0.3,
-                },
-                0,
-            )
-            .to(
-                box4.current.position,
-                {
-                    y: 10,
-                    ease: 'power4.out',
-                    duration: 0.3,
-                },
-                0,
-            );
-    }, []);
+    //     timeline
+    //         .to(
+    //             box1.current.position,
+    //             {
+    //                 y: 10,
+    //                 ease: 'power4.out',
+    //                 duration: 0.3,
+    //             },
+    //             0,
+    //         )
+    //         .to(
+    //             box2.current.position,
+    //             {
+    //                 y: 10,
+    //                 ease: 'power4.out',
+    //                 duration: 0.3,
+    //             },
+    //             0,
+    //         )
+    //         .to(
+    //             box3.current.position,
+    //             {
+    //                 y: 10,
+    //                 ease: 'power4.out',
+    //                 duration: 0.3,
+    //             },
+    //             0,
+    //         )
+    //         .to(
+    //             box4.current.position,
+    //             {
+    //                 y: 10,
+    //                 ease: 'power4.out',
+    //                 duration: 0.3,
+    //             },
+    //             0,
+    //         );
+    // }, []);
 
     return (
         <>
@@ -230,18 +392,13 @@ const particles = Array.from({ length: 20 }, () => ({
 }));
 
 function BackgroundAndLights() {
-    const { color } = useControls({
-        color: '#111d2e',
-    });
-
     return (
         <>
-            {/* <Tubes /> */}
             <Bg />
             {/* <fog attach="fog" args={[color, 10, 50]} /> */}
             <RandomizedLight castShadow amount={8} frames={100} position={[5, 5, -10]} />
-            <Sparkles count={50} scale={10} size={6} color="#14396c" speed={0.4} />
-            <Stars radius={100} depth={50} count={100} factor={4} saturation={0} fade speed={1} />
+            {/* <Sparkles count={50} scale={10} size={6} color="#14396c" speed={0.4} /> */}
+
             <Environment preset="studio" />
             <ambientLight />
             <pointLight position={[15, 15, 15]} intensity={1} />
@@ -281,9 +438,16 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
     // Set up state for the hovered and active state
     const [hovered, setHover] = useState(false);
     const [active, setActive] = useState(false);
-    // Subscribe this component to the render-loop, rotate the mesh every frame
 
-    // Return view, these are regular three.js elements expressed in JSX
+    const { smoothness, radius, bevelSegments, roughness, creaseAngle, emissiveIntensity } = useControls({
+        smoothness: { value: 10, min: 0, max: 100, step: 1 },
+        bevelSegments: { value: 10, min: 0, max: 100, step: 1 },
+        creaseAngle: { value: 0.4, min: 0, max: 2, step: 0.1 },
+        roughness: { value: 0.3, min: 0, max: 2, step: 0.1 },
+        emissiveIntensity: { value: 0.5, min: 0, max: 2, step: 0.1 },
+        radius: { value: 0.05, min: 0, max: 0.5, step: 0.01 },
+    });
+
     return (
         <mesh
             {...props}
@@ -301,16 +465,16 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
             >
                 <RoundedBox
                     args={[1, 1, 1]} // Width, height, depth. Default is [1, 1, 1]
-                    radius={0.1} // Radius of the rounded corners. Default is 0.05
-                    smoothness={10} // The number of curve segments. Default is 4
-                    bevelSegments={10} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
-                    creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
+                    radius={radius} // Radius of the rounded corners. Default is 0.05
+                    smoothness={smoothness} // The number of curve segments. Default is 4
+                    bevelSegments={bevelSegments} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
+                    creaseAngle={creaseAngle} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
                 >
                     <meshStandardMaterial
                         emissive={hovered ? 'red' : 'blue'}
                         color={color}
-                        roughness={0}
-                        emissiveIntensity={0.5}
+                        roughness={roughness}
+                        emissiveIntensity={emissiveIntensity}
                     />
                     {/* <meshPhongMaterial color={hovered ? 'red' : color} /> */}
                 </RoundedBox>
