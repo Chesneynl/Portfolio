@@ -8,7 +8,7 @@ import { useControls, button } from 'leva';
 export default function Tubes({ type }) {
     const curveRef = useRef(null);
     const objectRef = useRef(null);
-    const data = useScroll();
+    // const data = useScroll();
 
     const [points, setPoints] = useState([
         new THREE.Vector3(-4.4, 0, 0.1),
@@ -53,20 +53,20 @@ export default function Tubes({ type }) {
     // Create a Catmull-Rom spline curve that passes through the points
     const curve = new THREE.CatmullRomCurve3(points, false, type, 0.8);
 
-    useFrame(({ state, camera }) => {
-        const position = curve.getPointAt(data.offset);
-        objectRef.current.position.copy(position);
+    // useFrame(({ state, camera }) => {
+    //     const position = curve.getPointAt(data.offset);
+    //     objectRef.current.position.copy(position);
 
-        // Calculate tangent to the curve to determine rotation
-        const tangent = curve.getTangentAt(data.offset).normalize();
+    //     // Calculate tangent to the curve to determine rotation
+    //     const tangent = curve.getTangentAt(data.offset).normalize();
 
-        // Calculate a normal vector based on the tangent
-        const normal = new THREE.Vector3().crossVectors(tangent, new THREE.Vector3(0, 0, 1)).normalize();
+    //     // Calculate a normal vector based on the tangent
+    //     const normal = new THREE.Vector3().crossVectors(tangent, new THREE.Vector3(0, 0, 1)).normalize();
 
-        // Use quaternion to set rotation based on tangent and normal
-        const quaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal);
-        objectRef.current.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationFromQuaternion(quaternion));
-    });
+    //     // Use quaternion to set rotation based on tangent and normal
+    //     const quaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), normal);
+    //     objectRef.current.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationFromQuaternion(quaternion));
+    // });
 
     return (
         <group rotation={[Math.PI / 2, -Math.PI / 2, 0]} position={[2, 0, 0]}>

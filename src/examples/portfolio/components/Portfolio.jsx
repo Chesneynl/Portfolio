@@ -18,6 +18,7 @@ import {
     useScroll,
     shaderMaterial,
     Stats,
+    Scroll,
     PerspectiveCamera,
 } from '@react-three/drei';
 import { useFrame, extend } from '@react-three/fiber';
@@ -33,9 +34,10 @@ import * as THREE from 'three';
 
 import { StyledCanvas } from '../App.styled';
 import Tubes from './Tubes';
-import Welcome from './Welcome';
+import Welcome from './sections/Welcome';
+import Connect from './sections/Connect';
 import FlowField from './FlowField';
-import Projects from './Projects';
+import Projects from './sections/Projects';
 import { useTrailTexture } from './useTrailTexture';
 const AnimatedMaterial = a(MeshDistortMaterial);
 
@@ -48,7 +50,6 @@ function Loader() {
 
 function Portfolio() {
     const [degraded, degrade] = useState(false);
-    const timeline = gsap.timeline();
 
     const { zIndex } = useControls('position', {
         zIndex: { value: 0, min: 0, max: 30, step: 1 },
@@ -58,6 +59,7 @@ function Portfolio() {
         <>
             <Suspense fallback={<span>loading...</span>}>
                 <StyledCanvas
+                    className="absolute left-0 top-0"
                     shadows
                     dpr={[1, 2]}
                     // gl={{ antialias: false }}
@@ -70,43 +72,24 @@ function Portfolio() {
                         <Thing scale={3} />
                     </group> */}
 
-                    <Boxes timeline={timeline} />
+                    <Boxes />
                     {/* <FlowField width={5} height={5} segments={100} /> */}
 
-                    <ScrollControls pages={1}>
-                        <BackgroundAndLights />
-                        <Welcome timeline={timeline} />
-                        <MovingCamera />
-                        <Projects timeline={timeline} />
-                        <Tubes />
+                    <BackgroundAndLights />
 
-                        <Environment preset="warehouse" />
-                    </ScrollControls>
+                    {/* <Scroll html className="w-full"></Scroll> */}
+
+                    <Tubes />
+                    <Environment preset="warehouse" />
                 </StyledCanvas>
             </Suspense>
+            <div className="">
+                <Welcome />
+                <Projects />
+                <Connect />
+            </div>
         </>
     );
-}
-
-function MovingCamera() {
-    const cameraRef = useRef();
-    const timeline = gsap.timeline();
-    const { progress } = useProgress();
-    const { offset, scroll } = useScroll();
-    const data = useScroll();
-
-    useLayoutEffect(() => {
-        timeline.to(cameraRef.current.position, {
-            y: -10,
-            ease: 'power4.out',
-        });
-    }, []);
-
-    useFrame(() => {
-        timeline.progress(data.offset);
-    });
-
-    return <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 0, 8]} />;
 }
 
 const ParticleSystem = () => {
@@ -189,9 +172,9 @@ function Bg({ timeline }) {
         let lerpColor = colorStart;
         let lerpColor2 = colorEnd;
 
-        const lerpFactor = Math.sin(data.offset, 0.2);
-        lerpColor = new THREE.Color().lerpColors(colorStart, colorStart2, lerpFactor);
-        lerpColor2 = new THREE.Color().lerpColors(colorEnd, colorEnd2, lerpFactor);
+        // const lerpFactor = Math.sin(data.offset, 0.2);
+        // lerpColor = new THREE.Color().lerpColors(colorStart, colorStart2, lerpFactor);
+        // lerpColor2 = new THREE.Color().lerpColors(colorEnd, colorEnd2, lerpFactor);
 
         gradientRef.current.colorA = lerpColor;
         gradientRef.current.colorB = lerpColor2;
@@ -274,7 +257,8 @@ function Thing(props) {
     );
 }
 
-function Boxes({ timeline }) {
+function Boxes() {
+    const timeline = gsap.timeline();
     const box1 = useRef();
     const box2 = useRef();
     const box3 = useRef();
