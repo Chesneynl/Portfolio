@@ -156,6 +156,9 @@ function Bg({ timeline }) {
     const colorPallete = colors[67];
     const colorStart = useMemo(() => new THREE.Color('black'), []);
     const colorEnd = useMemo(() => new THREE.Color('#290345'), []);
+    // Pitch kleuren
+    // const colorStart = useMemo(() => new THREE.Color('#5318eb'), []);
+    // const colorEnd = useMemo(() => new THREE.Color('#ab6ef9'), []);
     const colorStart2 = useMemo(() => new THREE.Color('black'), []);
     const colorEnd2 = useMemo(() => new THREE.Color('#450027'), []);
 
@@ -420,6 +423,7 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
     const [active, setActive] = useState(false);
 
     const { smoothness, radius, bevelSegments, roughness, creaseAngle, emissiveIntensity } = useControls({
+        enableControls: { value: false, label: 'Enable Controls' },
         smoothness: { value: 10, min: 0, max: 100, step: 1 },
         bevelSegments: { value: 10, min: 0, max: 100, step: 1 },
         creaseAngle: { value: 0.4, min: 0, max: 2, step: 0.1 },
@@ -456,7 +460,6 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
                         roughness={roughness}
                         emissiveIntensity={emissiveIntensity}
                     />
-                    {/* <meshPhongMaterial color={hovered ? 'red' : color} /> */}
                 </RoundedBox>
             </Float>
         </mesh>

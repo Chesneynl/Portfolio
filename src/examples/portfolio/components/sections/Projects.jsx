@@ -32,23 +32,24 @@ export default function Projects() {
                     end: `bottom top`,
                     pin: containerRef.current,
                     markers: true,
+                    toggleActions: 'play none none reverse',
                 },
             });
 
+            const listItems = document.querySelectorAll('.project-item');
             // Projects animation
-            // gsap.from(splitText.words, {
-            //     yPercent: 100,
-            //     clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-            //     stagger: 0.1,
-            //     scrollTrigger: {
-            //         trigger: wrapperRef.current,
-            //         start: 'top top',
-            //         end: `bottom top`,
-            //         scrub: 1,
-            //         pin: containerRef.current,
-            //         markers: true,
-            //     },
-            // });
+            gsap.to(listItems, {
+                // yPercent: -100,
+                stagger: 0.3,
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: wrapperRef.current,
+                    start: 'top top',
+                    end: `bottom top`,
+
+                    markers: true,
+                },
+            });
         });
 
         return () => ctx.revert();
@@ -62,10 +63,9 @@ export default function Projects() {
                         Projects
                     </h2>
                 </div>
-                <div className="w-full gap-4 grid grid-cols-3" ref={rightDivRef}>
+                <div className="w-full gap-4 grid grid-cols-3 pt-36" ref={rightDivRef}>
                     {Array.from({ length: 20 }, (_, i) => (
-                        <div key={i} className="h-[300px] block bg-green-300 w-full text-sm">
-                            {' '}
+                        <div key={i} className="project-item h-[300px] block bg-green-300 w-full text-sm opacity-0">
                             Project {i}
                         </div>
                     ))}
