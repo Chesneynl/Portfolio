@@ -8,29 +8,29 @@ export default function Connect() {
     const containerRef = useRef();
     const textRef = useRef();
 
-    useLayoutEffect(() => {
-        if (!containerRef.current) return;
+    // useLayoutEffect(() => {
+    //     if (!containerRef.current) return;
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef?.current,
-                start: 'top 20%',
-                markers: true,
-            },
-        });
+    //     const tl = gsap.timeline({
+    //         scrollTrigger: {
+    //             trigger: containerRef?.current,
+    //             start: 'top 20%',
+    //             markers: true,
+    //         },
+    //     });
 
-        const splitText = new SplitType(textRef.current, {
-            types: 'words',
-        });
+    //     const splitText = new SplitType(textRef.current, {
+    //         types: 'words',
+    //     });
 
-        tl.from(splitText.words, {
-            yPercent: 100,
-            color: 'red',
-            opacity: 0,
-            clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-            stagger: 0.1,
-        });
-    }, []);
+    //     tl.from(splitText.words, {
+    //         yPercent: 100,
+    //         color: 'red',
+    //         opacity: 0,
+    //         clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+    //         stagger: 0.1,
+    //     });
+    // }, []);
 
     return (
         <div

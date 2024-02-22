@@ -34,11 +34,13 @@ import * as THREE from 'three';
 
 import { StyledCanvas } from '../App.styled';
 import Tubes from './Tubes';
+
 import Welcome from './sections/Welcome';
 import Connect from './sections/Connect';
 import FlowField from './FlowField';
 import Projects from './sections/Projects';
 import { useTrailTexture } from './useTrailTexture';
+
 const AnimatedMaterial = a(MeshDistortMaterial);
 
 const PAGES = 5;
@@ -49,14 +51,13 @@ function Loader() {
 }
 
 function Portfolio() {
-    const [degraded, degrade] = useState(false);
-
-    const { zIndex } = useControls('position', {
-        zIndex: { value: 0, min: 0, max: 30, step: 1 },
-    });
-
     return (
         <>
+            <div id="main-wrapper" className="relative z-10">
+                <Welcome />
+                <Projects />
+                <Connect />
+            </div>
             <Suspense fallback={<span>loading...</span>}>
                 <StyledCanvas
                     className="absolute left-0 top-0"
@@ -79,15 +80,10 @@ function Portfolio() {
 
                     {/* <Scroll html className="w-full"></Scroll> */}
 
-                    <Tubes />
+                    {/* <Tubes /> */}
                     <Environment preset="warehouse" />
                 </StyledCanvas>
             </Suspense>
-            <div className="">
-                <Welcome />
-                <Projects />
-                <Connect />
-            </div>
         </>
     );
 }
@@ -193,7 +189,7 @@ function Bg({ timeline }) {
 
 const DisplaceMaterial = shaderMaterial(
     { map: null, color: new THREE.Color('black'), color2: new THREE.Color('white'), amount: 1 },
-    `
+    /* glsl */ `
       uniform sampler2D map;
       uniform float amount;
   
@@ -208,7 +204,7 @@ const DisplaceMaterial = shaderMaterial(
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
       }
     `,
-    `
+    /* glsl */ `
       uniform vec3 color;
       uniform vec3 color2;
   
