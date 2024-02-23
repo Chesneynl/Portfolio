@@ -5,7 +5,6 @@ import {
   useGLTF,
   OrbitControls,
   Center,
-  softShadows,
   Environment,
   useScroll,
   Html,

@@ -11,7 +11,6 @@ import {
   useGLTF,
   OrbitControls,
   Center,
-  softShadows,
   Environment,
   PresentationControls,
   Html,
