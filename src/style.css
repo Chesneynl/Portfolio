@@ -44,12 +44,6 @@ body {
     background-color: rgba(0, 0, 0, 0); /* Set the track color to transparent */
 }
 
-.projects-list {
-    @media (min-width: 768px) {
-        transform: skewX(-20deg);
-    }
-}
-
 .project-item:hover > img {
     opacity: 1;
     scale: 1.1;

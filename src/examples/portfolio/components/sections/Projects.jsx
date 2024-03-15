@@ -15,47 +15,67 @@ let mm = gsap.matchMedia();
 export default function Projects() {
     const containerRef = useRef(null);
     const wrapperRef = useRef(null);
-    const leftDivRef = useRef(null);
+    const titleRef = useRef(null);
     const rightDivRef = useRef(null);
 
     useEffect(() => {
         if (!containerRef.current) return;
-        const leftDiv = leftDivRef.current;
+        const titleDiv = titleRef.current;
 
         let ctx = gsap.context(() => {
-            mm.add('(min-width: 768px)', () => {
-                const splitText = new SplitType(leftDiv, {
-                    types: 'words',
-                    wordClass: 'large-highlight-word',
-                });
+            // mm.add('(min-width: 768px)', () => {
+            //     const splitText = new SplitType(titleDiv, {
+            //         types: 'words',
+            //         wordClass: 'large-highlight-word',
+            //     });
+            //     gsap.from(splitText.words, {
+            //         yPercent: 100,
+            //         clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+            //         stagger: 0.1,
+            //         scrollTrigger: {
+            //             trigger: wrapperRef.current,
+            //             start: 'top top',
+            //             end: `bottom top`,
+            //             pin: containerRef.current,
+            //             markers: true,
+            //             toggleActions: 'play none none reverse',
+            //         },
+            //     });
+            // });
 
-                gsap.from(splitText.words, {
-                    yPercent: 100,
-                    clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: wrapperRef.current,
-                        start: 'top top',
-                        end: `bottom top`,
-                        pin: containerRef.current,
-                        markers: true,
-                        toggleActions: 'play none none reverse',
-                    },
+            const cards = document.querySelectorAll('.card');
+            const header = document.querySelector('.header');
+            let cardHeight;
+            const animation = gsap.timeline();
+            function initCards() {
+                animation.clear();
+                cardHeight = cards[0].offsetHeight;
+                console.log('initCards()', cardHeight);
+                cards.forEach((card, index) => {
+                    if (index > 0) {
+                        gsap.set(card, { y: index * cardHeight });
+                        animation.to(card, { y: 0, duration: index * 0.5, ease: 'none' });
+                    }
                 });
-            });
+            }
+            initCards();
 
-            const listItems = document.querySelectorAll('.project-item');
-            // Projects animation
-            gsap.to(listItems, {
-                stagger: 0.1,
-                opacity: 1,
-                scrollTrigger: {
-                    trigger: wrapperRef.current,
-                    start: 'top top',
-                    end: `bottom top`,
-                    markers: true,
-                },
+            console.log(cards.length * cardHeight + header.offsetHeight);
+            ScrollTrigger.create({
+                trigger: '.wrapper',
+                start: 'top top',
+                pin: true,
+                end: () => `+=${cards.length * cardHeight + header.offsetHeight}`,
+                scrub: true,
+                animation: animation,
+                markers: true,
+                invalidateOnRefresh: true,
             });
+            ScrollTrigger.addEventListener('refreshInit', initCards);
+            // Clean up function
+            return () => {
+                ScrollTrigger.removeEventListener('refreshInit', initCards);
+            };
         });
 
         return () => ctx.revert();
@@ -77,7 +97,7 @@ export default function Projects() {
         {
             primaryColor: '#1a2b8f',
             name: 'Mobiel.nl',
-            image: '/images/mobiel-image.jpeg',
+            image: '/images/mobiel-website.png',
             logo: <MobielLogo />,
         },
         {
@@ -89,73 +109,36 @@ export default function Projects() {
     ];
 
     return (
-        <div className="w-full" ref={wrapperRef}>
-            <div
-                className="container text-white relative w-full text-8xl flex flex-col lg:flex-row overflow-hidden"
-                ref={containerRef}
-            >
-                <div className="flex items-center w-full pt-10 lg:h-screen lg:pt-0">
-                    <h2 ref={leftDivRef} className="w-full uppercase">
+        <div className="w-full wrapper" ref={wrapperRef}>
+            <div className="container text-white relative w-full text-8xl flex flex-col" ref={containerRef}>
+                <div className="flex items-center w-full pt-10 lg:pt-0 header h-[30vh]">
+                    <h2 ref={titleRef} className="w-full uppercase">
                         Work
                     </h2>
                 </div>
-                <div className="w-full relative pt-10 lg:pt-36 flex gap-36 flex-col projects-list" ref={rightDivRef}>
-                    <div className="w-full  lg:absolute top-1/2 trans right-36 h-1/2 lg:-translate-y-1/2">
-                        <div className="w-full text-base text-center mb-5">E-COMMERCE</div>
-                        <div className="w-full gap-4 grid grid-cols-2">
-                            {eCommerceWebsites.map((website, i) => (
-                                <div
-                                    key={`website-${i}`}
-                                    className={`project-item relative  overflow-hidden duration-500 rounded-xl  transition-all filter bg-[${website.primaryColor}] relative h-[300px] lg:h-[250px] uppercase block  w-full text-sm opacity-0 cursor-pointer`}
-                                    style={{ backgroundColor: website.primaryColor }}
-                                >
-                                    <img
-                                        src={website.image}
-                                        alt="Project"
-                                        className="opacity-0 transition-all duration-500"
-                                        style={{
-                                            objectFit: 'cover',
-                                            width: '100%',
-                                            height: '100%',
-                                        }}
-                                    />
-                                    <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] transition-all">
-                                        {website.logo}
-                                    </div>
-                                </div>
-                            ))}
+                <div className="w-full relative flex flex-col h-[70vh]" ref={rightDivRef}>
+                    {/* <div className="w-full text-base text-center mb-5">E-COMMERCE</div> */}
+                    {eCommerceWebsites.map((website, i) => (
+                        <div
+                            key={`website-${i}`}
+                            className={`card absolute rounded-xl filter h-[70vh] uppercase block w-full text-sm cursor-pointer`}
+                            style={{ backgroundColor: website.primaryColor }}
+                        >
+                            <img
+                                src={website.image}
+                                alt="Project"
+                                className="transition-all duration-500"
+                                style={{
+                                    objectFit: 'cover',
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                            />
+                            <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] transition-all">
+                                {website.logo}
+                            </div>
                         </div>
-                    </div>
-                    {/* <div className="w-full gap-4 grid grid-cols-2">
-                        {Array.from({ length: 2 }, (_, i) => (
-                            <div key={i} className="project-item h-[300px] block w-full text-sm opacity-0">
-                                <img
-                                    src="https://via.placeholder.com/300x300"
-                                    alt="Project"
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                    <div className="w-full gap-4 grid grid-cols-2">
-                        {Array.from({ length: 2 }, (_, i) => (
-                            <div key={i} className="project-item h-[300px] block  w-full text-sm opacity-0">
-                                <img
-                                    src="https://via.placeholder.com/300x300"
-                                    alt="Project"
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                />
-                            </div>
-                        ))}
-                    </div> */}
+                    ))}
                 </div>
             </div>
         </div>
