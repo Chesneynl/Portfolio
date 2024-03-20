@@ -2,15 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-    font-family: 'inter-bold';
-    src: url('/fonts/inter-bold.woff') format('woff');
-    /* Additional font properties can be added here */
-}
-
 body {
     margin: 0;
-    font-family: 'fjalla one', sans-serif;
+    font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* background: linear-gradient(to bottom, #00b2ca, #fbd1a2); */
@@ -51,4 +45,8 @@ body {
 
 .project-item:hover .website-logo {
     opacity: 0;
+}
+
+.case-card:hover img {
+    opacity: 1;
 }

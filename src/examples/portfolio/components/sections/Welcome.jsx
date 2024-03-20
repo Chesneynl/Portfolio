@@ -141,7 +141,7 @@ export default function Welcome() {
         <div className="container text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center gap-4 lg:gap-8 lg:items-center">
             <h1
                 ref={nameRef}
-                className="text-3xl lg:text-4xl pb-3 font-micro uppercase lg:pb-0 text-[#8d49f7] flex items-center justify-center gap-4"
+                className="text-3xl lg:text-4xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4"
             >
                 <div className="h-[120px] overflow-hidden">
                     <div className="whitespace-nowrap" ref={functionsRef}>
@@ -155,7 +155,10 @@ export default function Welcome() {
                 </div>
                 <div>developer</div>
             </h1>
-            <div ref={lineRef} className="w-0 h-1 rounded-full bg-white lg:h-0 flex-grow-0 lg:w-1 flex-shrink-0" />
+            <div
+                ref={lineRef}
+                className="w-0 h-[1px] rounded-full bg-white lg:h-0 flex-grow-0 lg:w-[1px] flex-shrink-0"
+            />
             <h2 ref={functionRef} className="text-7xl lg:text-6xl opacity-0 pt-1 uppercase lg:text-right lg:pt-0">
                 Chesney
                 <br />

@@ -18,8 +18,10 @@ import {
     useScroll,
     shaderMaterial,
     Stats,
+    Edges,
     Scroll,
     PerspectiveCamera,
+    OrbitControls,
 } from '@react-three/drei';
 import { useFrame, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, SSAO, Vignette } from '@react-three/postprocessing';
@@ -36,8 +38,10 @@ import { StyledCanvas } from '../App.styled';
 import Tubes from './Tubes';
 
 import Welcome from './sections/Welcome';
+import About from './sections/About';
 import Connect from './sections/Connect';
 import FlowField from './FlowField';
+import Floor from './Floor';
 import Projects from './sections/Projects';
 import { useTrailTexture } from './useTrailTexture';
 
@@ -55,6 +59,7 @@ function Portfolio() {
         <>
             <div id="main-wrapper" className="relative z-10">
                 <Welcome />
+                {/* <About /> */}
                 <Projects />
                 <Connect />
             </div>
@@ -66,19 +71,14 @@ function Portfolio() {
                     // gl={{ antialias: false }}
                     // camera={{ position: [-0.1, 0, 8], fov: 50 }}
                 >
-                    {/* <Effects /> */}
-
                     <Stats />
-                    {/* <group rotation-x={Math.PI} position={[0, 0, zIndex]}>
-                        <Thing scale={3} />
-                    </group> */}
+                    {/* <OrbitControls /> */}
 
                     <Boxes />
+                    {/* <Floor /> */}
                     {/* <FlowField width={5} height={5} segments={100} /> */}
 
                     <BackgroundAndLights />
-
-                    {/* <Scroll html className="w-full"></Scroll> */}
 
                     {/* <Tubes /> */}
                     <Environment preset="warehouse" />
@@ -88,64 +88,31 @@ function Portfolio() {
     );
 }
 
-const ParticleSystem = () => {
-    const splineRef = useRef();
-    const particlesRef = useRef();
+const MeshEdgesMaterial = shaderMaterial(
+    {
+        color: new THREE.Color('blue'),
+        size: new THREE.Vector3(1, 1, 1),
+        thickness: 0.01,
+        smoothness: 0.2,
+    },
+    /*glsl*/ `varying vec3 vPosition;
+    void main() {
+      vPosition = position;
+      gl_Position = projectionMatrix * viewMatrix * instanceMatrix * vec4(position, 1.0);
+    }`,
+    /*glsl*/ `varying vec3 vPosition;
+    uniform vec3 size;
+    uniform vec3 color;
+    uniform float thickness;
+    uniform float smoothness;
+    void main() {
+      vec3 d = abs(vPosition) - (size * 0.5);
+      float a = smoothstep(thickness, thickness + smoothness, min(min(length(d.xy), length(d.yz)), length(d.xz)));
+      gl_FragColor = vec4(0.0, 1.0, 0.0, 0.0);
+    }`,
+);
 
-    useEffect(() => {
-        // Create a spline curve
-        const spline = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(-5, 0, 0),
-            new THREE.Vector3(-2, 2, 0),
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(2, -2, 0),
-            new THREE.Vector3(5, 0, 0),
-        ]);
-
-        splineRef.current = spline;
-
-        // Create particles along the spline
-        const particles = new Array(1000).fill().map(() => {
-            const position = new THREE.Vector3();
-            const tangent = new THREE.Vector3();
-            const axis = new THREE.Vector3(0, 1, 0);
-
-            return { position, tangent, axis };
-        });
-
-        particlesRef.current = particles;
-    }, []);
-
-    useEffect(() => {
-        // Update particles along the spline
-        if (splineRef.current && particlesRef.current) {
-            const spline = splineRef.current;
-            const particles = particlesRef.current;
-
-            particles.forEach((particle, index) => {
-                const t = index / particles.length;
-                spline.getPointAt(t, particle.position);
-                spline.getTangentAt(t, particle.tangent);
-                particle.axis.crossVectors(particle.tangent, axis).normalize();
-            });
-        }
-    }, [splineRef, particlesRef]);
-
-    return (
-        <>
-            <mesh>
-                <tubeBufferGeometry args={[splineRef.current, 100, 0.1, 8, false]} />
-                <meshStandardMaterial color="blue" />
-            </mesh>
-
-            {particlesRef.current.map((particle, index) => (
-                <Html key={index} center>
-                    <div style={{ position: 'absolute', transform: `translate(-50%, -50%)` }}>•</div>
-                </Html>
-            ))}
-        </>
-    );
-};
+extend({ MeshEdgesMaterial });
 
 function Bg({ timeline }) {
     const mesh = useRef();
@@ -190,151 +157,14 @@ function Bg({ timeline }) {
     );
 }
 
-const DisplaceMaterial = shaderMaterial(
-    { map: null, color: new THREE.Color('black'), color2: new THREE.Color('white'), amount: 1 },
-    /* glsl */ `
-      uniform sampler2D map;
-      uniform float amount;
-  
-      varying float vDisplace;
-      void main() {
-        float displace = texture2D(map, uv).r;
-        vDisplace = displace;
-  
-        vec3 pos = position;
-        pos.z += displace * amount;
-  
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-      }
-    `,
-    /* glsl */ `
-      uniform vec3 color;
-      uniform vec3 color2;
-  
-      varying float vDisplace;
-      void main() {
-        vec3 col = mix(color, color2, vDisplace);
-        gl_FragColor.rgba = vec4(col, 1.0);
-      }
-    `,
-);
-extend({ DisplaceMaterial });
-
-function Thing(props) {
-    const { debug, ease, zIndex, ...conf } = useControls('Trail', {
-        size: { value: 64, min: 8, max: 256, step: 8 },
-        radius: { value: 0.3, min: 0, max: 1 },
-        maxAge: { value: 750, min: 300, max: 1000 },
-        interpolate: { value: 0, min: 0, max: 2, step: 1 },
-        smoothing: { value: 0, min: 0, max: 0.99, step: 0.01 },
-        minForce: { value: 0.3, min: 0, max: 1, step: 0.1 },
-        intensity: { value: 0.2, min: 0, max: 1, step: 0.1 },
-        blend: { value: 'screen', options: ['source-over', 'screen'] },
-        ease: { value: 'easeCircleOut', options: Object.keys(easings) },
-        debug: false,
-    });
-    const disp = useControls('Displacement', {
-        amount: { value: 0.1, min: 0, max: 0.5 },
-    });
-
-    const { texture, onMove } = useTrailTexture({ ...conf, ease: easings[ease] });
-
-    return (
-        <>
-            <mesh onPointerMove={onMove} {...props}>
-                <planeGeometry args={[1, 1, 10, 10]} />
-                {debug && <meshBasicMaterial map={texture} />}
-                <displaceMaterial
-                    key={DisplaceMaterial.key}
-                    map={texture}
-                    side={THREE.DoubleSide}
-                    {...disp}
-                    wireframe
-                />
-            </mesh>
-        </>
-    );
-}
-
 function Boxes() {
-    const timeline = gsap.timeline();
     const box1 = useRef();
     const box2 = useRef();
     const box3 = useRef();
-    const box4 = useRef();
 
     const { color } = useControls('boxes', {
         color: '#111d2e',
     });
-
-    // useLayoutEffect(() => {
-    //     gsap.from(box1.current.scale, {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //         duration: 5,
-    //         ease: 'power4.out',
-    //     });
-    //     gsap.from(box2.current.scale, {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //         duration: 2,
-    //         ease: 'power4.out',
-    //     });
-    //     gsap.from(box3.current.scale, {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //         duration: 2.5,
-    //         ease: 'power4.out',
-    //     });
-    //     gsap.from(box4.current.scale, {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0,
-    //         duration: 4,
-    //         ease: 'power4.out',
-    //     });
-
-    //     timeline
-    //         .to(
-    //             box1.current.position,
-    //             {
-    //                 y: 10,
-    //                 ease: 'power4.out',
-    //                 duration: 0.3,
-    //             },
-    //             0,
-    //         )
-    //         .to(
-    //             box2.current.position,
-    //             {
-    //                 y: 10,
-    //                 ease: 'power4.out',
-    //                 duration: 0.3,
-    //             },
-    //             0,
-    //         )
-    //         .to(
-    //             box3.current.position,
-    //             {
-    //                 y: 10,
-    //                 ease: 'power4.out',
-    //                 duration: 0.3,
-    //             },
-    //             0,
-    //         )
-    //         .to(
-    //             box4.current.position,
-    //             {
-    //                 y: 10,
-    //                 ease: 'power4.out',
-    //                 duration: 0.3,
-    //             },
-    //             0,
-    //         );
-    // }, []);
 
     return (
         <>
@@ -342,7 +172,20 @@ function Boxes() {
             <Box ref={box2} position={[3.9, -2.2, 1.8]} rotation={[1, 2, 1]} scale={1} color="green" />
             <Box ref={box3} position={[3.4, 2.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color="red" />
 
-            <Box ref={box4} position={[-5, 4, -8]} rotation={[0, 5.3, 5]} scale={1.5} color={color} />
+            <mesh position={[-5, 4, -8]} rotation={[0, 5.3, 5]}>
+                <meshStandardMaterial color={color} roughness={0.3} />
+                <meshEdgesMaterial
+                    transparent
+                    polygonOffset
+                    polygonOffsetFactor={-30}
+                    size={[1, 1, 1]}
+                    color="##290345"
+                    thickness={0.005}
+                    smoothness={0.002}
+                />
+                {/* <Box ref={box4} position={[-5, 4, -8]} rotation={[0, 5.3, 5]} scale={1.5} color={color} /> */}
+                <boxGeometry scale={0.1} />
+            </mesh>
             {/* <Instances limit={particles.length} castShadow receiveShadow position={[0, 0, 0]}>
                 <sphereGeometry args={[1, 32, 32]} />
 
@@ -366,54 +209,17 @@ function Boxes() {
     );
 }
 
-const particles = Array.from({ length: 20 }, () => ({
-    factor: THREE.MathUtils.randInt(0.1, 8),
-    speed: THREE.MathUtils.randFloat(0.01, 0.4),
-    xFactor: THREE.MathUtils.randFloatSpread(5),
-    yFactor: THREE.MathUtils.randFloatSpread(6),
-    zFactor: THREE.MathUtils.randFloatSpread(15),
-}));
-
 function BackgroundAndLights() {
     return (
         <>
             <Bg />
             {/* <fog attach="fog" args={[color, 10, 50]} /> */}
-            <RandomizedLight castShadow amount={8} frames={100} position={[5, 5, -10]} />
+            {/* <RandomizedLight castShadow amount={8} frames={100} position={[5, 5, -10]} /> */}
             {/* <Sparkles count={50} scale={10} size={6} color="#14396c" speed={0.4} /> */}
 
             <Environment preset="studio" />
-            <ambientLight />
-            <pointLight position={[15, 15, 15]} intensity={1} />
+            {/* <ambientLight /> */}
         </>
-    );
-}
-
-function Effects() {
-    const { focusDistance, focalLength, bokehScale, height } = useControls({
-        focusDistance: {
-            min: 0,
-            max: 4,
-            value: 2,
-        },
-        focalLength: {
-            min: 0,
-            max: 1,
-            value: 0.1,
-        },
-        bokehScale: {
-            min: 0,
-            max: 10,
-            value: 2,
-        },
-    });
-
-    return (
-        <EffectComposer multisampling={0} disableNormalPass={true}>
-            <DepthOfField focusDistance={10} focalLength={focalLength} bokehScale={bokehScale} />
-            {/* <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} opacity={3} /> */}
-            {/* <Vignette eskil={false} offset={0.2} darkness={0.5} /> */}
-        </EffectComposer>
     );
 }
 

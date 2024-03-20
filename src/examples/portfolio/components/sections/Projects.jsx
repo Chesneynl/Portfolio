@@ -7,6 +7,10 @@ import React, { useEffect, useRef } from 'react';
 import VogelsLogo from '../../../../logos/VogelsLogo';
 import MobielLogo from '../../../../logos/MobielLogo';
 import PrazLogo from '../../../../logos/PrazLogo';
+import MrFilletLogo from '../../../../logos/MrFilletLogo';
+import SolarNRGLogo from '../../../../logos/SolarNRGLogo';
+import HillhoutLogo from '../../../../logos/HillhoutLogo';
+import LeadHealthcareLogo from '../../../../logos/LeadHealthcareLogo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,66 +20,65 @@ export default function Projects() {
     const containerRef = useRef(null);
     const wrapperRef = useRef(null);
     const titleRef = useRef(null);
-    const rightDivRef = useRef(null);
+    const casesRef = useRef(null);
 
     useEffect(() => {
         if (!containerRef.current) return;
         const titleDiv = titleRef.current;
 
         let ctx = gsap.context(() => {
-            // mm.add('(min-width: 768px)', () => {
-            //     const splitText = new SplitType(titleDiv, {
-            //         types: 'words',
-            //         wordClass: 'large-highlight-word',
-            //     });
-            //     gsap.from(splitText.words, {
-            //         yPercent: 100,
-            //         clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-            //         stagger: 0.1,
-            //         scrollTrigger: {
-            //             trigger: wrapperRef.current,
-            //             start: 'top top',
-            //             end: `bottom top`,
-            //             pin: containerRef.current,
-            //             markers: true,
-            //             toggleActions: 'play none none reverse',
-            //         },
-            //     });
-            // });
-
-            const cards = document.querySelectorAll('.card');
-            const header = document.querySelector('.header');
-            let cardHeight;
-            const animation = gsap.timeline();
-            function initCards() {
-                animation.clear();
-                cardHeight = cards[0].offsetHeight;
-                console.log('initCards()', cardHeight);
-                cards.forEach((card, index) => {
-                    if (index > 0) {
-                        gsap.set(card, { y: index * cardHeight });
-                        animation.to(card, { y: 0, duration: index * 0.5, ease: 'none' });
-                    }
-                });
-            }
-            initCards();
-
-            console.log(cards.length * cardHeight + header.offsetHeight);
-            ScrollTrigger.create({
-                trigger: '.wrapper',
-                start: 'top top',
-                pin: true,
-                end: () => `+=${cards.length * cardHeight + header.offsetHeight}`,
-                scrub: true,
-                animation: animation,
-                markers: true,
-                invalidateOnRefresh: true,
+            const splitText = new SplitType(titleDiv, {
+                types: 'chars',
+                wordClass: 'large-highlight-word',
             });
-            ScrollTrigger.addEventListener('refreshInit', initCards);
-            // Clean up function
-            return () => {
-                ScrollTrigger.removeEventListener('refreshInit', initCards);
-            };
+            gsap.from(splitText.chars, {
+                yPercent: 100,
+                clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: wrapperRef.current,
+                    start: 'top top',
+                    end: `bottom top`,
+                    markers: true,
+                    toggleActions: 'play none none reverse',
+                },
+            });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    pin: containerRef.current,
+                    start: 'top top',
+                    end: `bottom top`,
+                    scrub: 1,
+                    markers: true,
+                    toggleActions: 'play none none reverse',
+                },
+            });
+
+            tl.to(
+                '.list-one',
+                {
+                    yPercent: -80,
+                },
+                0,
+            );
+
+            tl.from(
+                '.list-two',
+                {
+                    yPercent: -80,
+                },
+                0.01,
+            );
+
+            tl.to(
+                '.list-three',
+                {
+                    yPercent: -80,
+                },
+                0.01,
+            );
         });
 
         return () => ctx.revert();
@@ -85,62 +88,150 @@ export default function Projects() {
         {
             primaryColor: '#594fff',
             name: 'PRAZ',
+            websiteType: 'E-COMMERCE',
             image: '/images/praz-image.jpeg',
             logo: <PrazLogo />,
         },
         {
-            primaryColor: '#f3dccf',
+            primaryColor: '#c61717',
             name: 'Mr-fillet',
+            websiteType: 'E-COMMERCE',
             image: '/images/mrfillet-image.jpeg',
-            logo: <VogelsLogo />,
+            logo: <MrFilletLogo />,
+        },
+        {
+            primaryColor: '#09361b',
+            name: 'Hillhout',
+            websiteType: 'Configurator',
+            image: '/images/vogels-image.png',
+            logo: <HillhoutLogo />,
         },
         {
             primaryColor: '#1a2b8f',
             name: 'Mobiel.nl',
+            websiteType: 'E-COMMERCE',
             image: '/images/mobiel-website.png',
             logo: <MobielLogo />,
         },
         {
             primaryColor: '#ea5733',
             name: 'Vogels',
+            websiteType: 'E-COMMERCE',
             image: '/images/vogels-image.png',
             logo: <VogelsLogo />,
         },
+        {
+            primaryColor: '#ffb914',
+            name: 'SolarNRG',
+            websiteType: 'CONFIGURATOR',
+            image: '/images/vogels-image.png',
+            logo: <SolarNRGLogo />,
+        },
+        {
+            primaryColor: '#09361b',
+            name: 'Hillhout',
+            websiteType: 'Website',
+            image: '/images/vogels-image.png',
+            logo: <HillhoutLogo />,
+        },
+        {
+            primaryColor: '#e57300',
+            name: 'Lead Healthcare',
+            websiteType: 'Website',
+            image: '/images/vogels-image.png',
+            logo: <LeadHealthcareLogo />,
+        },
     ];
 
+    const websiteLabelClassnames =
+        'absolute left-1/2 bottom-8 -translate-x-1/2 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
+
     return (
-        <div className="w-full wrapper" ref={wrapperRef}>
-            <div className="container text-white relative w-full text-8xl flex flex-col" ref={containerRef}>
-                <div className="flex items-center w-full pt-10 lg:pt-0 header h-[30vh]">
-                    <h2 ref={titleRef} className="w-full uppercase">
-                        Work
-                    </h2>
-                </div>
-                <div className="w-full relative flex flex-col h-[70vh]" ref={rightDivRef}>
-                    {/* <div className="w-full text-base text-center mb-5">E-COMMERCE</div> */}
-                    {eCommerceWebsites.map((website, i) => (
-                        <div
-                            key={`website-${i}`}
-                            className={`card absolute rounded-xl filter h-[70vh] uppercase block w-full text-sm cursor-pointer`}
-                            style={{ backgroundColor: website.primaryColor }}
-                        >
-                            <img
-                                src={website.image}
-                                alt="Project"
-                                className="transition-all duration-500"
-                                style={{
-                                    objectFit: 'cover',
-                                    width: '100%',
-                                    height: '100%',
-                                }}
-                            />
-                            <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120px] transition-all">
-                                {website.logo}
+        <>
+            <div className="flex items-center w-full pt-10 lg:pt-0 header h-screen" ref={wrapperRef}>
+                <h2 ref={titleRef} className="w-full uppercase text-white text-[29vw] text-center">
+                    Cases<span className="text-secondary">.</span>
+                </h2>
+            </div>
+            <div
+                className="wrapper overflow-hidden px-4 text-white relative w-full  flex flex-col h-screen"
+                ref={containerRef}
+            >
+                <div className="w-full relative grid grid-cols-3 gap-10" ref={casesRef}>
+                    <div className="gap-10 flex flex-col list-one">
+                        {eCommerceWebsites.map((website, i) => (
+                            <div
+                                key={`website-${i}`}
+                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                style={{ backgroundColor: website.primaryColor }}
+                            >
+                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
+                                <img
+                                    src={website.image}
+                                    alt="Project"
+                                    className="transition-all duration-500 opacity-0"
+                                    style={{
+                                        objectFit: 'cover',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                />
+                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                    {website.logo}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                    <div className="gap-10 flex flex-col list-two">
+                        {eCommerceWebsites.map((website, i) => (
+                            <div
+                                key={`website-${i}`}
+                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                style={{ backgroundColor: website.primaryColor }}
+                            >
+                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
+                                <img
+                                    src={website.image}
+                                    alt="Project"
+                                    className="transition-all duration-500 opacity-0"
+                                    style={{
+                                        objectFit: 'cover',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                />
+                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                    {website.logo}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="gap-10 flex flex-col list-three">
+                        {eCommerceWebsites.map((website, i) => (
+                            <div
+                                key={`website-${i}`}
+                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                style={{ backgroundColor: website.primaryColor }}
+                            >
+                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
+                                <img
+                                    src={website.image}
+                                    alt="Project"
+                                    className="transition-all duration-500 opacity-0"
+                                    style={{
+                                        objectFit: 'cover',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                />
+                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                    {website.logo}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
