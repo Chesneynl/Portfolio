@@ -5,8 +5,14 @@ import { Instances, Instance, Line } from '@react-three/drei';
 // import { Outlines } from '@react-three/postprocessing';
 
 function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
+    const xPosition = object.position.x;
     const ref = useRef();
-    console.log(object);
+    const groupRef = useRef();
+    const yPosition = object.position.y;
+    const zPosition = object.position.z;
+    const linesSize = 0.5;
+    const lineWidth = 3;
+    const lineColor = '#FF6363';
 
     useEffect(() => {
         if (!ref.current) return;
@@ -19,17 +25,63 @@ function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
 
         const displacement = ((Math.sin(state.clock.getElapsedTime() + id) + 1) / 2) * object.maxZ;
 
-        ref.current.position.z = displacement;
+        // ref.current.scale = 2;
+        groupRef.current.position.z = displacement;
     });
 
     return (
-        <group {...props}>
+        <group {...props} ref={groupRef}>
+            <Line
+                points={[
+                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                    [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                ]}
+                color={lineColor}
+                lineWidth={lineWidth}
+            />
+            <Line
+                points={[
+                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
+                    [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
+                    [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                ]}
+                color={lineColor}
+                lineWidth={lineWidth}
+            />
+            <Line
+                points={[
+                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                ]}
+                color={lineColor}
+                lineWidth={lineWidth}
+            />
+            <Line
+                points={[
+                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
+                    [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
+                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                ]}
+                color={lineColor}
+                lineWidth={lineWidth}
+            />
             <Instance ref={ref} />
         </group>
     );
 }
 
 function Boxes({ count = 50, objects, temp = new THREE.Object3D() }) {
+    console.log({ objects });
     return (
         <group>
             <Instances range={1000}>
@@ -37,50 +89,6 @@ function Boxes({ count = 50, objects, temp = new THREE.Object3D() }) {
                 <meshStandardMaterial color="black" roughness={0.8} emissiveIntensity={0.5} />
                 {objects.map((obj, i) => (
                     <instancedMesh>
-                        <Line
-                            points={[
-                                [-i, -1, -1],
-                                [-i, -1, 1],
-                                [-i, 1, 1],
-                                [-1, 1, -1],
-                                [-1, -1, -1],
-                            ]}
-                            color="white"
-                            lineWidth={2}
-                        />
-                        <Line
-                            points={[
-                                [1, -1, -1],
-                                [1, -1, 1],
-                                [1, 1, 1],
-                                [1, 1, -1],
-                                [1, -1, -1],
-                            ]}
-                            color="white"
-                            lineWidth={2}
-                        />
-                        <Line
-                            points={[
-                                [-1, -1, -1],
-                                [1, -1, -1],
-                                [1, -1, 1],
-                                [-1, -1, 1],
-                                [-1, -1, -1],
-                            ]}
-                            color="white"
-                            lineWidth={2}
-                        />
-                        <Line
-                            points={[
-                                [-1, 1, -1],
-                                [1, 1, -1],
-                                [1, 1, 1],
-                                [-1, 1, 1],
-                                [-1, 1, -1],
-                            ]}
-                            color="white"
-                            lineWidth={2}
-                        />
                         <Box key={i} id={i} object={obj} />
                     </instancedMesh>
                 ))}
@@ -109,13 +117,11 @@ export default function Floor({ count = 10, _normal = new THREE.Vector3(), _posi
         }
     }, []);
 
-    console.log({ trees });
-
     return (
         <group
             // rotation-x={-Math.PI / 4}
-            rotation-x={-Math.PI / 4}
-            position={[-4, -1.8, 1]}
+            rotation-x={-Math.PI / 2}
+            position={[-15, -2.8, 1]}
         >
             <Boxes objects={trees} count={count} />
         </group>

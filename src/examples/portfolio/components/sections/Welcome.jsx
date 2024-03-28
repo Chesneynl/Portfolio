@@ -139,7 +139,7 @@ export default function Welcome() {
     }, [nameRef?.current]);
 
     return (
-        <div className="container text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center gap-4 lg:gap-8 lg:items-center">
+        <div className="text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center gap-4 lg:gap-8 lg:items-center">
             <h1 className="text-4xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4">
                 <div className="h-[120px] overflow-hidden">
                     <div className="whitespace-nowrap" ref={functionsRef}>
@@ -157,7 +157,7 @@ export default function Welcome() {
                 ref={lineRef}
                 className="w-0 h-[1px] rounded-full bg-white lg:h-0 flex-grow-0 lg:w-[1px] flex-shrink-0"
             />
-            <h2 ref={nameRef} className="text-[8vw] leading-none pt-1 uppercase lg:text-right lg:pt-0">
+            <h2 ref={nameRef} className="text-[5vw] leading-none pt-1 uppercase lg:text-right lg:pt-0">
                 Chesney
                 <br />
                 Buitendijk

@@ -75,7 +75,7 @@ function Portfolio() {
                     {/* <OrbitControls /> */}
 
                     <Boxes />
-                    <Floor />
+                    {/* <Floor /> */}
                     {/* <FlowField width={5} height={5} segments={100} /> */}
 
                     <BackgroundAndLights />
