@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { Suspense, useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Instances, Instance, OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
+import { Instances, Instance, Line } from '@react-three/drei';
+// import { Outlines } from '@react-three/postprocessing';
 
 function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
     const ref = useRef();
@@ -33,9 +34,55 @@ function Boxes({ count = 50, objects, temp = new THREE.Object3D() }) {
         <group>
             <Instances range={1000}>
                 <boxGeometry />
-                <meshStandardMaterial color="red" roughness={0.3} emissiveIntensity={0.5} />
+                <meshStandardMaterial color="black" roughness={0.8} emissiveIntensity={0.5} />
                 {objects.map((obj, i) => (
-                    <Box key={i} id={i} object={obj} />
+                    <instancedMesh>
+                        <Line
+                            points={[
+                                [-i, -1, -1],
+                                [-i, -1, 1],
+                                [-i, 1, 1],
+                                [-1, 1, -1],
+                                [-1, -1, -1],
+                            ]}
+                            color="white"
+                            lineWidth={2}
+                        />
+                        <Line
+                            points={[
+                                [1, -1, -1],
+                                [1, -1, 1],
+                                [1, 1, 1],
+                                [1, 1, -1],
+                                [1, -1, -1],
+                            ]}
+                            color="white"
+                            lineWidth={2}
+                        />
+                        <Line
+                            points={[
+                                [-1, -1, -1],
+                                [1, -1, -1],
+                                [1, -1, 1],
+                                [-1, -1, 1],
+                                [-1, -1, -1],
+                            ]}
+                            color="white"
+                            lineWidth={2}
+                        />
+                        <Line
+                            points={[
+                                [-1, 1, -1],
+                                [1, 1, -1],
+                                [1, 1, 1],
+                                [-1, 1, 1],
+                                [-1, 1, -1],
+                            ]}
+                            color="white"
+                            lineWidth={2}
+                        />
+                        <Box key={i} id={i} object={obj} />
+                    </instancedMesh>
                 ))}
             </Instances>
         </group>
@@ -44,11 +91,11 @@ function Boxes({ count = 50, objects, temp = new THREE.Object3D() }) {
 
 const rand11 = () => Math.random() * 2.0 - 1.0;
 
-export default function Floor({ count = 5, _normal = new THREE.Vector3(), _position = new THREE.Vector3(0, 0, 30) }) {
+export default function Floor({ count = 10, _normal = new THREE.Vector3(), _position = new THREE.Vector3(0, 0, 30) }) {
     const [trees, setTrees] = useState([]);
 
     useEffect(() => {
-        for (let x = 0; x < count * 2; x++) {
+        for (let x = 0; x < count * 3; x++) {
             for (let y = 0; y < count; y++) {
                 const tree = {
                     position: new THREE.Vector3(x, y, 0),
@@ -68,7 +115,7 @@ export default function Floor({ count = 5, _normal = new THREE.Vector3(), _posit
         <group
             // rotation-x={-Math.PI / 4}
             rotation-x={-Math.PI / 4}
-            position={[-4, 0, 0]}
+            position={[-4, -1.8, 1]}
         >
             <Boxes objects={trees} count={count} />
         </group>

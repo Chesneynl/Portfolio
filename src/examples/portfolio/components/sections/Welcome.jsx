@@ -16,23 +16,24 @@ export default function Welcome() {
         let ctx = gsap.context(() => {
             const tl = gsap.timeline();
 
-            // const splitText = new SplitType(nameRef.current, {
-            //     types: 'words',
-            // });
-
-            // tl.from(splitText.words, {
-            //     yPercent: 100,
-            //     opacity: 0,
-            //     delay: 0.3,
-            //     clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-            //     stagger: 0.1,
-            // });
-
-            tl.to(functionRef.current, {
-                opacity: 1,
-                duration: 0.3,
-                delay: 0.1,
+            const splitText = new SplitType(nameRef.current, {
+                types: 'words',
             });
+
+            tl.from(splitText.words, {
+                yPercent: 100,
+                opacity: 0,
+                color: '#290345',
+                delay: 0.5,
+                clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+                stagger: 0.1,
+            });
+
+            // tl.to(functionRef.current, {
+            //     opacity: 1,
+            //     duration: 0.3,
+            //     delay: 0.1,
+            // });
 
             mm.add('(min-width: 768px)', () => {
                 tl.to(lineRef.current, {
@@ -139,10 +140,7 @@ export default function Welcome() {
 
     return (
         <div className="container text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center gap-4 lg:gap-8 lg:items-center">
-            <h1
-                ref={nameRef}
-                className="text-3xl lg:text-4xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4"
-            >
+            <h1 className="text-4xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4">
                 <div className="h-[120px] overflow-hidden">
                     <div className="whitespace-nowrap" ref={functionsRef}>
                         <div className="job-title opacity-10">Front-end</div>
@@ -159,7 +157,7 @@ export default function Welcome() {
                 ref={lineRef}
                 className="w-0 h-[1px] rounded-full bg-white lg:h-0 flex-grow-0 lg:w-[1px] flex-shrink-0"
             />
-            <h2 ref={functionRef} className="text-7xl lg:text-6xl opacity-0 pt-1 uppercase lg:text-right lg:pt-0">
+            <h2 ref={nameRef} className="text-[8vw] leading-none pt-1 uppercase lg:text-right lg:pt-0">
                 Chesney
                 <br />
                 Buitendijk

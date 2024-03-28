@@ -11,6 +11,8 @@ import MrFilletLogo from '../../../../logos/MrFilletLogo';
 import SolarNRGLogo from '../../../../logos/SolarNRGLogo';
 import HillhoutLogo from '../../../../logos/HillhoutLogo';
 import LeadHealthcareLogo from '../../../../logos/LeadHealthcareLogo';
+import SyncVrLogo from '../../../../logos/SyncVrLogo';
+import AinablersLogo from '../../../../logos/AinablersLogo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,9 +38,10 @@ export default function Projects() {
                 clipPath: 'inset(0 0 100% 0)', // Starting clip-path
                 stagger: 0.1,
                 scrollTrigger: {
-                    trigger: wrapperRef.current,
-                    start: 'top top',
-                    end: `bottom top`,
+                    trigger: titleRef.current,
+                    start: 'top center',
+                    end: `top top`,
+                    scrub: 1,
                     markers: true,
                     toggleActions: 'play none none reverse',
                 },
@@ -59,7 +62,7 @@ export default function Projects() {
             tl.to(
                 '.list-one',
                 {
-                    yPercent: -80,
+                    y: '-180vh',
                 },
                 0,
             );
@@ -67,7 +70,7 @@ export default function Projects() {
             tl.from(
                 '.list-two',
                 {
-                    yPercent: -80,
+                    y: '-180vh',
                 },
                 0.01,
             );
@@ -75,16 +78,16 @@ export default function Projects() {
             tl.to(
                 '.list-three',
                 {
-                    yPercent: -80,
+                    y: '-180vh',
                 },
-                0.01,
+                0.02,
             );
         });
 
         return () => ctx.revert();
     }, []);
 
-    const eCommerceWebsites = [
+    const firstList = [
         {
             primaryColor: '#594fff',
             name: 'PRAZ',
@@ -99,20 +102,23 @@ export default function Projects() {
             image: '/images/mrfillet-image.jpeg',
             logo: <MrFilletLogo />,
         },
+        // {
+        //     primaryColor: '#09361b',
+        //     name: 'Hillhout',
+        //     websiteType: 'Configurator',
+        //     image: '/images/vogels-image.png',
+        //     logo: <HillhoutLogo />,
+        // },
         {
             primaryColor: '#09361b',
-            name: 'Hillhout',
-            websiteType: 'Configurator',
+            name: 'Methinks',
+            websiteType: 'Website',
             image: '/images/vogels-image.png',
             logo: <HillhoutLogo />,
         },
-        {
-            primaryColor: '#1a2b8f',
-            name: 'Mobiel.nl',
-            websiteType: 'E-COMMERCE',
-            image: '/images/mobiel-website.png',
-            logo: <MobielLogo />,
-        },
+    ];
+
+    const secondList = [
         {
             primaryColor: '#ea5733',
             name: 'Vogels',
@@ -124,31 +130,57 @@ export default function Projects() {
             primaryColor: '#ffb914',
             name: 'SolarNRG',
             websiteType: 'CONFIGURATOR',
-            image: '/images/vogels-image.png',
-            logo: <SolarNRGLogo />,
+            image: '/images/solarnrg-image.jpeg',
+            logo: <SolarNRGLogo fill="#161414" />,
         },
+        // {
+        //     primaryColor: '#09361b',
+        //     name: 'Hillhout',
+        //     websiteType: 'Website',
+        //     image: '/images/vogels-image.png',
+        //     logo: <HillhoutLogo />,
+        // },
         {
-            primaryColor: '#09361b',
-            name: 'Hillhout',
+            primaryColor: '#fffced',
+            name: 'Ainablers',
             websiteType: 'Website',
             image: '/images/vogels-image.png',
-            logo: <HillhoutLogo />,
+            logo: <AinablersLogo />,
         },
+    ];
+
+    const thirdList = [
         {
             primaryColor: '#e57300',
             name: 'Lead Healthcare',
             websiteType: 'Website',
-            image: '/images/vogels-image.png',
+            image: '/images/leadhealthcare-image.png',
             logo: <LeadHealthcareLogo />,
+        },
+        {
+            primaryColor: '#1a2b8f',
+            name: 'Mobiel.nl',
+            websiteType: 'E-COMMERCE',
+            image: '/images/mobiel-website.png',
+            logo: <MobielLogo />,
+        },
+        {
+            primaryColor: '#346FF6',
+            name: 'SyncVR',
+            websiteType: '2x VR Applications',
+            image: '/images/mobiel-website.png',
+            logo: <SyncVrLogo />,
         },
     ];
 
     const websiteLabelClassnames =
         'absolute left-1/2 bottom-8 -translate-x-1/2 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
+    const cardClassnames =
+        'case-card relative rounded-xl filter h-[90vh] uppercase block w-full text-sm cursor-pointer overflow-hidden';
 
     return (
-        <>
-            <div className="flex items-center w-full pt-10 lg:pt-0 header h-screen" ref={wrapperRef}>
+        <div ref={wrapperRef}>
+            <div className="flex items-center w-full pt-10 lg:pt-0 header h-screen">
                 <h2 ref={titleRef} className="w-full uppercase text-white text-[29vw] text-center">
                     Cases<span className="text-secondary">.</span>
                 </h2>
@@ -159,10 +191,10 @@ export default function Projects() {
             >
                 <div className="w-full relative grid grid-cols-3 gap-10" ref={casesRef}>
                     <div className="gap-10 flex flex-col list-one">
-                        {eCommerceWebsites.map((website, i) => (
+                        {firstList.map((website, i) => (
                             <div
                                 key={`website-${i}`}
-                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                className={cardClassnames}
                                 style={{ backgroundColor: website.primaryColor }}
                             >
                                 <div className={websiteLabelClassnames}>{website.websiteType}</div>
@@ -183,10 +215,10 @@ export default function Projects() {
                         ))}
                     </div>
                     <div className="gap-10 flex flex-col list-two">
-                        {eCommerceWebsites.map((website, i) => (
+                        {secondList.map((website, i) => (
                             <div
                                 key={`website-${i}`}
-                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                className={cardClassnames}
                                 style={{ backgroundColor: website.primaryColor }}
                             >
                                 <div className={websiteLabelClassnames}>{website.websiteType}</div>
@@ -207,10 +239,10 @@ export default function Projects() {
                         ))}
                     </div>
                     <div className="gap-10 flex flex-col list-three">
-                        {eCommerceWebsites.map((website, i) => (
+                        {thirdList.map((website, i) => (
                             <div
                                 key={`website-${i}`}
-                                className={`case-card relative rounded-xl filter h-[80vh] uppercase block w-full text-sm cursor-pointer`}
+                                className={cardClassnames}
                                 style={{ backgroundColor: website.primaryColor }}
                             >
                                 <div className={websiteLabelClassnames}>{website.websiteType}</div>
@@ -232,6 +264,6 @@ export default function Projects() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

@@ -59,7 +59,7 @@ function Portfolio() {
         <>
             <div id="main-wrapper" className="relative z-10">
                 <Welcome />
-                {/* <About /> */}
+                <About />
                 <Projects />
                 <Connect />
             </div>
@@ -75,7 +75,7 @@ function Portfolio() {
                     {/* <OrbitControls /> */}
 
                     <Boxes />
-                    {/* <Floor /> */}
+                    <Floor />
                     {/* <FlowField width={5} height={5} segments={100} /> */}
 
                     <BackgroundAndLights />
@@ -161,13 +161,62 @@ function Boxes() {
     const box1 = useRef();
     const box2 = useRef();
     const box3 = useRef();
+    const groupRef = useRef();
 
     const { color } = useControls('boxes', {
         color: '#111d2e',
     });
 
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#root',
+                    start: 'top top',
+                    end: `bottom top`,
+                    scrub: 1,
+                    markers: true,
+                    toggleActions: 'play none none reverse',
+                },
+            });
+
+            tl.to(
+                groupRef.current.position,
+                {
+                    y: 10,
+                },
+                0,
+            );
+
+            tl.to(
+                box1.current.position,
+                {
+                    y: 9,
+                },
+                0,
+            );
+
+            tl.to(
+                box2.current.position,
+                {
+                    y: 6,
+                },
+                0,
+            );
+            tl.to(
+                box3.current.position,
+                {
+                    y: 3,
+                },
+                0,
+            );
+        });
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <>
+        <group ref={groupRef}>
             <Box ref={box1} position={[-3.4, -3.2, 2.8]} rotation={[2, 2, 1]} scale={3.5} color="#290345" />
             <Box ref={box2} position={[3.9, -2.2, 1.8]} rotation={[1, 2, 1]} scale={1} color="green" />
             <Box ref={box3} position={[3.4, 2.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color="red" />
@@ -179,33 +228,14 @@ function Boxes() {
                     polygonOffset
                     polygonOffsetFactor={-30}
                     size={[1, 1, 1]}
-                    color="##290345"
+                    color="#290345"
                     thickness={0.005}
                     smoothness={0.002}
                 />
-                {/* <Box ref={box4} position={[-5, 4, -8]} rotation={[0, 5.3, 5]} scale={1.5} color={color} /> */}
+                <Box position={[-5, 4, -8]} rotation={[0, 5.3, 5]} scale={1.5} color={color} />
                 <boxGeometry scale={0.1} />
             </mesh>
-            {/* <Instances limit={particles.length} castShadow receiveShadow position={[0, 0, 0]}>
-                <sphereGeometry args={[1, 32, 32]} />
-
-                {particles.map((data, i) => {
-                    console.log({ data });
-                    return (
-                        <>
-                            <meshStandardMaterial color="hotpink" />
-
-                            <Box
-                                {...data}
-                                position={[data.xFactor, data.yFactor, data.zFactor]}
-                                scale={data.factor}
-                                color="#4B0082"
-                            />
-                        </>
-                    );
-                })}
-            </Instances> */}
-        </>
+        </group>
     );
 }
 
