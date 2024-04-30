@@ -26,7 +26,7 @@ export default function Projects() {
     const toolsClassnames =
         'text-xs tool-item inline-flex items-center font-bold leading-sm uppercase px-3 py-1 text-black rounded-full bg-white';
     const websiteLabelClassnames =
-        'absolute left-1/2 bottom-8 -translate-x-1/2 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
+        'absolute left-1/2 bottom-8 -translate-x-1/2 hidden md:block md:text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
     const cardClassnames =
         'case-card shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative rounded-xl filter h-[99vh] uppercase block w-full text-sm cursor-pointer overflow-hidden';
 
@@ -216,7 +216,7 @@ export default function Projects() {
                     <div className=" w-full h-full absolute top-0 left-0"></div>
                 </div>
                 <div
-                    className="w-full h-full px-10 py-10 md:w-1/3 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
+                    className="w-full h-full px-10 py-10 md:w-1/3 flex-shrink-0 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
                     ref={projectDescriptionWrapperRef}
                 >
                     <div
@@ -274,7 +274,7 @@ export default function Projects() {
                 <div className="flex items-center w-full pt-10 lg:pt-0 header pb-10">
                     <h2
                         ref={titleRef}
-                        className="w-full uppercase text-off-white text-[34vw] md:text-[26vw] text-center leading-normal"
+                        className="w-full uppercase text-off-white text-[45vw] md:text-[26vw] text-center leading-normal"
                     >
                         Cases<span className="text-secondary">.</span>
                     </h2>

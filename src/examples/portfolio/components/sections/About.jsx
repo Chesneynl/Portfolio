@@ -41,7 +41,7 @@ export default function About() {
             >
                 <h2
                     ref={textRef}
-                    className="text-[8vw] text-center font-normal leading-none uppercase drop-shadow-lg tracking-wide"
+                    className="text-[16vw] md:text-[8vw] text-center font-normal leading-none uppercase drop-shadow-lg tracking-wide"
                 >
                     I'm a front-end developer based in the netherlands with over 5 years of expertise. I've refined my
                     skills on a variety of projects, including{' '}

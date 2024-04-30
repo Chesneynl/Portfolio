@@ -100,16 +100,7 @@ function Portfolio() {
                     // gl={{ antialias: false }}
                     // camera={{ position: [-0.1, 0, 8], fov: 50 }}
                 >
-                    <PerspectiveCamera
-                        makeDefault
-                        ref={cameraRef}
-                        gl={{ antialias: true }}
-                        position={[0, 0, 5]}
-                        fov={60}
-                        // aspect={window.innerWidth / window.innerHeight}
-                        near={0.1}
-                        far={1000}
-                    />
+                    <CustomCamera />
                     <Stats />
                     {/* <OrbitControls /> */}
 
@@ -125,6 +116,22 @@ function Portfolio() {
                 </StyledCanvas>
             </Suspense>
         </>
+    );
+}
+
+function CustomCamera() {
+    const cameraRef = useRef();
+
+    return (
+        <PerspectiveCamera
+            makeDefault
+            ref={cameraRef}
+            gl={{ antialias: true }}
+            position={[0, 0, 8]}
+            // fov={60}
+            near={0.1}
+            far={1000}
+        />
     );
 }
 
@@ -300,6 +307,12 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
     const [hovered, setHover] = useState(false);
     const [active, setActive] = useState(false);
 
+    // useFrame(({ clock }) => {
+    //     const t = Math.sin(clock.getElapsedTime()) * scale + 0.5;
+
+    //     ref?.current.scale.set(t, t, t);
+    // });
+
     return (
         <mesh
             {...props}
@@ -310,7 +323,7 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
             onPointerOut={(event) => setHover(false)}
         >
             <Float
-                speed={1} // Animation speed, defaults to 1
+                speed={3} // Animation speed, defaults to 1
                 rotationIntensity={3} // XYZ rotation intensity, defaults to 1
                 floatIntensity={0.1} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
                 floatingRange={[0, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
@@ -320,7 +333,7 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
                     radius={hovered ? 0.5 : 0.05} // Radius of the rounded corners. Default is 0.05
                     smoothness={4} // The number of curve segments. Default is 4
                     bevelSegments={30} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
-                    // creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
+                    creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
                 >
                     <meshStandardMaterial
                         emissive={hovered ? 'red' : ''}

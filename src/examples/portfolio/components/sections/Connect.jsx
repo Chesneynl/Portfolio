@@ -81,7 +81,7 @@ export default function Connect() {
                 delay: 0.05,
             });
 
-            tl.from('.social-buttons a', {
+            tl.from('.social-button', {
                 opacity: 0,
                 y: 20,
                 stagger: 0.1,
@@ -320,12 +320,12 @@ export default function Connect() {
                 </div>
             )}
             <div ref={lineRef} className="w-0 h-[1px]  bg-white flex-grow-0 flex-shrink-0 mx-auto mb-5 md:hidden" />
-            <div className="flex gap-6 items-center w-full justify-center md:pb-20 pb-10 pt-3 md:pt-5   social-buttons">
+            <div className="flex gap-6 items-center w-full justify-center md:pb-20 pb-10 pt-3 md:pt-5">
                 <a
                     href="https://www.linkedin.com/in/chesneybuitendijk/"
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full p-4 hover:shadow-custom-pink transition-all hover:-translate-y-1.5 bg-primary"
+                    className="rounded-full p-4 hover:shadow-custom-pink transition-all hover:-translate-y-1.5 bg-primary social-button"
                 >
                     <span className="">
                         <svg viewBox="0 0 24 24" width="26" xmlns="http://www.w3.org/2000/svg" fill="white">
@@ -337,7 +337,7 @@ export default function Connect() {
                     href="https://www.linkedin.com/in/chesneybuitendijk/"
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full p-4 hover:shadow-custom-pink  transition-all hover:-translate-y-1.5 bg-primary"
+                    className="rounded-full p-4 hover:shadow-custom-pink  transition-all hover:-translate-y-1.5 bg-primary social-button"
                 >
                     <span className="">
                         <svg
