@@ -1,7 +1,7 @@
 const HillhoutLogo = () => {
     return (
         <svg fill="none" viewBox="0 0 98 20" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#a)" fill="currentColor">
+            <g clipPath="url(#a)" fill="currentColor">
                 <path d="m11.513 11.428h-7.808v8.2289h-3.705v-19.258h3.705v7.8288h7.808v-7.8288h3.705v19.258h-3.705v-8.2293z"></path>
                 <path d="m22.772 7.166h-3.6473v12.466h3.6473v-12.466z"></path>
                 <path d="m30.319 19.657h-3.6473v-18.637l3.6473-0.62125v19.259z"></path>

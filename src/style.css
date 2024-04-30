@@ -2,12 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'NeueMontreal';
+    src: url('/fonts/PPNeueMontreal-SemiBolditalic.otf') format('otf');
+}
+
+@font-face {
+    font-family: 'Morganite';
+    src: url('/fonts/MorganitePro-Regular.woff2') format('woff2');
+    /* You can include additional font properties like font-weight and font-style if needed */
+}
+
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'NeueMontreal', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* background: linear-gradient(to bottom, #00b2ca, #fbd1a2); */
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Morganite', sans-serif;
+}
+
+a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+p {
+    margin-bottom: 24px;
 }
 
 .word-1 {
@@ -43,10 +70,14 @@ body {
     scale: 1.1;
 }
 
-.project-item:hover .website-logo {
+.case-card:hover .website-logo {
     opacity: 0;
 }
 
 .case-card:hover img {
     opacity: 1;
+}
+
+p a {
+    position: relative;
 }

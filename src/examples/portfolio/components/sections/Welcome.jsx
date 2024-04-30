@@ -6,7 +6,7 @@ let mm = gsap.matchMedia();
 
 export default function Welcome() {
     const nameRef = useRef();
-    const functionRef = useRef();
+    const functionGroupRef = useRef();
     const lineRef = useRef();
     const functionsRef = useRef();
 
@@ -26,28 +26,18 @@ export default function Welcome() {
                 color: '#290345',
                 delay: 0.5,
                 clipPath: 'inset(0 0 100% 0)', // Starting clip-path
-                stagger: 0.1,
+                // stagger: 0.1,
             });
 
-            // tl.to(functionRef.current, {
-            //     opacity: 1,
-            //     duration: 0.3,
-            //     delay: 0.1,
-            // });
-
-            mm.add('(min-width: 768px)', () => {
-                tl.to(lineRef.current, {
-                    height: '300px',
-                    duration: 0.3,
-                    delay: 0.05,
-                });
+            tl.to(lineRef.current, {
+                width: '10%',
+                duration: 0.3,
+                delay: 0.05,
             });
-            mm.add('(max-width: 767px)', () => {
-                tl.to(lineRef.current, {
-                    width: '100%',
-                    duration: 0.3,
-                    delay: 0.05,
-                });
+
+            tl.from(functionGroupRef.current, {
+                duration: 1,
+                opacity: 0,
             });
         });
 
@@ -55,17 +45,19 @@ export default function Welcome() {
 
         const slotTl = gsap.timeline({ repeat: -1 });
 
+        const height = 32;
+
         slotTl
             .to(functionsRef.current, {
-                duration: 0.5,
+                duration: 1,
                 delay: 1,
-                y: '-=40', // Move all words up
+                y: `-=${height}`,
                 ease: 'none',
             })
             .to(
                 words[1],
                 {
-                    opacity: 0.1,
+                    opacity: 0,
                     duration: 0.5,
                     ease: 'none',
                 },
@@ -82,14 +74,14 @@ export default function Welcome() {
             )
             .to(functionsRef.current, {
                 duration: 0.5,
-                y: '-=40', // Move all words up
+                y: `-=${height}`,
                 ease: 'none',
                 delay: 1.5,
             })
             .to(
                 words[2],
                 {
-                    opacity: 0.1,
+                    opacity: 0,
                     duration: 0.5,
                     ease: 'none',
                 },
@@ -106,14 +98,14 @@ export default function Welcome() {
             )
             .to(functionsRef.current, {
                 duration: 0.5,
-                y: '-=40', // Move all words up
+                y: `-=${height}`,
                 ease: 'none',
                 delay: 1,
             })
             .to(
                 words[3],
                 {
-                    opacity: 0.1,
+                    opacity: 0,
                     duration: 0.5,
                     ease: 'none',
                 },
@@ -130,7 +122,7 @@ export default function Welcome() {
             )
             .to(functionsRef.current, {
                 duration: 0,
-                y: '0', // Move all words up
+                y: `-=${height}`,
                 ease: 'none',
                 delay: 1,
             });
@@ -139,29 +131,27 @@ export default function Welcome() {
     }, [nameRef?.current]);
 
     return (
-        <div className="text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center gap-4 lg:gap-8 lg:items-center">
-            <h1 className="text-4xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4">
-                <div className="h-[120px] overflow-hidden">
-                    <div className="whitespace-nowrap" ref={functionsRef}>
-                        <div className="job-title opacity-10">Front-end</div>
+        <div className="text-white flex flex-col h-screen w-full justify-center gap-2 items-center">
+            <h1 ref={nameRef} className="text-[27vw] leading-none uppercase lg:pt-0 drop-shadow-lg">
+                Chesney Buitendijk
+            </h1>
+            <div ref={lineRef} className="w-0 h-[1px]  bg-white flex-grow-0 flex-shrink-0" />
+            <div
+                className="text-2xl pb-3 font-micro uppercase lg:pb-0 text-secondary flex items-center justify-center gap-4"
+                ref={functionGroupRef}
+            >
+                <div className="h-[96px] overflow-hidden">
+                    <div className="whitespace-nowrap drop-shadow-lg" ref={functionsRef}>
+                        <div className="job-title opacity-0">Front-end</div>
                         <div className="job-title opacity-1">Creative</div>
-                        <div className="job-title opacity-10">Freelance</div>
-                        <div className="job-title opacity-10">Front-end</div>
-                        <div className="job-title opacity-10">Creative</div>
-                        <div className="job-title opacity-10">Freelance</div>
+                        <div className="job-title opacity-0">Freelance</div>
+                        <div className="job-title opacity-0">Front-end</div>
+                        <div className="job-title opacity-0">Creative</div>
+                        <div className="job-title opacity-0">Freelance</div>
                     </div>
                 </div>
                 <div>developer</div>
-            </h1>
-            <div
-                ref={lineRef}
-                className="w-0 h-[1px] rounded-full bg-white lg:h-0 flex-grow-0 lg:w-[1px] flex-shrink-0"
-            />
-            <h2 ref={nameRef} className="text-[5vw] leading-none pt-1 uppercase lg:text-right lg:pt-0">
-                Chesney
-                <br />
-                Buitendijk
-            </h2>
+            </div>
         </div>
     );
 }

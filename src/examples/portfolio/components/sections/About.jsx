@@ -17,7 +17,7 @@ export default function About() {
             });
 
             tl.from(splitText.words, {
-                opacity: 0,
+                opacity: 0.1,
                 stagger: 0.1,
                 y: 20,
                 scrollTrigger: {
@@ -39,12 +39,16 @@ export default function About() {
                 className="text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center lg:items-center px-[3vw]"
                 ref={containerRef}
             >
-                <div ref={textRef} className="text-[3vw] lg:text-center font-bold">
+                <h2
+                    ref={textRef}
+                    className="text-[8vw] text-center font-normal leading-none uppercase drop-shadow-lg tracking-wide"
+                >
                     I'm a front-end developer based in the netherlands with over 5 years of expertise. I've refined my
-                    skills on a variety of projects, including <span className="text-secondary">e-commerce</span>{' '}
-                    websites, <span className="text-secondary">websites</span>, and{' '}
+                    skills on a variety of projects, including{' '}
+                    <span className="text-secondary underline">e-commerce</span>,{' '}
+                    <span className="text-secondary">websites</span>, and{' '}
                     <span className="text-secondary">configurators</span>.
-                </div>
+                </h2>
             </div>
         </>
     );

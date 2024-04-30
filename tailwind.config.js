@@ -17,9 +17,13 @@ module.exports = {
             },
         },
         extend: {
+            boxShadow: {
+                'custom-pink': '0 0 15px black', // Adjust the spread, blur, and offset as needed
+            },
             colors: {
-                primary: '#290345',
-                secondary: '#FF6363',
+                primary: '#ef476f',
+                secondary: '#ffd166',
+                'off-white': '#F5F5F5',
                 dark: '#034529',
                 light: '#FFB063',
             },

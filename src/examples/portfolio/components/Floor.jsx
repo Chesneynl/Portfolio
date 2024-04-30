@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 import { Suspense, useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Instances, Instance, Line } from '@react-three/drei';
+import { Instances, Instance, Line, Merged } from '@react-three/drei';
 // import { Outlines } from '@react-three/postprocessing';
 
 function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
-    const xPosition = object.position.x;
     const ref = useRef();
     const groupRef = useRef();
+    const xPosition = object.position.x;
     const yPosition = object.position.y;
     const zPosition = object.position.z;
     const linesSize = 0.5;
@@ -31,50 +31,54 @@ function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
 
     return (
         <group {...props} ref={groupRef}>
-            <Line
-                points={[
-                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
-                    [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
-                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
-                ]}
-                color={lineColor}
-                lineWidth={lineWidth}
-            />
-            <Line
-                points={[
-                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
-                    [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
-                    [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
-                ]}
-                color={lineColor}
-                lineWidth={lineWidth}
-            />
-            <Line
-                points={[
-                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
-                ]}
-                color={lineColor}
-                lineWidth={lineWidth}
-            />
-            <Line
-                points={[
-                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
-                    [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
-                    [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
-                ]}
-                color={lineColor}
-                lineWidth={lineWidth}
-            />
+            <mesh ref={ref}>
+                {/* <Line
+                    points={[
+                        [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                        [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                        [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                    ]}
+                    color={lineColor}
+                    lineWidth={lineWidth}
+                />
+                <Line
+                    points={[
+                        [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
+                        [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
+                        [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                    ]}
+                    color={lineColor}
+                    lineWidth={lineWidth}
+                />
+                <Line
+                    points={[
+                        [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition - linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition - linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition - linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition - linesSize, zPosition - linesSize],
+                    ]}
+                    color={lineColor}
+                    lineWidth={lineWidth}
+                />
+                <Line
+                    points={[
+                        [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition + linesSize, zPosition - linesSize],
+                        [xPosition + linesSize, yPosition + linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition + linesSize, zPosition + linesSize],
+                        [xPosition - linesSize, yPosition + linesSize, zPosition - linesSize],
+                    ]}
+                    color={lineColor}
+                    lineWidth={lineWidth}
+                /> */}
+                <boxGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial color="black" roughness={0.8} emissiveIntensity={0.5} />
+            </mesh>
             <Instance ref={ref} />
         </group>
     );
@@ -82,16 +86,19 @@ function Box({ id, object, temp = new THREE.Object3D(), ...props }) {
 
 function Boxes({ count = 50, objects, temp = new THREE.Object3D() }) {
     console.log({ objects });
+
+    const material = new THREE.MeshLambertMaterial({ color: 'red' });
+    const boxesGeometry = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5);
+
     return (
         <group>
-            <Instances range={1000}>
-                <boxGeometry />
-                <meshStandardMaterial color="black" roughness={0.8} emissiveIntensity={0.5} />
-                {objects.map((obj, i) => (
-                    <instancedMesh>
-                        <Box key={i} id={i} object={obj} />
+            <Instances range={1000} geometry={[boxesGeometry, material]}>
+                <instancedMesh args={[boxesGeometry, material]} />
+                {/* {objects.map((obj, i) => (
+                    <instancedMesh key={`box-${i}`}>
+                        <Box id={i} object={obj} />
                     </instancedMesh>
-                ))}
+                ))} */}
             </Instances>
         </group>
     );

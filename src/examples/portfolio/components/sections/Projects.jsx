@@ -2,27 +2,33 @@ import gsap from 'gsap';
 import SplitType from 'split-type';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import VogelsLogo from '../../../../logos/VogelsLogo';
-import MobielLogo from '../../../../logos/MobielLogo';
-import PrazLogo from '../../../../logos/PrazLogo';
-import MrFilletLogo from '../../../../logos/MrFilletLogo';
-import SolarNRGLogo from '../../../../logos/SolarNRGLogo';
-import HillhoutLogo from '../../../../logos/HillhoutLogo';
-import LeadHealthcareLogo from '../../../../logos/LeadHealthcareLogo';
-import SyncVrLogo from '../../../../logos/SyncVrLogo';
-import AinablersLogo from '../../../../logos/AinablersLogo';
+import PROJECTS_LIST from '../../constants/constants';
+
+import { twMerge } from 'tailwind-merge';
 
 gsap.registerPlugin(ScrollTrigger);
 
-let mm = gsap.matchMedia();
+// let mm = gsap.matchMedia();
 
 export default function Projects() {
     const containerRef = useRef(null);
     const wrapperRef = useRef(null);
     const titleRef = useRef(null);
-    const casesRef = useRef(null);
+    const projectNameRef = useRef(null);
+    const projectImageRef = useRef(null);
+    const projectDescriptionRef = useRef(null);
+    const projectDescriptionWrapperRef = useRef(null);
+    const [activeProject, setActiveProject] = useState(null);
+    const height = '180vh';
+
+    const toolsClassnames =
+        'text-xs tool-item inline-flex items-center font-bold leading-sm uppercase px-3 py-1 text-black rounded-full bg-white';
+    const websiteLabelClassnames =
+        'absolute left-1/2 bottom-8 -translate-x-1/2 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
+    const cardClassnames =
+        'case-card shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative rounded-xl filter h-[99vh] uppercase block w-full text-sm cursor-pointer overflow-hidden';
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -39,7 +45,7 @@ export default function Projects() {
                 stagger: 0.1,
                 scrollTrigger: {
                     trigger: titleRef.current,
-                    start: 'top center',
+                    start: 'top bottom',
                     end: `top top`,
                     scrub: 1,
                     markers: true,
@@ -47,11 +53,62 @@ export default function Projects() {
                 },
             });
 
-            const tl = gsap.timeline({
+            gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
                     pin: containerRef.current,
                     start: 'top top',
+                    // end: `bottom top`,
+                    scrub: 1,
+                    markers: true,
+                    toggleActions: 'play none none reverse',
+                },
+            });
+
+            const tl3 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top top+=800',
+                    end: `bottom top`,
+                    markers: true,
+                    toggleActions: 'play none none reverse',
+                },
+            });
+
+            tl3.from(
+                '.list-one .case-card',
+                {
+                    opacity: 0,
+                    stagger: 0.2,
+                    scale: 0.8,
+                },
+                0,
+            );
+
+            tl3.from(
+                '.list-two .case-card',
+                {
+                    opacity: 0,
+                    stagger: 0.2,
+                    scale: 0.8,
+                },
+                0.2,
+            );
+
+            tl3.from(
+                '.list-three .case-card',
+                {
+                    opacity: 0,
+                    stagger: 0.2,
+                    scale: 0.8,
+                },
+                0.8,
+            );
+
+            const tl2 = gsap.timeline({
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top top+=100',
                     end: `bottom top`,
                     scrub: 1,
                     markers: true,
@@ -59,26 +116,26 @@ export default function Projects() {
                 },
             });
 
-            tl.to(
+            tl2.to(
                 '.list-one',
                 {
-                    y: '-180vh',
+                    y: '-203vh',
                 },
                 0,
             );
 
-            tl.from(
+            tl2.from(
                 '.list-two',
                 {
-                    y: '-180vh',
+                    y: '-203vh',
                 },
                 0.01,
             );
 
-            tl.to(
+            tl2.to(
                 '.list-three',
                 {
-                    y: '-180vh',
+                    y: '-203vh',
                 },
                 0.02,
             );
@@ -87,183 +144,224 @@ export default function Projects() {
         return () => ctx.revert();
     }, []);
 
-    const firstList = [
-        {
-            primaryColor: '#594fff',
-            name: 'PRAZ',
-            websiteType: 'E-COMMERCE',
-            image: '/images/praz-image.jpeg',
-            logo: <PrazLogo />,
-        },
-        {
-            primaryColor: '#c61717',
-            name: 'Mr-fillet',
-            websiteType: 'E-COMMERCE',
-            image: '/images/mrfillet-image.jpeg',
-            logo: <MrFilletLogo />,
-        },
-        // {
-        //     primaryColor: '#09361b',
-        //     name: 'Hillhout',
-        //     websiteType: 'Configurator',
-        //     image: '/images/vogels-image.png',
-        //     logo: <HillhoutLogo />,
-        // },
-        {
-            primaryColor: '#09361b',
-            name: 'Methinks',
-            websiteType: 'Website',
-            image: '/images/vogels-image.png',
-            logo: <HillhoutLogo />,
-        },
-    ];
+    useEffect(() => {
+        if (!projectNameRef.current) return;
 
-    const secondList = [
-        {
-            primaryColor: '#ea5733',
-            name: 'Vogels',
-            websiteType: 'E-COMMERCE',
-            image: '/images/vogels-image.png',
-            logo: <VogelsLogo />,
-        },
-        {
-            primaryColor: '#ffb914',
-            name: 'SolarNRG',
-            websiteType: 'CONFIGURATOR',
-            image: '/images/solarnrg-image.jpeg',
-            logo: <SolarNRGLogo fill="#161414" />,
-        },
-        // {
-        //     primaryColor: '#09361b',
-        //     name: 'Hillhout',
-        //     websiteType: 'Website',
-        //     image: '/images/vogels-image.png',
-        //     logo: <HillhoutLogo />,
-        // },
-        {
-            primaryColor: '#fffced',
-            name: 'Ainablers',
-            websiteType: 'Website',
-            image: '/images/vogels-image.png',
-            logo: <AinablersLogo />,
-        },
-    ];
+        let ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                paused: !!activeProject,
+            });
 
-    const thirdList = [
-        {
-            primaryColor: '#e57300',
-            name: 'Lead Healthcare',
-            websiteType: 'Website',
-            image: '/images/leadhealthcare-image.png',
-            logo: <LeadHealthcareLogo />,
-        },
-        {
-            primaryColor: '#1a2b8f',
-            name: 'Mobiel.nl',
-            websiteType: 'E-COMMERCE',
-            image: '/images/mobiel-website.png',
-            logo: <MobielLogo />,
-        },
-        {
-            primaryColor: '#346FF6',
-            name: 'SyncVR',
-            websiteType: '2x VR Applications',
-            image: '/images/mobiel-website.png',
-            logo: <SyncVrLogo />,
-        },
-    ];
+            tl.from(projectDescriptionWrapperRef.current, {
+                // yPercent: 100,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.3,
+            });
 
-    const websiteLabelClassnames =
-        'absolute left-1/2 bottom-8 -translate-x-1/2 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-black text-white rounded-full';
-    const cardClassnames =
-        'case-card relative rounded-xl filter h-[90vh] uppercase block w-full text-sm cursor-pointer overflow-hidden';
+            tl.from(projectNameRef.current, {
+                yPercent: 100,
+                opacity: 0,
+                clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+                stagger: 0.1,
+                duration: 0.4,
+            });
+
+            const splitText = new SplitType(projectDescriptionRef.current, {
+                types: 'words',
+                wordClass: '',
+            });
+
+            tl.from(splitText.words, {
+                // yPercent: 100,
+                opacity: 0,
+                // clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+                stagger: 0.001,
+                duration: 0.4,
+            });
+
+            tl.from('.tool-item', {
+                yPercent: -100,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.4,
+            });
+
+            if (activeProject) {
+                tl.play();
+            }
+        });
+
+        return () => ctx.revert();
+    }, [activeProject?.name]); // Run effect only once on component mount
+
+    function onProjectClick(project) {
+        setActiveProject(project);
+        document.body.style.overflow = 'hidden';
+    }
 
     return (
-        <div ref={wrapperRef}>
-            <div className="flex items-center w-full pt-10 lg:pt-0 header h-screen">
-                <h2 ref={titleRef} className="w-full uppercase text-white text-[29vw] text-center">
-                    Cases<span className="text-secondary">.</span>
-                </h2>
-            </div>
+        <>
             <div
-                className="wrapper overflow-hidden px-4 text-white relative w-full  flex flex-col h-screen"
-                ref={containerRef}
+                className={twMerge(
+                    'w-screen fixed flex flex-col md:flex-row h-screen top-0 left-0 z-50 transition-all bg-black duration-700',
+                    activeProject ? 'pointer-events-all opacity-1' : 'pointer-events-none opacity-0',
+                )}
             >
-                <div className="w-full relative grid grid-cols-3 gap-10" ref={casesRef}>
-                    <div className="gap-10 flex flex-col list-one">
-                        {firstList.map((website, i) => (
-                            <div
-                                key={`website-${i}`}
-                                className={cardClassnames}
-                                style={{ backgroundColor: website.primaryColor }}
-                            >
-                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
-                                <img
-                                    src={website.image}
-                                    alt="Project"
-                                    className="transition-all duration-500 opacity-0"
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                />
-                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
-                                    {website.logo}
-                                </div>
-                            </div>
-                        ))}
+                <div
+                    className="w-full h-full flex-shrink-0 md:flex-shrink bg-cover bg-center bg-no-repeat relative opacity-90"
+                    ref={projectImageRef}
+                    style={{ backgroundImage: `url('${activeProject?.image}')` }}
+                >
+                    <div className=" w-full h-full absolute top-0 left-0"></div>
+                </div>
+                <div
+                    className="w-full h-full px-10 py-10 md:w-1/3 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
+                    ref={projectDescriptionWrapperRef}
+                >
+                    <div
+                        className="absolute right-4 top-4 cursor-pointer hover:rotate-90 transition-all"
+                        onClick={() => {
+                            setActiveProject(null);
+                            document.body.style.overflow = 'visible';
+                        }}
+                    >
+                        <svg
+                            className="h-10 w-10"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
                     </div>
-                    <div className="gap-10 flex flex-col list-two">
-                        {secondList.map((website, i) => (
-                            <div
-                                key={`website-${i}`}
-                                className={cardClassnames}
-                                style={{ backgroundColor: website.primaryColor }}
-                            >
-                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
-                                <img
-                                    src={website.image}
-                                    alt="Project"
-                                    className="transition-all duration-500 opacity-0"
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                />
-                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
-                                    {website.logo}
-                                </div>
-                            </div>
-                        ))}
+                    <div className="flex gap-4 mb-6 projects items-center">
+                        <h3 ref={projectNameRef} className="text-7xl text-white">
+                            {activeProject?.name}
+                        </h3>
                     </div>
-                    <div className="gap-10 flex flex-col list-three">
-                        {thirdList.map((website, i) => (
+                    {/* <a href={activeProject?.url} className="mb-10 text-sm">
+                        Visit website
+                    </a> */}
+
+                    <div>
+                        {activeProject && (
                             <div
-                                key={`website-${i}`}
-                                className={cardClassnames}
-                                style={{ backgroundColor: website.primaryColor }}
-                            >
-                                <div className={websiteLabelClassnames}>{website.websiteType}</div>
-                                <img
-                                    src={website.image}
-                                    alt="Project"
-                                    className="transition-all duration-500 opacity-0"
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                />
-                                <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
-                                    {website.logo}
+                                className="text-xl"
+                                ref={projectDescriptionRef}
+                                dangerouslySetInnerHTML={{ __html: activeProject?.description }}
+                            />
+                        )}
+                        <div className="flex flex-wrap gap-2 mt-4">
+                            {activeProject?.tools.map((tool, i) => (
+                                <div key={`tool-${i}`} className={toolsClassnames}>
+                                    {tool}
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div ref={wrapperRef}>
+                <div className="flex items-center w-full pt-10 lg:pt-0 header pb-10">
+                    <h2
+                        ref={titleRef}
+                        className="w-full uppercase text-off-white text-[34vw] md:text-[26vw] text-center leading-normal"
+                    >
+                        Cases<span className="text-secondary">.</span>
+                    </h2>
+                </div>
+                <div
+                    className="wrapper overflow-hidden px-4 text-white relative w-full  flex flex-col h-screen"
+                    ref={containerRef}
+                >
+                    <div className="w-full relative grid grid-cols-3 gap-[1vw]">
+                        <div className="gap-[1vw] flex flex-col list-one">
+                            {PROJECTS_LIST.slice(0, 3).map((project, i) => (
+                                <div
+                                    key={`website-${i}`}
+                                    className={cardClassnames}
+                                    style={{ backgroundColor: project.primaryColor }}
+                                    onClick={() => onProjectClick(project)}
+                                >
+                                    <div className={websiteLabelClassnames}>{project.websiteType}</div>
+                                    <img
+                                        src={project.image}
+                                        alt="Project"
+                                        className="transition-all duration-500 opacity-0"
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%',
+                                        }}
+                                    />
+                                    <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                        {project.logo}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="gap-[1vw] flex flex-col list-two">
+                            {PROJECTS_LIST.slice(3, 6).map((project, i) => (
+                                <div
+                                    key={`website-${i}`}
+                                    className={cardClassnames}
+                                    style={{ backgroundColor: project.primaryColor }}
+                                    onClick={() => onProjectClick(project)}
+                                >
+                                    <div className={websiteLabelClassnames}>{project.websiteType}</div>
+                                    <img
+                                        src={project.image}
+                                        alt="Project"
+                                        className="transition-all duration-500 opacity-0"
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%',
+                                        }}
+                                    />
+                                    <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                        {project.logo}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="gap-[1vw] flex flex-col list-three">
+                            {PROJECTS_LIST.slice(6, 9).map((project, i) => (
+                                <div
+                                    key={`website-${i}`}
+                                    className={cardClassnames}
+                                    style={{ backgroundColor: project.primaryColor }}
+                                    onClick={() => onProjectClick(project)}
+                                >
+                                    <div className={websiteLabelClassnames}>{project.websiteType}</div>
+                                    <img
+                                        src={project.image}
+                                        alt="Project"
+                                        className="transition-all duration-500 opacity-0"
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%',
+                                        }}
+                                    />
+                                    <div className="website-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] transition-all">
+                                        {project.logo}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
