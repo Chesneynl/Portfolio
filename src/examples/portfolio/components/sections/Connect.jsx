@@ -48,7 +48,7 @@ export default function Connect() {
                     start: 'top center',
                     end: `bottom bottom`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });

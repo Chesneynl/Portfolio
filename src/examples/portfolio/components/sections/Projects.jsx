@@ -48,7 +48,7 @@ export default function Projects() {
                     start: 'top bottom',
                     end: `top top`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -60,7 +60,7 @@ export default function Projects() {
                     start: 'top top',
                     // end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -70,7 +70,7 @@ export default function Projects() {
                     trigger: containerRef.current,
                     start: 'top top+=800',
                     end: `bottom top`,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -111,7 +111,7 @@ export default function Projects() {
                     start: 'top top+=100',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
