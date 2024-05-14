@@ -128,7 +128,7 @@ function CustomCamera() {
             ref={cameraRef}
             gl={{ antialias: true }}
             position={[0, 0, 8]}
-            // fov={60}
+            fov={40}
             near={0.1}
             far={1000}
         />
@@ -269,8 +269,8 @@ function Boxes() {
             {/* <Box ref={movingBoxRef} position={[0, 0, 1.1]} rotation={[0, 2, 1]} scale={1.5} color="#FF6363" /> */}
             <group ref={groupRef}>
                 <Box ref={box1} position={[-3.4, -3.2, 2.8]} rotation={[2, 2, 1]} scale={3.5} color={color} />
-                <Box ref={box2} position={[9.9, -3.2, 1.8]} rotation={[1, 2, 1]} scale={1} color={color} />
-                <Box ref={box3} position={[-8.4, 2.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
+                <Box ref={box2} position={[6.4, -2.2, 2.8]} rotation={[1, 2, 1]} scale={1} color={color} />
+                <Box ref={box3} position={[-6.4, 1.8, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
                 <Box position={[3.4, 5.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
                 <Box position={[4.8, -16.5, 1.1]} rotation={[0, 2, 1]} scale={1} color={color} />
                 <Box position={[-3.8, -13.5, 1.1]} rotation={[0, 2, 1]} scale={0.3} color={color} />
