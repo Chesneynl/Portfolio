@@ -216,7 +216,7 @@ export default function Projects() {
                     <div className=" w-full h-full absolute top-0 left-0"></div>
                 </div>
                 <div
-                    className="w-full h-full px-10 py-10 md:w-1/3 flex-shrink-0 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
+                    className="absolute top-0 left-0 md:relative bg-black/90 w-full h-full px-10 py-10 md:w-1/3 flex-shrink-0 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
                     ref={projectDescriptionWrapperRef}
                 >
                     <div

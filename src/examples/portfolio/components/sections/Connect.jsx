@@ -46,7 +46,7 @@ export default function Connect() {
                 scrollTrigger: {
                     trigger: '.connect-wrapper',
                     start: 'top center',
-                    end: `top top`,
+                    end: `bottom bottom`,
                     scrub: 1,
                     markers: true,
                     toggleActions: 'play none none reverse',
@@ -163,7 +163,7 @@ export default function Connect() {
                 </div>
             ) : (
                 <div
-                    className="container form-container text-off-white md:border-2 md:py-16 md:px-8 rounded-lg flex-col lg:gap-10 bg-red w-full justify-center items-center mb-10 lg:max-w-[800px]"
+                    className="container form-container text-off-white  py-10 md:py-16 md:px-8 rounded-xl flex-col lg:gap-10 bg-red w-full justify-center items-center mb-10 lg:max-w-[800px]"
                     ref={containerRef}
                 >
                     <form className="w-full ">
@@ -334,7 +334,7 @@ export default function Connect() {
                     </span>
                 </a>
                 <a
-                    href="https://www.linkedin.com/in/chesneybuitendijk/"
+                    href="mailto:chesneybuitendijk@gmail.com"
                     target="_blank"
                     rel="noreferrer"
                     className="rounded-full p-4 hover:shadow-custom-pink  transition-all hover:-translate-y-1.5 bg-primary social-button"
