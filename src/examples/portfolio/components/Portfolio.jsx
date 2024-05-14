@@ -67,7 +67,7 @@ function Portfolio() {
                     start: 'top top',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -101,7 +101,7 @@ function Portfolio() {
                     // camera={{ position: [-0.1, 0, 8], fov: 50 }}
                 >
                     <CustomCamera />
-                    <Stats />
+                    {/* <Stats /> */}
                     {/* <OrbitControls /> */}
 
                     <Boxes />
@@ -213,7 +213,7 @@ function Boxes() {
                     start: 'top top',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    markers: false,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -269,8 +269,8 @@ function Boxes() {
             {/* <Box ref={movingBoxRef} position={[0, 0, 1.1]} rotation={[0, 2, 1]} scale={1.5} color="#FF6363" /> */}
             <group ref={groupRef}>
                 <Box ref={box1} position={[-3.4, -3.2, 2.8]} rotation={[2, 2, 1]} scale={3.5} color={color} />
-                <Box ref={box2} position={[3.9, -2.2, 1.8]} rotation={[1, 2, 1]} scale={1} color={color} />
-                <Box ref={box3} position={[3.4, 2.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
+                <Box ref={box2} position={[9.9, -3.2, 1.8]} rotation={[1, 2, 1]} scale={1} color={color} />
+                <Box ref={box3} position={[-8.4, 2.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
                 <Box position={[3.4, 5.5, 1.1]} rotation={[0, 2, 1]} scale={1.5} color={color} />
                 <Box position={[4.8, -16.5, 1.1]} rotation={[0, 2, 1]} scale={1} color={color} />
                 <Box position={[-3.8, -13.5, 1.1]} rotation={[0, 2, 1]} scale={0.3} color={color} />

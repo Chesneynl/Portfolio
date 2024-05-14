@@ -25,13 +25,15 @@ export default function About() {
                     start: 'center bottom',
                     scrub: 1,
                     end: `bottom bottom`,
-                    markers: true,
+                    markers: false,
                 },
             });
         });
 
         return () => ctx.revert();
     }, [containerRef?.current]);
+
+    return null;
 
     return (
         <>
