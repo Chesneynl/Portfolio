@@ -7,6 +7,7 @@ import AinablersLogo from '../../../logos/AinablersLogo';
 import LeadHealthcareLogo from '../../../logos/LeadHealthcareLogo';
 import MobielLogo from '../../../logos/MobielLogo';
 import SyncVrLogo from '../../../logos/SyncVrLogo';
+import TweedekansjeLogo from '../../../logos/TweedekansjeLogo';
 
 enum Tools {
     PYTHON = 'Python',
@@ -42,12 +43,20 @@ enum Tools {
     USER_RESEARCH = 'User Research',
     OCULUS = 'Oculus',
     STORYBOOK = 'Storybook',
+    AKENEO = 'Akeneo',
+    DOCKER = 'Docker',
+    CHATGPT = 'ChatGPT',
+    PICQER = 'Picqer',
+    CRONJOB = 'Cronjob',
+    FRAMER_MOTION = 'Framer Motion',
+    MOLLIE = 'Mollie',
 }
 
 const PROJECTS_LIST = [
     {
         primaryColor: '#594fff',
         name: 'PRAZ',
+        url: 'https://www.praz.com/',
         websiteType: 'E-COMMERCE',
         image: '/images/praz-image.jpeg',
         logo: <PrazLogo />,
@@ -62,31 +71,66 @@ const PROJECTS_LIST = [
             Tools.STYLED_COMPONENTS,
         ],
         description: `
-        
-<div>
-<p>
-  PRAZ epitomizes dynamism and user-friendliness in the realm of online shopping, catering specifically to athletes and fitness enthusiasts by offering a rich array of high-quality sport meals meticulously tailored to their dietary requirements and performance aspirations. Whether you're a seasoned elite athlete in pursuit of optimal nutrition or a dedicated fitness enthusiast striving to power through workouts, PRAZ stands ready with a diverse selection of nutritious meals crafted to bolster your active lifestyle.
-</p>
-<p>
-  Within the collaborative environment of Gracious, a vital arm of Happy Horizon, our team worked hand in hand to conceive and materialize the PRAZ website, ensuring an immersive and seamless online shopping experience for every customer. Employing state-of-the-art technologies and adhering to industry best practices, we transformed the vision of the PRAZ team into a captivating reality.
-</p>
-<p>
-  The integration of Magento, Storyblok CMS, and Next.js was executed flawlessly, resulting in the delivery of a webshop that not only boasts a plethora of features but also exudes visual appeal synonymous with the esteemed PRAZ brand. From effortless browsing and purchasing of sport meals to accessing invaluable nutrition resources, the PRAZ website stands as a holistic solution catering to the discerning needs of athletes and fitness enthusiasts striving for premium nutrition and peak performance.
-</p>
-<p>
-  But our commitment to innovation doesn't end there. With the implementation of Squeezely, powered by AI, we've taken personalization to new heights. By analyzing user click behavior, we deliver tailor-made product recommendations, ensuring that each customer finds the perfect meal to fuel their journey to greatness.
-</p>
-</div>
- 
+          <div>
+          <p>
+            PRAZ epitomizes dynamism and user-friendliness in the realm of online shopping, catering specifically to athletes and fitness enthusiasts by offering a rich array of high-quality sport meals meticulously tailored to their dietary requirements and performance aspirations. Whether you're a seasoned elite athlete in pursuit of optimal nutrition or a dedicated fitness enthusiast striving to power through workouts, PRAZ stands ready with a diverse selection of nutritious meals crafted to bolster your active lifestyle.
+          </p>
+          <p>
+            Within the collaborative environment of Gracious, a vital arm of Happy Horizon, our team worked hand in hand to conceive and materialize the PRAZ website, ensuring an immersive and seamless online shopping experience for every customer. Employing state-of-the-art technologies and adhering to industry best practices, we transformed the vision of the PRAZ team into a captivating reality.
+          </p>
+          <p>
+            The integration of Magento, Storyblok CMS, and Next.js was executed flawlessly, resulting in the delivery of a webshop that not only boasts a plethora of features but also exudes visual appeal synonymous with the esteemed PRAZ brand. From effortless browsing and purchasing of sport meals to accessing invaluable nutrition resources, the PRAZ website stands as a holistic solution catering to the discerning needs of athletes and fitness enthusiasts striving for premium nutrition and peak performance.
+          </p>
+          <p>
+            But our commitment to innovation doesn't end there. With the implementation of Squeezely, powered by AI, we've taken personalization to new heights. By analyzing user click behavior, we deliver tailor-made product recommendations, ensuring that each customer finds the perfect meal to fuel their journey to greatness.
+          </p>
+          </div>
         `,
     },
     {
         primaryColor: '#c61717',
         name: 'Mr-fillet',
         websiteType: 'E-COMMERCE',
+        url: 'https://www.mr-fillet.shop/',
         image: '/images/mockups/mrfillet-mockup.jpg',
-        tools: [Tools.MAGENTO, Tools.STORYBLOK, Tools.NEXTJS, Tools.GTM, Tools.HEADLESS, Tools.SENTRY],
+        tools: [
+            Tools.MAGENTO,
+            Tools.STORYBLOK,
+            Tools.NEXTJS,
+            Tools.GTM,
+            Tools.HEADLESS,
+            Tools.SENTRY,
+            Tools.MOLLIE,
+            Tools.STYLED_COMPONENTS,
+            Tools.HEADLESS,
+        ],
         logo: <MrFilletLogo />,
+        description: `
+        <p>In this project, our team developed a state-of-the-art e-commerce webshop for Mr. Fillet, a rapidly growing company specializing in chicken and related products. Recognizing the need for a scalable and flexible online platform, we built the website using Next.js and integrated Storyblok as the Content Management System (CMS). Additionally, we incorporated Magento to manage the product inventory, providing robust, scalable solutions for e-commerce operations.</p>
+
+        <ul>
+          <li><strong>Next.js Framework:</strong>
+            <p>We chose Next.js for its server-side rendering capabilities, which enhance the performance and SEO of the webshop. This JavaScript framework allows for building highly interactive and responsive user interfaces, ensuring a seamless shopping experience.</p>
+          </li>
+          <li><strong>Headless CMS with Storyblok:</strong>
+            <p>To provide dynamic content management capabilities, we integrated Storyblok, a headless CMS. This allows Mr. Fillet to manage their content efficiently without compromising on the design and performance of the webshop. Storyblok's API-driven approach means content updates are instantaneous and do not affect the frontend structure.</p>
+          </li>
+          <li><strong>Magento for Product Management:</strong>
+            <p>Magento serves as the backbone for managing the product listings in the webshop. Known for its robustness and flexibility, Magento seamlessly handles the extensive product range, ensuring that all inventory processes are streamlined and scalable as the company grows.</p>
+          </li>
+          <li><strong>Scalability and Flexibility:</strong>
+            <p>The combination of Next.js, Storyblok, and Magento allows the webshop to handle increasing traffic and sales effortlessly, ensuring the platform can grow alongside the business.</p>
+          </li>
+          <li><strong>Product Variety:</strong>
+            <p>The webshop features a wide range of products, primarily focusing on chicken and related items. Each product page is designed to provide detailed information, enhancing customer engagement and satisfaction.</p>
+          </li>
+        </ul>
+        
+        <p>The new e-commerce webshop has significantly improved Mr. Fillet's online presence, enabling them to reach a broader audience and streamline their sales processes. The use of a headless CMS, alongside Magento for product management, has particularly enhanced their ability to manage website content and promotions dynamically, providing them with the agility to respond quickly to market demands.</p>
+        
+        <p>In summary, this project has delivered a robust, scalable e-commerce solution that not only meets the current needs of Mr. Fillet but also provides the infrastructure to support future growth and expansion.</p>
+        
+        `,
     },
     // {
     //     primaryColor: '#09361b',
@@ -96,16 +140,50 @@ const PROJECTS_LIST = [
     //     logo: <HillhoutLogo />,
     // },
     {
-        primaryColor: '#09361b',
-        name: 'Methinks',
-        websiteType: 'Website',
-        image: '/images/vogels-image.png',
-        tools: [Tools.MAGENTO, Tools.STORYBLOK, Tools.NEXTJS],
-        logo: <HillhoutLogo />,
+        primaryColor: '#6fac46',
+        name: '2dekansje',
+        url: 'https://2dekansje.com/',
+        websiteType: 'AI automation',
+        image: '/images/2dekansje-products.png',
+        tools: [
+            Tools.AKENEO,
+            Tools.STORYBLOK,
+            Tools.NODEJS,
+            Tools.GOOGLE_PUBSUB,
+            Tools.SENTRY,
+            Tools.DOCKER,
+            Tools.CHATGPT,
+            Tools.PICQER,
+            Tools.CRONJOB,
+        ],
+        logo: <TweedekansjeLogo />,
+        description: `
+        <p>In this innovative project, our team developed a sophisticated product data enricher designed to seamlessly integrate with Akeneo, the leading Product Information Management (PIM) system. Our primary goal was to enhance the richness and accuracy of product listings on the platform by automatically importing and integrating comprehensive attribute data from bol.com, one of the largest e-commerce platforms in the Netherlands.</p>
+        <ul>
+          <li><strong>Dynamic Data Enrichment:</strong>
+            <p>Utilizing Google Cloud Pub/Sub, we implemented a robust messaging system that ensures sequential enrichment of product attributes. Each product is processed individually, allowing for meticulous updates without overloading the system.</p>
+          </li>
+          <li><strong>Automated Price Updates:</strong>
+            <p>To maintain competitive pricing, we introduced a price enricher that updates product pricing information daily from bol.com. This feature is executed as a cron job, ensuring prices are consistently accurate and reflect the latest market trends.</p>
+          </li>
+          <li><strong>Advanced Language Processing:</strong>
+            <p>Leveraging the cutting-edge capabilities of ChatGPT, we automated the translation of product descriptions, slugs, brands, and names. This not only streamlined the process of updating product information across multiple languages but also ensured that the translations were contextually accurate and engaging.</p>
+          </li>
+          <li><strong>Intelligent Categorization:</strong>
+            <p>Our system smartly categorizes each product into the appropriate category within Akeneo based on the data retrieved from bol.com. This automated categorization helps in maintaining a structured and user-friendly product catalog.</p>
+          </li>
+          <li><strong>Seamless Integration and Scalability:</strong>
+            <p>Designed with scalability in mind, our solution effortlessly handles the growing inventory and data needs of our business, ensuring that the data enrichment process scales with our operations without compromising on efficiency.</p>
+          </li>
+        </ul>
+        <p>This project has significantly streamlined the product information management processes, reducing manual efforts and improving the accuracy of product data. The automated updates and enhancements have not only saved considerable time but also improved the overall shopping experience for the customers by providing them with detailed and up-to-date product information. Furthermore, the integration has enhanced the SEO efforts and boosted the visibility of the products across multiple markets.</p>
+        <p>In summary, this data enrichment integration represents a significant leap forward in the ability to manage product information efficiently while ensuring the listings remain competitive and comprehensive.</p>
+        `,
     },
     {
         primaryColor: '#ea5733',
         name: 'Vogels',
+        url: 'https://www.vogels.com/',
         websiteType: 'E-COMMERCE',
         image: '/images/mockups/vogels-mockup.jpg',
         tools: [
@@ -113,6 +191,8 @@ const PROJECTS_LIST = [
             Tools.STORYBLOK,
             Tools.NEXTJS,
             Tools.REDIS,
+            Tools.MOLLIE,
+            Tools.STYLED_COMPONENTS,
             Tools.VUEJS,
             Tools.NODEJS,
             Tools.GOOGLE_PUBSUB,
@@ -145,12 +225,12 @@ const PROJECTS_LIST = [
     Additionally, we integrated a store locator functionality, enabling customers to easily find the nearest store to pick up their TV bracket. This convenient tool enhances accessibility and provides customers with a hassle-free way to obtain their desired mounting solution.
   </p>
 </div>
-
             `,
     },
     {
         primaryColor: '#ffb914',
         name: 'SolarNRG',
+        url: 'https://solarnrg.shop/',
         websiteType: 'CONFIGURATOR',
         image: '/images/solarnrg-image.jpeg',
         description: `
@@ -200,6 +280,7 @@ const PROJECTS_LIST = [
     {
         primaryColor: '#fffced',
         name: 'Ainablers',
+        url: 'https://www.ainablers.com/',
         websiteType: 'Website',
         image: '/images/mockups/ainablers-mockup.jpg',
         tools: [
@@ -241,9 +322,38 @@ const PROJECTS_LIST = [
         primaryColor: '#e57300',
         name: 'Lead Healthcare',
         websiteType: 'Website',
+        url: 'https://www.leadhealthcare.nl/',
         image: '/images/leadhealthcare-image.png',
-        tools: [Tools.MAGENTO, Tools.STORYBLOK, Tools.NEXTJS],
+        tools: [
+            Tools.REACT,
+            Tools.STORYBLOK,
+            Tools.NEXTJS,
+            Tools.FRAMER_MOTION,
+            Tools.GTM,
+            Tools.SENTRY,
+            Tools.STYLED_COMPONENTS,
+        ],
         logo: <LeadHealthcareLogo />,
+        description: `
+        <p>In this rapid development project, our team successfully designed and deployed a cutting-edge website for Leadhealthcare, an organization dedicated to assisting individuals in finding new opportunities within the healthcare industry. Given a challenging deadline of just one week, we mobilized our full team to achieve this ambitious goal.</p>
+
+        <ul>
+          <li><strong>Next.js and React Framework:</strong>
+            <p>We utilized Next.js combined with React to build a highly responsive and efficient website. Next.js provided the server-side rendering capabilities necessary for SEO and performance optimization, while React allowed for dynamic user interfaces adaptable to user needs and interactions.</p>
+          </li>
+          <li><strong>Framer Motion for Animations:</strong>
+            <p>To enhance the user experience with interactive and smooth animations, we integrated Framer Motion. This tool enabled us to implement complex animations easily and efficiently, adding a layer of polish and engagement to the website's design.</p>
+          </li>
+          <li><strong>Project Execution Under Tight Deadlines:</strong>
+            <p>Facing a tight deadline of one week, our entire team collaborated intensively, employing agile methodologies to ensure timely delivery without compromising on quality. The project demanded rapid iteration and seamless communication across all development phases.</p>
+          </li>
+        </ul>
+        
+        <p>The completion of the Leadhealthcare website has significantly bolstered their capability to connect individuals with job opportunities in the healthcare sector. The site's robust functionality and engaging design enable users to easily navigate and find relevant job listings, enhancing their career prospects in the healthcare industry.</p>
+        
+        <p>In summary, this project not only met the urgent needs of Leadhealthcare but also set a new standard in our ability to deliver high-quality web solutions under significant time constraints. The successful deployment of this site demonstrates our team's commitment to excellence and our capability to handle projects with stringent deadlines.</p>
+        
+        `,
     },
     {
         primaryColor: '#1a2b8f',
@@ -283,7 +393,6 @@ const PROJECTS_LIST = [
             Tools.GRAPHQL,
             Tools.CHROME_EXTENSION,
             Tools.SENTRY,
-            Tools.JQUERY,
             Tools.JENKINS,
             Tools.STYLED_COMPONENTS,
             Tools.JQUERY,
@@ -293,6 +402,7 @@ const PROJECTS_LIST = [
     {
         primaryColor: '#346FF6',
         name: 'SyncVR',
+        url: 'https://www.syncvrmedical.com/',
         websiteType: '2x VR Applications',
         image: '/images/mockups/syncvr-mockup.jpg',
         tools: [Tools.UNITY, Tools.C_SHARP, Tools.VR, Tools.GAME_DESIGN, Tools.USER_RESEARCH, Tools.OCULUS],

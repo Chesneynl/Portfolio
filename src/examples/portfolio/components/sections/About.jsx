@@ -25,7 +25,7 @@ export default function About() {
                     start: 'center bottom',
                     scrub: 1,
                     end: `bottom bottom`,
-                    markers: true,
+                    // markers: true,
                 },
             });
         });
@@ -43,7 +43,7 @@ export default function About() {
                     ref={textRef}
                     className="text-[16vw] md:text-[8vw] text-center font-normal leading-none uppercase drop-shadow-lg tracking-wide"
                 >
-                    I'm a front-end developer based in the netherlands with over 5 years of expertise. I've refined my
+                    I'm a front-end developer based in the netherlands with over 6 years of expertise. I've refined my
                     skills on a variety of projects, including{' '}
                     <span className="text-secondary underline">e-commerce</span>,{' '}
                     <span className="text-secondary">websites</span>, and{' '}

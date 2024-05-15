@@ -48,7 +48,7 @@ export default function Connect() {
                     start: 'top center',
                     end: `bottom bottom`,
                     scrub: 1,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -263,7 +263,7 @@ export default function Connect() {
                                     className="block uppercase tracking-wide text-off-white text-xs font-bold mb-2"
                                     htmlFor="grid-first-name"
                                 >
-                                    Your message to me
+                                    Your message for me
                                 </label>
                                 <textarea
                                     className={`appearance-none block w-full bg-gray-200 text-gray-700 border ${
@@ -271,11 +271,11 @@ export default function Connect() {
                                     } rounded py-3 px-4 mb-0 leading-tight focus:outline-none focus:bg-off-white h-32 md:h-40 transition-all`}
                                     id="grid-first-name"
                                     onChange={handleChange}
-                                    name="firstName"
+                                    name="message"
                                     type="text"
                                     placeholder="I would like to talk to you about..."
                                 />
-                                {errors.includes('firstName') && (
+                                {errors.includes('message') && (
                                     <p className="text-red-500 text-xs italic mt-3">
                                         Please leave me a message so i know what you would like to discuss.
                                     </p>

@@ -17,11 +17,11 @@ export default function Projects() {
     const wrapperRef = useRef(null);
     const titleRef = useRef(null);
     const projectNameRef = useRef(null);
+    const websiteRef = useRef(null);
     const projectImageRef = useRef(null);
     const projectDescriptionRef = useRef(null);
     const projectDescriptionWrapperRef = useRef(null);
     const [activeProject, setActiveProject] = useState(null);
-    const height = '180vh';
 
     const toolsClassnames =
         'text-xs tool-item inline-flex items-center font-bold leading-sm uppercase px-3 py-1 text-black rounded-full bg-white';
@@ -48,7 +48,7 @@ export default function Projects() {
                     start: 'top bottom',
                     end: `top top`,
                     scrub: 1,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -60,7 +60,7 @@ export default function Projects() {
                     start: 'top top',
                     // end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -70,7 +70,7 @@ export default function Projects() {
                     trigger: containerRef.current,
                     start: 'top top+=800',
                     end: `bottom top`,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -111,7 +111,7 @@ export default function Projects() {
                     start: 'top top+=100',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -167,6 +167,13 @@ export default function Projects() {
                 duration: 0.4,
             });
 
+            tl.from(websiteRef.current, {
+                yPercent: 100,
+                opacity: 0,
+                clipPath: 'inset(0 0 100% 0)', // Starting clip-path
+                duration: 0.2,
+            });
+
             const splitText = new SplitType(projectDescriptionRef.current, {
                 types: 'words',
                 wordClass: '',
@@ -212,9 +219,7 @@ export default function Projects() {
                     className="w-full h-full flex-shrink-0 md:flex-shrink bg-cover bg-center bg-no-repeat relative opacity-90"
                     ref={projectImageRef}
                     style={{ backgroundImage: `url('${activeProject?.image}')` }}
-                >
-                    <div className=" w-full h-full absolute top-0 left-0"></div>
-                </div>
+                ></div>
                 <div
                     className="absolute top-0 left-0 md:relative bg-black/90 w-full h-full px-10 py-10 md:w-1/3 flex-shrink-0 text-white overflow-y-scroll shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px]"
                     ref={projectDescriptionWrapperRef}
@@ -247,9 +252,15 @@ export default function Projects() {
                             {activeProject?.name}
                         </h3>
                     </div>
-                    {/* <a href={activeProject?.url} className="mb-10 text-sm">
+                    <a
+                        ref={websiteRef}
+                        href={activeProject?.url}
+                        className="mb-5 text-sm no-underline border-b pb-1 inline-block"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
                         Visit website
-                    </a> */}
+                    </a>
 
                     <div>
                         {activeProject && (

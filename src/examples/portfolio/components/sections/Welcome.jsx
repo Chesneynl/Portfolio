@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 let mm = gsap.matchMedia();
 
-export default function Welcome() {
+export default function Welcome({ loaded }) {
     const nameRef = useRef();
     const functionGroupRef = useRef();
     const lineRef = useRef();
@@ -14,7 +14,9 @@ export default function Welcome() {
         if (!nameRef.current) return;
 
         let ctx = gsap.context(() => {
-            const tl = gsap.timeline();
+            const tl = gsap.timeline({
+                paused: !loaded,
+            });
 
             const splitText = new SplitType(nameRef.current, {
                 types: 'words',
@@ -43,7 +45,7 @@ export default function Welcome() {
 
         const words = functionsRef.current.querySelectorAll('.job-title');
 
-        const slotTl = gsap.timeline({ repeat: -1 });
+        const slotTl = gsap.timeline({ repeat: -1, paused: !loaded });
 
         const height = 32;
 

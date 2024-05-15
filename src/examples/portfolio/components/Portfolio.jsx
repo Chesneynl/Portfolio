@@ -26,36 +26,46 @@ import {
 import { useFrame, extend } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, SSAO, Vignette } from '@react-three/postprocessing';
 import gsap from 'gsap';
-import { DebugLayerMaterial, Gradient, LayerMaterial, Noise, Normal } from 'lamina';
-import { useControls } from 'leva';
-import colors from 'nice-color-palettes/200';
+import { Gradient, LayerMaterial } from 'lamina';
 import { forwardRef, Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import React, { useLayoutEffect } from 'react';
-import * as easings from 'd3-ease';
+import React from 'react';
 import * as THREE from 'three';
 
 import { StyledCanvas } from '../App.styled';
-import Tubes from './Tubes';
 
 import Welcome from './sections/Welcome';
 import About from './sections/About';
 import Connect from './sections/Connect';
-import FlowField from './FlowField';
-import Floor from './Floor';
+
+import { twMerge } from 'tailwind-merge';
+
 import Projects from './sections/Projects';
-import { useTrailTexture } from './useTrailTexture';
 
-const AnimatedMaterial = a(MeshDistortMaterial);
-
-const PAGES = 5;
-
-function Loader() {
+function Loader({ setLoaded }) {
     const { progress } = useProgress();
-    return <Html center>{progress} % loaded</Html>;
+
+    if (progress === 100) {
+        setLoaded(true);
+    }
+
+    return (
+        <Html fullscreen>
+            <div
+                className={twMerge(
+                    'absolute left-0 top-0 w-screen h-screen bg-primary flex items-center z-50 text-white justify-center flex-col gap-0 transition-all duration-500',
+                    progress === 100 ? '-top-full' : 'top-0',
+                )}
+            >
+                <div className="large-text uppercase text-[27vw]">Loading</div>
+                <div className="text-[20px]">{progress}%</div>
+            </div>
+        </Html>
+    );
 }
 
 function Portfolio() {
     const cameraRef = useRef();
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         if (!cameraRef.current) return;
@@ -67,7 +77,7 @@ function Portfolio() {
                     start: 'top top',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    // // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -86,35 +96,34 @@ function Portfolio() {
 
     return (
         <>
-            <div id="main-wrapper" className="relative z-10">
-                <Welcome />
+            <div
+                id="main-wrapper"
+                className={twMerge('relative z-30 transition-all', loaded ? 'opacity-1' : 'opacity-0')}
+            >
+                <Welcome loaded={loaded} />
                 <About />
                 <Projects />
                 <Connect />
             </div>
-            <Suspense fallback={<span>loading...</span>}>
-                <StyledCanvas
-                    className="absolute left-0 top-0"
-                    shadows
-                    dpr={[1, 2]}
-                    // gl={{ antialias: false }}
-                    // camera={{ position: [-0.1, 0, 8], fov: 50 }}
-                >
+
+            <StyledCanvas
+                className="absolute left-0 top-0 z-20"
+                shadows
+                dpr={[1, 2]}
+                // gl={{ antialias: false }}
+            >
+                <Loader setLoaded={setLoaded} />
+                <Suspense>
                     <CustomCamera />
                     <Stats />
-                    {/* <OrbitControls /> */}
 
                     <Boxes />
-                    <Floor />
-
-                    {/* <FlowField width={5} height={5} segments={100} /> */}
 
                     <BackgroundAndLights />
 
-                    {/* <Tubes /> */}
                     <Environment preset="warehouse" />
-                </StyledCanvas>
-            </Suspense>
+                </Suspense>
+            </StyledCanvas>
         </>
     );
 }
@@ -213,7 +222,7 @@ function Boxes() {
                     start: 'top top',
                     end: `bottom top`,
                     scrub: 1,
-                    markers: true,
+                    // markers: true,
                     toggleActions: 'play none none reverse',
                 },
             });
