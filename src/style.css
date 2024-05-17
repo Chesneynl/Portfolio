@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'NeueMontreal';
+    src: url('/fonts/PPNeueMontreal-SemiBolditalic.otf') format('otf');
+}
+
+@font-face {
+    font-family: 'Morganite';
+    src: url('/fonts/MorganitePro-Regular.woff2') format('woff2');
+    /* You can include additional font properties like font-weight and font-style if needed */
+}
+
+body {
+    margin: 0;
+    font-family: 'NeueMontreal', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* background: linear-gradient(to bottom, #00b2ca, #fbd1a2); */
+}
+
+h1,
+h2,
+h3,
+h4,
+.large-text {
+    font-family: 'Morganite', sans-serif;
+}
+
+a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+p {
+    margin-bottom: 24px;
+}
+
+.word-1 {
+    transform: translateY(0);
+    font-size: 200px;
+}
+.line-wrapper {
+    overflow: hidden;
+}
+
+.my-name {
+    color: purple;
+}
+
+/* Hide the scrollbar for webkit-based browsers */
+::-webkit-scrollbar {
+    width: 0.5em; /* Width of the scrollbar */
+    background-color: rgba(0, 0, 0, 0); /* Set the background color to transparent */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0); /* Set the thumb color to transparent */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0); /* Set the track color to transparent */
+}
+
+.project-item:hover > img {
+    opacity: 1;
+    scale: 1.1;
+}
+
+.case-card:hover .website-logo {
+    opacity: 0;
+}
+
+.case-card:hover img {
+    opacity: 1;
+}
+
+p a {
+    position: relative;
+}
+
+.case-card {
+    box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.1) inset, 0px 0px 20px 3px rgba(7, 13, 79, 0.05),
+        0px 0px 40px 20px rgba(7, 13, 79, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.form-container {
+    background: linear-gradient(138deg, #20235bb3 22%, rgba(7, 9, 33, 0.7) 82%);
+    box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.1) inset, 0px 0px 20px 3px rgba(7, 13, 79, 0.05),
+        0px 0px 40px 20px rgba(7, 13, 79, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
