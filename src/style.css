@@ -4,12 +4,14 @@
 
 @font-face {
     font-family: 'NeueMontreal';
-    src: url('/fonts/PPNeueMontreal-SemiBolditalic.otf') format('otf');
+    src: url('/fonts/PPNeueMontreal-Medium.otf') format('opentype');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Morganite';
     src: url('/fonts/MorganitePro-Regular.woff2') format('woff2');
+    font-display: swap;
     /* You can include additional font properties like font-weight and font-style if needed */
 }
 
