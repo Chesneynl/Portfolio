@@ -12,7 +12,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.use(bodyParser.json());
 
-app.post('/send-email', async (req, res) => {
+app.post('/api/send-email', async (req, res) => {
     const { firstName, lastName, email, message, company } = req.body;
 
     if (!firstName || !lastName || !email || !message || !company) {
@@ -38,8 +38,8 @@ app.post('/send-email', async (req, res) => {
     res.status(200).json({ data });
 });
 
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok' });
+app.get('/api/health', (req, res) => {
+    res.send('Express on Vercel');
 });
 
 app.listen(port, async () => {
