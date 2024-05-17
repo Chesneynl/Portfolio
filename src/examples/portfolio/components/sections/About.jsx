@@ -36,7 +36,7 @@ export default function About() {
     return (
         <>
             <div
-                className="text-white flex flex-col-reverse lg:flex-row-reverse h-screen w-full justify-center lg:items-center px-[3vw]"
+                className="text-white flex flex-col-reverse lg:flex-row-reverse min-h-screen w-full justify-center lg:items-center px-[3vw]"
                 ref={containerRef}
             >
                 <h2

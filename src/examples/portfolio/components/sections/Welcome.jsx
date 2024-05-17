@@ -133,7 +133,7 @@ export default function Welcome({ loaded }) {
     }, [nameRef?.current]);
 
     return (
-        <div className="text-white flex flex-col h-screen w-full justify-center gap-2 items-center">
+        <div className="text-white flex flex-col min-h-screen w-full justify-center gap-2 items-center">
             <h1 ref={nameRef} className="text-[27vw] leading-none uppercase lg:pt-0 drop-shadow-lg">
                 Chesney Buitendijk
             </h1>

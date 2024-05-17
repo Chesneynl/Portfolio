@@ -1,30 +1,14 @@
-import { useSpring } from '@react-spring/core';
-import { a } from '@react-spring/three';
 import {
-    Backdrop,
     Environment,
     Float,
     Html,
-    Instance,
-    Instances,
-    MeshDistortMaterial,
-    RandomizedLight,
     RoundedBox,
-    ScrollControls,
-    Sparkles,
-    Stars,
-    Line,
     useProgress,
-    useScroll,
     shaderMaterial,
     Stats,
-    Edges,
-    Scroll,
     PerspectiveCamera,
-    OrbitControls,
 } from '@react-three/drei';
 import { useFrame, extend } from '@react-three/fiber';
-import { Bloom, DepthOfField, EffectComposer, SSAO, Vignette } from '@react-three/postprocessing';
 import gsap from 'gsap';
 import { Gradient, LayerMaterial } from 'lamina';
 import { forwardRef, Suspense, useEffect, useMemo, useRef, useState } from 'react';
@@ -52,11 +36,11 @@ function Loader({ setLoaded }) {
         <Html fullscreen>
             <div
                 className={twMerge(
-                    'absolute left-0 top-0 w-screen h-screen bg-primary flex items-center z-50 text-white justify-center flex-col gap-0 transition-all duration-500',
-                    progress === 100 ? '-top-full' : 'top-0',
+                    'relative w-screen min-h-screen bg-primary flex items-center z-50 text-white justify-center flex-col gap-0 transition-all duration-500',
+                    progress === 100 ? '-translate-y-full pointer-events-none' : '',
                 )}
             >
-                <div className="large-text uppercase text-[27vw]">Loading</div>
+                <div className="large-text uppercase text-[27vw] leading-none">Loading</div>
                 <div className="text-[20px]">{progress}%</div>
             </div>
         </Html>
@@ -323,14 +307,7 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
     // });
 
     return (
-        <mesh
-            {...props}
-            ref={ref}
-            scale={active ? 1.5 : scale}
-            onClick={(event) => setActive(!active)}
-            onPointerOver={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}
-        >
+        <mesh {...props} ref={ref} scale={active ? 1.5 : scale} onClick={(event) => setActive(!active)}>
             <Float
                 speed={3} // Animation speed, defaults to 1
                 rotationIntensity={3} // XYZ rotation intensity, defaults to 1
@@ -341,7 +318,7 @@ const Box = forwardRef(({ color, scale, ...props }, ref) => {
                     args={[1, 1, 1]} // Width, height, depth. Default is [1, 1, 1]
                     radius={hovered ? 0.5 : 0.05} // Radius of the rounded corners. Default is 0.05
                     smoothness={4} // The number of curve segments. Default is 4
-                    bevelSegments={30} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
+                    bevelSegments={4} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
                     creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
                 >
                     <meshStandardMaterial

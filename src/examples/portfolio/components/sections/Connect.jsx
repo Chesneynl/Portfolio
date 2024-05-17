@@ -2,20 +2,6 @@ import SplitType from 'split-type';
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Resend } from 'resend';
-
-const resend = new Resend('re_ZvNntfjE_567FGjg1FgkpDVKT6PazZwcm');
-
-const EmailTemplate = ({ firstName, lastName, email, company, message }) => (
-    <div>
-        <div>{firstName}</div>
-        <div>{lastName}</div>
-        <div>{email}</div>
-        <div>{company}</div>
-        <div>{message}</div>
-    </div>
-);
-
 export default function Connect() {
     const containerRef = useRef();
     const titleRef = useRef();
@@ -94,7 +80,7 @@ export default function Connect() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        // if (isSubmitting) return;
+        if (isSubmitting) return;
 
         let newErrors = [];
 
@@ -121,20 +107,24 @@ export default function Connect() {
 
         setIsSubmitting(true);
 
-        const { data, error } = await resend.emails.send({
-            from: 'Website',
-            to: 'hello@chesney.dev',
-            subject: `Bericht van ${formdata.firstName} ${formdata.lastName} via de website`,
-            react: EmailTemplate(formdata),
-        });
+        try {
+            const data = await fetch('http://localhost:5000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formdata),
+            });
 
-        setIsSubmitting(false);
+            setIsSubmitting(false);
 
-        if (data) {
-            setIsSubmitted(true);
-        }
-
-        if (error) {
+            if (data) {
+                setIsSubmitted(true);
+            } else {
+                setFailedToSubmit(true);
+            }
+        } catch (error) {
+            setIsSubmitting(false);
             setFailedToSubmit(true);
         }
     }
