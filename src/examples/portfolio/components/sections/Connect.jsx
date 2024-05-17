@@ -32,7 +32,7 @@ export default function Connect() {
                 scrollTrigger: {
                     trigger: '.connect-wrapper',
                     start: 'top center',
-                    end: `bottom bottom`,
+                    end: `bottom bottom -20`,
                     scrub: 1,
                     // markers: true,
                     toggleActions: 'play none none reverse',
@@ -69,7 +69,6 @@ export default function Connect() {
 
             tl.from('.social-button', {
                 opacity: 0,
-                y: 20,
                 stagger: 0.1,
             });
         });
@@ -324,7 +323,7 @@ export default function Connect() {
                     </span>
                 </a>
                 <a
-                    href="mailto:chesneybuitendijk@gmail.com"
+                    href="mailto:hello@chesney.dev"
                     target="_blank"
                     rel="noreferrer"
                     className="rounded-full p-4 hover:shadow-custom-pink  transition-all hover:-translate-y-1.5 bg-primary social-button"
