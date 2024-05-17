@@ -1,7 +1,27 @@
-# README 📖
+# My React Application
 
-![Screenshot 2022-03-06 22:36:02](https://user-images.githubusercontent.com/72122026/156933735-0244a678-9328-4a00-9313-52089063cb61.png)
+This is a React application built using [Create React App](https://github.com/facebook/create-react-app). It uses Yarn as the package manager.
 
-Source code for the tutorial series. The code is in the finished form. Feel free to play around!
+## Getting Started
 
-**[View it live](https://threejs-tutorial-2022.vercel.app/)**
+### Prerequisites
+
+Ensure you have the following software installed on your machine:
+
+- [Node.js](https://nodejs.org/) (version 14.x or later)
+- [Yarn](https://yarnpkg.com/) (version 1.22.x or later)
+
+### Installation
+
+Install the dependencies:
+
+    ```sh
+    yarn install
+    ```
+
+### Running the Application
+
+To start the application in development mode, run:
+
+```sh
+yarn start
