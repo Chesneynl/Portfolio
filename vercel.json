@@ -7,13 +7,14 @@
         }
     ],
     "routes": [
+        { "handle": "filesystem" },
         {
             "src": "/api/(.*)",
             "dest": "src/api/index.js"
         },
         {
             "src": "/",
-            "dest": "/dist/$1"
+            "dest": "index.html"
         }
     ]
 }
