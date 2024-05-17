@@ -3,6 +3,7 @@
     "routes": [
         { "handle": "filesystem" },
         { "src": "/send-email", "dest": "src/api/server.js" },
+        { "src": "/health", "dest": "src/api/server.js" },
         {
             "src": "/(.*)",
             "dest": "/dist/$1"

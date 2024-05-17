@@ -19,5 +19,12 @@
         "incremental": true
     },
     "exclude": ["node_modules", "../node_modules"],
-    "include": ["**/*.ts", "**/*.tsx", "**/*.jsx",  "next-env.d.ts", "next.config.js", "src/examples/portfolio/components/Portfolio.jsx"]
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.jsx",
+        "next-env.d.ts",
+        "next.config.js",
+        "src/examples/portfolio/components/Portfolio.jsx"
+    ]
 }

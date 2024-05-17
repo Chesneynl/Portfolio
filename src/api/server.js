@@ -38,6 +38,10 @@ app.post('/send-email', async (req, res) => {
     res.status(200).json({ data });
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
 app.listen(port, async () => {
     console.log(`Server is running on port ${port}`);
 });

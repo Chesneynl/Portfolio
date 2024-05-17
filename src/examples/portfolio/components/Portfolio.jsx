@@ -99,7 +99,7 @@ function Portfolio() {
                 <Loader setLoaded={setLoaded} />
                 <Suspense>
                     <CustomCamera />
-                    <Stats />
+                    {/* <Stats /> */}
 
                     <Boxes />
 
