@@ -1,1 +1,15 @@
-{"projectId":"prj_u7Jm7W6vR5qU5sn6MbHBR7IwpWYU","orgId":"BbvcnmkEsuHNiyrizQNjzOCM"}
+{
+  "projectId": "prj_u7Jm7W6vR5qU5sn6MbHBR7IwpWYU",
+  "orgId": "BbvcnmkEsuHNiyrizQNjzOCM",
+  "settings": {
+    "createdAt": 1712837761872,
+    "framework": "vite",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": "yarn build",
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "20.x"
+  }
+}
