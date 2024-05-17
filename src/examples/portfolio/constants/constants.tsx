@@ -58,7 +58,7 @@ const PROJECTS_LIST = [
         name: 'PRAZ',
         url: 'https://www.praz.com/',
         websiteType: 'E-COMMERCE',
-        image: '/images/praz-image.jpeg',
+        image: '/images/praz-image.webp',
         logo: <PrazLogo />,
         tools: [
             Tools.MAGENTO,
@@ -92,7 +92,7 @@ const PROJECTS_LIST = [
         name: 'Mr-fillet',
         websiteType: 'E-COMMERCE',
         url: 'https://www.mr-fillet.shop/',
-        image: '/images/mockups/mrfillet-mockup.jpg',
+        image: '/images/mockups/mrfillet-mockup.webp',
         tools: [
             Tools.MAGENTO,
             Tools.STORYBLOK,
@@ -136,7 +136,7 @@ const PROJECTS_LIST = [
     //     primaryColor: '#09361b',
     //     name: 'Hillhout',
     //     websiteType: 'Configurator',
-    //     image: '/images/vogels-image.png',
+    //     image: '/images/vogels-image.webp',
     //     logo: <HillhoutLogo />,
     // },
     {
@@ -144,7 +144,7 @@ const PROJECTS_LIST = [
         name: '2dekansje',
         url: 'https://2dekansje.com/',
         websiteType: 'AI automation',
-        image: '/images/2dekansje-products.png',
+        image: '/images/2dekansje-products.webp',
         tools: [
             Tools.AKENEO,
             Tools.STORYBLOK,
@@ -185,7 +185,7 @@ const PROJECTS_LIST = [
         name: 'Vogels',
         url: 'https://www.vogels.com/',
         websiteType: 'E-COMMERCE',
-        image: '/images/mockups/vogels-mockup.jpg',
+        image: '/images/mockups/vogels-mockup.webp',
         tools: [
             Tools.MAGENTO,
             Tools.STORYBLOK,
@@ -232,7 +232,7 @@ const PROJECTS_LIST = [
         name: 'SolarNRG',
         url: 'https://solarnrg.shop/',
         websiteType: 'CONFIGURATOR',
-        image: '/images/solarnrg-image.jpeg',
+        image: '/images/solarnrg-image.webp',
         description: `
         <div>
         <p>
@@ -274,7 +274,7 @@ const PROJECTS_LIST = [
     //     primaryColor: '#09361b',
     //     name: 'Hillhout',
     //     websiteType: 'Website',
-    //     image: '/images/vogels-image.png',
+    //     image: '/images/vogels-image.webp',
     //     logo: <HillhoutLogo />,
     // },
     {
@@ -282,7 +282,7 @@ const PROJECTS_LIST = [
         name: 'Ainablers',
         url: 'https://www.ainablers.com/',
         websiteType: 'Website',
-        image: '/images/mockups/ainablers-mockup.jpg',
+        image: '/images/mockups/ainablers-mockup.webp',
         tools: [
             Tools.TAILWIND,
             Tools.STORYBLOK,
@@ -323,7 +323,7 @@ const PROJECTS_LIST = [
         name: 'Lead Healthcare',
         websiteType: 'Website',
         url: 'https://www.leadhealthcare.nl/',
-        image: '/images/leadhealthcare-image.png',
+        image: '/images/leadhealthcare-image.webp',
         tools: [
             Tools.REACT,
             Tools.STORYBLOK,
@@ -384,7 +384,7 @@ const PROJECTS_LIST = [
         </p>
       </div>
         `,
-        image: '/images/mockups/mobielnl-mockup.jpg',
+        image: '/images/mockups/mobielnl-mockup.webp',
         tools: [
             Tools.RUBY,
             Tools.ELIXIR,
@@ -404,7 +404,7 @@ const PROJECTS_LIST = [
         name: 'SyncVR',
         url: 'https://www.syncvrmedical.com/',
         websiteType: '2x VR Applications',
-        image: '/images/mockups/syncvr-mockup.jpg',
+        image: '/images/mockups/syncvr-mockup.webp',
         tools: [Tools.UNITY, Tools.C_SHARP, Tools.VR, Tools.GAME_DESIGN, Tools.USER_RESEARCH, Tools.OCULUS],
         description: `
         <div>
