@@ -107,7 +107,7 @@ export default function Connect() {
         setIsSubmitting(true);
 
         try {
-            const data = await fetch('/send-email', {
+            const data = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
