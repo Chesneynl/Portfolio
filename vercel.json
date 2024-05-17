@@ -2,7 +2,7 @@
     "version": 2,
     "routes": [
         { "handle": "filesystem" },
-        { "src": "/send-email", "dest": "index.js" },
+        { "src": "/send-email", "dest": "/src/api/index.js" },
         {
             "src": "/(.*)",
             "dest": "/dist/$1"
