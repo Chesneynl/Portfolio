@@ -1,5 +1,15 @@
 {
     "version": 2,
+    "builds": [
+        {
+            "src": "src/api/index.js",
+            "use": "@now/node"
+        },
+        {
+            "src": "index.html",
+            "use": "@vercel/static"
+        }
+    ],
     "routes": [
         { "handle": "filesystem" },
         {
