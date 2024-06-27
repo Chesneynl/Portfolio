@@ -38,7 +38,8 @@ export default function Welcome({ loaded }) {
             });
 
             tl.from(functionGroupRef.current, {
-                duration: 1,
+                duration: 0.3,
+                delay: 0.1,
                 opacity: 0,
             });
         });
@@ -146,10 +147,10 @@ export default function Welcome({ loaded }) {
                     <div className="whitespace-nowrap drop-shadow-lg" ref={functionsRef}>
                         <div className="job-title opacity-0">Front-end</div>
                         <div className="job-title opacity-1">Creative</div>
-                        <div className="job-title opacity-0">Freelance</div>
+                        <div className="job-title opacity-0">Full-stack</div>
                         <div className="job-title opacity-0">Front-end</div>
                         <div className="job-title opacity-0">Creative</div>
-                        <div className="job-title opacity-0">Freelance</div>
+                        <div className="job-title opacity-0">Full-stack</div>
                     </div>
                 </div>
                 <div>developer</div>

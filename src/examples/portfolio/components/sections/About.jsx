@@ -41,9 +41,9 @@ export default function About() {
             >
                 <h2
                     ref={textRef}
-                    className="text-[16vw] md:text-[8vw] text-center font-normal leading-none uppercase drop-shadow-lg tracking-wide"
+                    className="text-[10vw] md:text-[7vw] text-center font-normal leading-none drop-shadow-lg tracking-wide"
                 >
-                    I'm a front-end developer based in the netherlands with over 6 years of expertise. I've refined my
+                    I'm a full-stack developer based in the netherlands with over 6 years of expertise. I've refined my
                     skills on a variety of projects, including{' '}
                     <span className="text-secondary underline">e-commerce</span>,{' '}
                     <span className="text-secondary">websites</span>, and{' '}
