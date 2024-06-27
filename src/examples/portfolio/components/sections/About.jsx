@@ -43,8 +43,8 @@ export default function About() {
                     ref={textRef}
                     className="text-[10vw] md:text-[7vw] text-center font-normal leading-none drop-shadow-lg tracking-wide"
                 >
-                    I'm a full-stack developer based in the netherlands with over 6 years of expertise. I've refined my
-                    skills on a variety of projects, including{' '}
+                    I'm a freelance full-stack developer based in the netherlands with over 6 years of expertise. I've
+                    refined my skills on a variety of projects, including{' '}
                     <span className="text-secondary underline">e-commerce</span>,{' '}
                     <span className="text-secondary">websites</span>, and{' '}
                     <span className="text-secondary">configurators</span>.
